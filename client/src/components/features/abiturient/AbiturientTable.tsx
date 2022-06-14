@@ -25,6 +25,7 @@ const AbiturientTable: React.FC<Props> = ({ columns, data }) => {
     pageSize: queryPageSize,
     totalPages,
   } = useAppSelector((state) => state.abiturient);
+  const { token } = useAppSelector((state) => state.auth);
 
   const tableInstance = useTable(
     {
@@ -101,9 +102,12 @@ const AbiturientTable: React.FC<Props> = ({ columns, data }) => {
             <button
               disabled={!isRowsSelected}
               onClick={() => {
-                exportAbiturients(
-                  selectedFlatRows.map((d) => d.original) as Abiturient[]
-                );
+                if (token) {
+                  exportAbiturients(
+                    selectedFlatRows.map((d) => d.original) as Abiturient[],
+                    token
+                  );
+                }
               }}
             >
               <SiMicrosoftexcel

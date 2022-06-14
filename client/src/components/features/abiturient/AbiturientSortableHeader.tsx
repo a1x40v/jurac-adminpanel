@@ -34,7 +34,7 @@ const AbiturientSortableHeader: React.FC<Props> = ({
       <div className="absolute top-0 right-0 flex items-center justify-around w-12">
         <span onClick={() => dispatch(toggleSorting(field))}>
           <div
-            className={`border-t-0 border-solid border-x-transparent border-x-8 cursor-pointer ${
+            className={`border-solid border-x-transparent border-x-8 cursor-pointer ${
               isDesc ? 'border-t-white border-t-8' : 'border-b-white border-b-8'
             }`}
           ></div>
