@@ -1,8 +1,9 @@
-import React from 'react';
+import { CSSProperties } from 'react';
 
 interface Props {
   name: string;
   value: string;
+  styles?: CSSProperties;
   type?: React.HTMLInputTypeAttribute;
   onChange?: React.ChangeEventHandler<HTMLInputElement>;
   onBlur?: React.FocusEventHandler<HTMLInputElement>;
@@ -14,6 +15,7 @@ const InputText: React.FC<Props> = ({
   name,
   isError = false,
   type = 'text',
+  styles,
   onChange,
   onBlur,
 }) => {
@@ -24,6 +26,7 @@ const InputText: React.FC<Props> = ({
   return (
     <input
       className={`py-2 px-4 border ${errorClasses}`}
+      style={styles}
       type={type}
       name={name}
       value={value}

@@ -4,6 +4,7 @@ import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import { useAppSelector } from '../app/hooks/stateHooks';
 import LeftNavBar from './common/layout/LeftNavBar';
 import AbiturientDashboard from './features/abiturient/AbiturientDashboard';
+import AbiturientDetail from './features/abiturient/AbiturientDetail';
 import LoginForm from './features/auth/LoginForm';
 import AppSettings from './features/settings/AppSettings';
 
@@ -27,6 +28,7 @@ const App = () => {
           <Routes>
             <Route path="/" element={<Navigate to="/abiturients" />} />
             <Route path="/abiturients" element={<AbiturientDashboard />} />
+            <Route path="/abiturients/:id" element={<AbiturientDetail />} />
             <Route path="/settings" element={<AppSettings />} />
             <Route path="*" element={<AbiturientDashboard />} />
           </Routes>

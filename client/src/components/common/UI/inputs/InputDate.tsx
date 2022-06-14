@@ -1,13 +1,17 @@
 interface Props {
   disabled?: boolean;
   value?: string;
-  onChange?: (date: string) => void;
+  name?: string;
+  onChange?: React.ChangeEventHandler<HTMLInputElement>;
+  onBlur?: React.FocusEventHandler<HTMLInputElement>;
 }
 
 const InputDate: React.FC<Props> = ({
+  name,
   value,
   disabled = false,
-  onChange = () => {},
+  onChange,
+  onBlur,
 }) => {
   return (
     <input
@@ -15,8 +19,10 @@ const InputDate: React.FC<Props> = ({
       pattern="dd-mm-yyyy"
       className="p-2 focus-visible:outline-sky-700"
       disabled={disabled}
+      name={name}
       value={value || ''}
-      onChange={(evt) => onChange(evt.target.value)}
+      onChange={onChange}
+      onBlur={onBlur}
     />
   );
 };
