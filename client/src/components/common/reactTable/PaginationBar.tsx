@@ -30,7 +30,7 @@ const PaginationBar: React.FC<Props> = ({ tableInstance }) => {
     previousPage,
     gotoPage,
     setPageSize,
-    state: { pageIndex },
+    state: { pageIndex, pageSize },
   } = tableInstance;
 
   if (pageCount <= 0) return null;
@@ -78,7 +78,7 @@ const PaginationBar: React.FC<Props> = ({ tableInstance }) => {
         <InputSelect
           menuPlacement="top"
           options={options}
-          defaultValue={options[0]}
+          defaultValue={{ value: pageSize, label: `${pageSize}` }}
           onChange={(val) => setPageSize(Number(val))}
         />
       </div>

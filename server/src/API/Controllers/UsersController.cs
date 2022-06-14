@@ -2,10 +2,12 @@ using Application.Common.QueryString;
 using Application.DTO.User;
 using Application.Features.Users.Requests.Commands;
 using Application.Features.Users.Requests.Queries;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers
 {
+    [Authorize]
     public class UsersController : BaseApiController
     {
         [HttpGet]

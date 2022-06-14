@@ -60,7 +60,7 @@ const transformToExported = ({
   snils,
 });
 
-export const exportAbiturients = (abs: Abiturient[]) => {
+export const exportAbiturients = (abs: Abiturient[], jwtToken: string) => {
   const exported: ExportedAbiturient[] = abs.map(transformToExported);
   const fileName = `Export_${dateFormat(new Date(), 'hh-MM_dd-mm-yy')}.xlsx`;
 
@@ -68,6 +68,7 @@ export const exportAbiturients = (abs: Abiturient[]) => {
     method: 'post',
     headers: {
       'Content-Type': 'application/json',
+      authorization: `Bearer ${jwtToken}`,
     },
     body: JSON.stringify({
       users: exported,

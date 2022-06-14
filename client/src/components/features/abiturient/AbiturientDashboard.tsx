@@ -12,6 +12,7 @@ import AbiturientSortableHeader from './AbiturientSortableHeader';
 import AbiturientTable from './AbiturientTable';
 import AbiturientFilters from './AbiturientFilters';
 import { getSortingString } from '../../../utils/apiUtils';
+import { Link } from 'react-router-dom';
 
 const columns: Array<Column> = [
   {
@@ -19,6 +20,14 @@ const columns: Array<Column> = [
       <AbiturientSortableHeader field={AbtSortableField.Id} title="Id" />
     ),
     accessor: 'id',
+    Cell: ({ value }) => (
+      <Link
+        className="text-sky-700 hover:underline"
+        to={`/abiturients/${value}`}
+      >
+        {value}
+      </Link>
+    ),
   },
   {
     Header: () => (

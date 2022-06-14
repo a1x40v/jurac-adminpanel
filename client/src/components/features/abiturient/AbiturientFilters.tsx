@@ -110,7 +110,10 @@ const AbiturientFilters = () => {
             </div>
             <div className="relative flex items-center justify-between min-w-[250px] pr-7">
               <span>От:</span>
-              <InputDate value={minJoined} onChange={setMinJoined} />
+              <InputDate
+                value={minJoined}
+                onChange={(evt) => setMinJoined(evt.target.value)}
+              />
               {minJoined && (
                 <button
                   className="absolute right-0 p-2"
@@ -122,7 +125,10 @@ const AbiturientFilters = () => {
             </div>
             <div className="relative flex items-center justify-between min-w-[250px] mt-1 pr-7">
               <span>До:</span>
-              <InputDate value={maxJoined} onChange={setMaxJoined} />
+              <InputDate
+                value={maxJoined}
+                onChange={(evt) => setMaxJoined(evt.target.value)}
+              />
               {maxJoined && (
                 <button
                   className="absolute right-0 p-2"

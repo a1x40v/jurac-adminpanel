@@ -24,10 +24,10 @@ export interface Abiturient {
   firstName: string;
   lastName: string;
   email: string;
-  dateJoined: Date;
-  lastLogin: Date;
+  dateJoined: string;
+  lastLogin: string;
   patronymic: string;
-  dateOfBirth: Date;
+  dateOfBirth: string;
   phoneNumber: string;
   sendingStatus: DocSendStatus;
   completeFlag: boolean;
@@ -44,6 +44,7 @@ export interface Abiturient {
   documents: AbiturDocument[];
 }
 
+export type AbiturientUpdate = Omit<Abiturient, 'documents'>;
 export interface AbiturDocument {
   id: number;
   datePub: Date;
@@ -61,7 +62,7 @@ export interface ExportedAbiturient {
   firstName: string;
   lastName: string;
   patronymic: string;
-  dateOfBirth: Date;
+  dateOfBirth: string;
   nameUz: string;
   address: string;
   snils: string;

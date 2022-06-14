@@ -2,6 +2,7 @@ using API.Filters;
 using Application;
 using Application.Features.Users.Validators;
 using FluentValidation.AspNetCore;
+using Identity;
 using Infrastructure;
 using Persistence;
 
@@ -35,6 +36,7 @@ namespace API
             services.AddPersistenceServices(Configuration);
             services.AddApplicationServices(Configuration);
             services.AddInfrastructureServices(Configuration);
+            services.AddIdentityServices(Configuration);
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

@@ -1,7 +1,5 @@
 import Select, { GroupBase, MenuPlacement, StylesConfig } from 'react-select';
 
-// type SelectValue = number | string;
-
 export interface SelectOption<T> {
   value: T;
   label: string;
