@@ -2,6 +2,7 @@ import React from 'react';
 
 interface Props {
   label: string;
+  type?: 'button' | 'submit' | 'reset';
   disabled?: boolean;
   isRounded?: boolean;
   onClick?: React.MouseEventHandler<HTMLButtonElement>;
@@ -9,6 +10,7 @@ interface Props {
 
 const Button: React.FC<Props> = ({
   label,
+  type = 'button',
   disabled = false,
   isRounded = false,
   onClick = () => {},
@@ -24,6 +26,7 @@ const Button: React.FC<Props> = ({
   return (
     <button
       className={`p-2 border-2 font-nanito ${roundedClasses} ${disabledClasses} ${hoverClasses}`}
+      type={type}
       disabled={disabled}
       onClick={onClick}
     >
