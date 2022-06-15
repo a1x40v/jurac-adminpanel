@@ -95,6 +95,9 @@ namespace IntegrationTests
 
             return await context.AuthUsers
                 .Include(x => x.RegabiturCustomuser)
+                .Include(x => x.RegabiturAdditionalinfo)
+                .ThenInclude(x => x.RegabiturAdditionalinfoEducationProfiles)
+                .ThenInclude(x => x.Choicesprofile)
                 .FirstOrDefaultAsync(x => x.Id == authUserId);
         }
 

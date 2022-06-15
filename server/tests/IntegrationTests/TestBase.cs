@@ -16,6 +16,34 @@ namespace IntegrationTests
             await ResetState();
         }
 
+        protected async Task CreateUserProfiles()
+        {
+            await AddAsync<RegabiturChoicesprofile>(new RegabiturChoicesprofile
+            {
+                Description = UserChoisesProfile.BakOfoUp
+            });
+            await AddAsync<RegabiturChoicesprofile>(new RegabiturChoicesprofile
+            {
+                Description = UserChoisesProfile.BakZfoUp
+            });
+            await AddAsync<RegabiturChoicesprofile>(new RegabiturChoicesprofile
+            {
+                Description = UserChoisesProfile.BakOzfoUp
+            });
+            await AddAsync<RegabiturChoicesprofile>(new RegabiturChoicesprofile
+            {
+                Description = UserChoisesProfile.AspZfoKs
+            });
+            await AddAsync<RegabiturChoicesprofile>(new RegabiturChoicesprofile
+            {
+                Description = UserChoisesProfile.AspOfoGp
+            });
+            await AddAsync<RegabiturChoicesprofile>(new RegabiturChoicesprofile
+            {
+                Description = UserChoisesProfile.AspOfoUgp
+            });
+        }
+
         protected async Task<int> CreateUser()
         {
             var authUser = new AuthUser
@@ -57,22 +85,17 @@ namespace IntegrationTests
             authUser.RegabiturAdditionalinfo = addInfo;
 
             // Choises profile
-            var choicesProfile = new RegabiturChoicesprofile
-            {
-                Description = "ОФО Бакалавриат"
-            };
-
             addInfo.RegabiturAdditionalinfoEducationProfiles = new List<RegabiturAdditionalinfoEducationProfile>
             {
                  new RegabiturAdditionalinfoEducationProfile
                  {
                      Additionalinfo = addInfo,
-                     Choicesprofile = new RegabiturChoicesprofile { Description = "ОФО Бакалавриат"}
+                     Choicesprofile = new RegabiturChoicesprofile { Description = UserChoisesProfile.BakOfoUp}
                  },
                  new RegabiturAdditionalinfoEducationProfile
                  {
                      Additionalinfo = addInfo,
-                     Choicesprofile = new RegabiturChoicesprofile { Description = "ОФО Магистратура"}
+                     Choicesprofile = new RegabiturChoicesprofile { Description = UserChoisesProfile.BakOfoGp}
                  }
             };
 

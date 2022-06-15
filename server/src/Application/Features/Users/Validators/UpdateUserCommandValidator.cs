@@ -23,6 +23,28 @@ namespace Application.Features.Users.Validators
                 })
                 .WithMessage("Incorrect sending status value.");
 
+            RuleFor(x => x.ChoicesProfiles)
+                .Must(profiles =>
+                {
+                    var acceptedProfiles = new List<string> {
+                        UserChoisesProfile.BakOfoUp, UserChoisesProfile.BakZfoUp, UserChoisesProfile.BakOzfoUp,
+                        UserChoisesProfile.BakOfoGp, UserChoisesProfile.BakZfoGp, UserChoisesProfile.BakOzfoGp,
+                        UserChoisesProfile.SpecOfoSd, UserChoisesProfile.MagOfoPo, UserChoisesProfile.MagZfoPo,
+                        UserChoisesProfile.MagOfoTp, UserChoisesProfile.MagZfoTp,
+                        UserChoisesProfile.AspOfoTip, UserChoisesProfile.AspZfoTip,
+                        UserChoisesProfile.AspOfoUp, UserChoisesProfile.AspZfoUp,
+                        UserChoisesProfile.AspOfoKs, UserChoisesProfile.AspZfoKs,
+                        UserChoisesProfile.AspOfoGp, UserChoisesProfile.AspOfoUgp,
+                    };
+
+                    foreach (var profile in profiles)
+                    {
+                        if (!acceptedProfiles.Contains(profile)) return false;
+                    }
+
+                    return true;
+                });
+
             RuleFor(x => x.CompleteFlag).NotNull();
             RuleFor(x => x.AgreementFlag).NotNull();
             RuleFor(x => x.WorkFlag).NotNull();

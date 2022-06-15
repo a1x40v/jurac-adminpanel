@@ -1,4 +1,6 @@
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Application.Common.Exceptions;
 using Application.Features.Users.Requests.Commands;
@@ -33,8 +35,15 @@ namespace IntegrationTests.Users.Commands
                 NameUz = "New Name Uz",
                 Passport = "09213333",
                 Snils = "11112222997",
-                Message = "New updated message"
+                Message = "New updated message",
             };
+        }
+
+        private UpdateUserCommand CreateUpdateCommand(int userId, ICollection<string> profiles)
+        {
+            var cmd = CreateUpdateCommand(userId);
+            cmd.ChoicesProfiles = profiles;
+            return cmd;
         }
 
         [Test]
@@ -96,6 +105,34 @@ namespace IntegrationTests.Users.Commands
             Assert.AreEqual(customUser.Passport, command.Passport);
             Assert.AreEqual(customUser.Snils, command.Snils);
             Assert.AreEqual(customUser.Message, command.Message);
+        }
+
+        [Test]
+        public async Task ShouldUpdateUserProfiles()
+        {
+            await CreateUserProfiles();
+
+            int userId = await CreateUser();
+
+            var newProfiles = new List<string>
+            {
+                UserChoisesProfile.AspOfoUgp,
+                UserChoisesProfile.AspOfoGp,
+                UserChoisesProfile.BakZfoUp
+            };
+
+            var command = CreateUpdateCommand(userId, newProfiles);
+
+            await SendAsync(command);
+
+            var authUser = await FindUserAsync(userId);
+
+            var actualProfiles = authUser.RegabiturAdditionalinfo
+                .RegabiturAdditionalinfoEducationProfiles
+                .Select(x => x.Choicesprofile.Description)
+                .ToList();
+
+            CollectionAssert.AreEquivalent(newProfiles, actualProfiles);
         }
     }
 }

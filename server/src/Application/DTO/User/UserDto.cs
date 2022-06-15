@@ -27,5 +27,6 @@ namespace Application.DTO.User
         public string Snils { get; set; }
         public string Message { get; set; }
         public ICollection<DocumentuserDto> Documents { get; set; }
+        public ICollection<string> ChoicesProfiles { get; set; }
     }
 }

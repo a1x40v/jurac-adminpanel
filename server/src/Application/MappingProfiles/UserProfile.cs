@@ -18,7 +18,10 @@ namespace Application.MappingProfiles
             CreateMap<UpdateUserCommand, RegabiturCustomuser>()
                 .ForMember(d => d.Id, o => o.Ignore());
 
-            CreateMap<AuthUser, UserDto>();
+            CreateMap<AuthUser, UserDto>()
+                .ForMember(d => d.ChoicesProfiles, o => o.MapFrom(s =>
+                    s.RegabiturAdditionalinfo.RegabiturAdditionalinfoEducationProfiles
+                        .Select(x => x.Choicesprofile.Description)));
 
             CreateMap<RegabiturCustomuser, UserDto>()
                 .ForMember(d => d.Id, o => o.MapFrom(s => s.User.Id))

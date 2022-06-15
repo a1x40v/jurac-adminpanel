@@ -14,5 +14,6 @@ namespace Domain
 
         public virtual AuthUser User { get; set; }
         public virtual ICollection<RegabiturAdditionalinfoEducationProfile> RegabiturAdditionalinfoEducationProfiles { get; set; }
+            = new List<RegabiturAdditionalinfoEducationProfile>();
     }
 }

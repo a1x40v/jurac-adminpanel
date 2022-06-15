@@ -47,6 +47,7 @@ const AbiturientForm: React.FC<Props> = ({ abitur }) => {
             </div>
 
             <div className="flex flex-col mt-8 w-[100%]">
+              <FormField isFullWidth={true} name="email" label="Email" />
               <FormField
                 isFullWidth={true}
                 name="address"

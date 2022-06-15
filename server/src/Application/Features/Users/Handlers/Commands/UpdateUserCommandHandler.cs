@@ -1,8 +1,10 @@
 using Application.Common.Exceptions;
 using Application.Features.Users.Requests.Commands;
 using AutoMapper;
+using Domain;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using Persistence;
 
 namespace Application.Features.Users.Handlers.Commands
@@ -11,6 +13,7 @@ namespace Application.Features.Users.Handlers.Commands
     {
         private readonly ApplicationDbContext _dbContext;
         private readonly IMapper _mapper;
+        private readonly ILogger<UpdateUserCommandHandler> _logger;
         public UpdateUserCommandHandler(ApplicationDbContext dbContext, IMapper mapper)
         {
             _dbContext = dbContext;
@@ -21,6 +24,8 @@ namespace Application.Features.Users.Handlers.Commands
         {
             var authUser = await _dbContext.AuthUsers
                 .Include(x => x.RegabiturCustomuser)
+                .Include(x => x.RegabiturAdditionalinfo)
+                .ThenInclude(x => x.RegabiturAdditionalinfoEducationProfiles)
                 .FirstOrDefaultAsync(x => x.Id == request.Id);
 
             if (authUser == null)
@@ -33,6 +38,37 @@ namespace Application.Features.Users.Handlers.Commands
             if (authUser.RegabiturCustomuser != null)
             {
                 _mapper.Map(request, authUser.RegabiturCustomuser);
+            }
+
+            var currentProfiles = await _dbContext.RegabiturAdditionalinfoEducationProfiles
+                .Where(x => x.AdditionalinfoId == authUser.RegabiturAdditionalinfo.Id)
+                .Select(x => x.Choicesprofile.Description)
+                .ToListAsync();
+
+            if (currentProfiles.Count() != request.ChoicesProfiles.Count()
+                || !request.ChoicesProfiles.All(x => currentProfiles.Contains(x)))
+            {
+                _dbContext.RegabiturAdditionalinfoEducationProfiles.RemoveRange(
+                    authUser.RegabiturAdditionalinfo.RegabiturAdditionalinfoEducationProfiles);
+
+                var newProfiles = await _dbContext.RegabiturChoicesprofiles
+                    .Where(x => request.ChoicesProfiles.Contains(x.Description))
+                    .ToListAsync();
+
+                foreach (var newPr in newProfiles)
+                {
+                    authUser.RegabiturAdditionalinfo.RegabiturAdditionalinfoEducationProfiles.Add(
+                        new RegabiturAdditionalinfoEducationProfile
+                        {
+                            Choicesprofile = newPr
+                        }
+                    );
+                }
+            }
+
+            if (!_dbContext.ChangeTracker.HasChanges())
+            {
+                return Unit.Value;
             }
 
             var result = await _dbContext.SaveChangesAsync() > 0;
