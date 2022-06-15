@@ -36,9 +36,13 @@ const AbiturientDetail = () => {
       <Link className="text-sky-700 hover:underline" to={`/abiturients`}>
         Вернуться к списку
       </Link>
-      <h1 className="mt-6 mb-10 text-xl font-bold">
-        {abitur.lastName} {abitur.firstName} {abitur.patronymic}. Id: {id}
-      </h1>
+      <div className="flex items-center justify-between">
+        <h1 className="mt-6 mb-10 text-xl font-bold">
+          {abitur.lastName} {abitur.firstName} {abitur.patronymic},{' '}
+          {abitur.username}
+        </h1>
+        <span className="font-bold">Id: {id}</span>
+      </div>
       <div>
         <AbiturientForm abitur={abitur} />
       </div>

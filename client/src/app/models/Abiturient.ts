@@ -2,6 +2,7 @@ import { Pagination } from './Pagination';
 
 export enum AbtSortableField {
   Id = 'id',
+  Username = 'username',
   FirstName = 'firstName',
   LastName = 'lastName',
   DateJoined = 'dateJoined',
@@ -21,6 +22,7 @@ export enum DocSendStatus {
 
 export interface Abiturient {
   id: number;
+  username: string;
   firstName: string;
   lastName: string;
   email: string;
