@@ -1,5 +1,6 @@
 import { Navigate } from 'react-router-dom';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import { ToastContainer } from 'react-toastify';
 
 import { useAppSelector } from '../app/hooks/stateHooks';
 import LeftNavBar from './common/layout/LeftNavBar';
@@ -33,6 +34,7 @@ const App = () => {
             <Route path="*" element={<AbiturientDashboard />} />
           </Routes>
         </div>
+        <ToastContainer />
       </div>
     </Router>
   );

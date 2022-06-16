@@ -1,12 +1,12 @@
 import { Link, useParams } from 'react-router-dom';
 
 import {
-  abiturientApi,
   transformToUpdate,
   useGetAbiturientQuery,
   useUpdateAbiturientMutation,
 } from '../../../app/apiServices/abiturientService';
 import { AbiturientUpdate } from '../../../app/models/Abiturient';
+import { toastError, toastSuccess } from '../../../app/react-toasts';
 import LoadingIndicator from '../../common/LoadingIndicator';
 import AbiturientForm from './AbiturientForm';
 
@@ -19,7 +19,13 @@ const AbiturientDetail = () => {
   const abitur = data?.user;
 
   const handleSubmit = async (values: AbiturientUpdate) => {
-    await updateAbiturient(values);
+    try {
+      await updateAbiturient(values);
+      toastSuccess('Пользователь обновлён');
+    } catch (err) {
+      console.log(err);
+      toastError('Что-то пошло не так');
+    }
   };
 
   if (error) {
