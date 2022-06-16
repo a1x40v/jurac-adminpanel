@@ -1,6 +1,10 @@
 import { Form, Formik } from 'formik';
 import { ReactElement } from 'react';
-import { CHOICE_PROFILES } from '../../../app/constants/abiturientConstants';
+import {
+  CHOICE_PROFILES,
+  SEND_STATUSES,
+  SEND_STATUS_DESC,
+} from '../../../app/constants/abiturientConstants';
 
 import { AbiturientUpdate } from '../../../app/models/Abiturient';
 import { ChoiceProfile } from '../../../app/models/ChoiceProfile';
@@ -14,7 +18,15 @@ interface Props {
   onSubmit: (updated: AbiturientUpdate) => void;
 }
 
-const options = CHOICE_PROFILES.map((value) => ({ value, label: value }));
+const profileOptions = CHOICE_PROFILES.map((value) => ({
+  value,
+  label: value,
+}));
+
+const statusOptions = SEND_STATUSES.map((value) => ({
+  value,
+  label: SEND_STATUS_DESC[value],
+}));
 
 const AbiturientForm: React.FC<Props> = ({ abitur, onSubmit }) => {
   const initialValues = abitur;
@@ -70,51 +82,79 @@ const AbiturientForm: React.FC<Props> = ({ abitur, onSubmit }) => {
                   </span>
                 }
               />
+              <FormField
+                isFullWidth={true}
+                name="commentAdmin"
+                label="Комментарий для внутренней работы"
+              />
             </div>
 
-            <div className="flex flex-col">
-              <label className="flex items-center mb-6 cursor-pointer">
-                <div className="mr-4 min-w-[200px]">Документы отправлены:</div>
-                <input
-                  type="checkbox"
-                  checked={getFieldProps('completeFlag').value}
-                  {...getFieldProps('completeFlag')}
-                />
-              </label>
+            <div className="flex my-8">
+              <div className="flex flex-col min-w-[200px] mr-20">
+                <span className="mb-2">Статус заявки:</span>
+                <InputSelect
+                  menuPlacement="top"
+                  options={statusOptions}
+                  defaultValue={{
+                    value: getFieldProps('sendingStatus').value,
 
-              <label className="flex items-center mb-6 cursor-pointer">
-                <div className="mr-4 min-w-[200px]">Соглашение:</div>
-                <input
-                  type="checkbox"
-                  className="grow"
-                  checked={getFieldProps('agreementFlag').value}
-                  {...getFieldProps('agreementFlag')}
+                    label:
+                      // @ts-ignore
+                      SEND_STATUS_DESC[getFieldProps('sendingStatus').value],
+                  }}
+                  onChange={(val) => {
+                    setFieldValue('sendingStatus', val);
+                  }}
                 />
-              </label>
+              </div>
 
-              <label className="flex items-center mb-6 cursor-pointer">
-                <div className="mr-4 min-w-[200px]">Взят в работу:</div>
-                <input
-                  type="checkbox"
-                  checked={getFieldProps('workFlag').value}
-                  {...getFieldProps('workFlag')}
-                />
-              </label>
+              <div className="flex flex-col">
+                <label className="flex items-center mb-6 cursor-pointer">
+                  <div className="mr-4 min-w-[200px]">
+                    Документы отправлены:
+                  </div>
+                  <input
+                    type="checkbox"
+                    checked={getFieldProps('completeFlag').value}
+                    {...getFieldProps('completeFlag')}
+                  />
+                </label>
 
-              <label className="flex items-center mb-6 cursor-pointer">
-                <div className="mr-4 min-w-[200px]">Отработан:</div>
-                <input
-                  type="checkbox"
-                  checked={getFieldProps('successFlag').value}
-                  {...getFieldProps('successFlag')}
-                />
-              </label>
+                <label className="flex items-center mb-6 cursor-pointer">
+                  <div className="mr-4 min-w-[200px]">Соглашение:</div>
+                  <input
+                    type="checkbox"
+                    className="grow"
+                    checked={getFieldProps('agreementFlag').value}
+                    {...getFieldProps('agreementFlag')}
+                  />
+                </label>
+
+                <label className="flex items-center mb-6 cursor-pointer">
+                  <div className="mr-4 min-w-[200px]">Взят в работу:</div>
+                  <input
+                    type="checkbox"
+                    checked={getFieldProps('workFlag').value}
+                    {...getFieldProps('workFlag')}
+                  />
+                </label>
+
+                <label className="flex items-center mb-6 cursor-pointer">
+                  <div className="mr-4 min-w-[200px]">Отработан:</div>
+                  <input
+                    type="checkbox"
+                    checked={getFieldProps('successFlag').value}
+                    {...getFieldProps('successFlag')}
+                  />
+                </label>
+              </div>
             </div>
 
             <div className="mb-6">
+              <p className="mb-2">Форма обучения:</p>
               <InputSelect
                 isMulti
-                options={options}
+                options={profileOptions}
                 menuWidth="600px"
                 menuPlacement="top"
                 defaultValue={getFieldProps('choicesProfiles').value.map(

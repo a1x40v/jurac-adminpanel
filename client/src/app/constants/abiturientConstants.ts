@@ -31,3 +31,12 @@ export const CHOICE_PROFILES = [
   ChoiceProfile.AspOfoGp,
   ChoiceProfile.AspOfoUgp,
 ];
+
+export const SEND_STATUSES: DocSendStatus[] = [
+  DocSendStatus.Error,
+  DocSendStatus.No,
+  DocSendStatus.Send,
+  DocSendStatus.Working,
+  DocSendStatus.Success,
+  DocSendStatus.Back,
+];
