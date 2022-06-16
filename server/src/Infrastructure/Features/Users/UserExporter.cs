@@ -31,13 +31,13 @@ namespace Infrastructure.Features.Users
                     worksheet.Cell(currentRow, 2).Value = user.LastName;
                     worksheet.Cell(currentRow, 3).Value = user.FirstName;
                     worksheet.Cell(currentRow, 4).Value = user.Patronymic;
-                    worksheet.Cell(currentRow, 5).Value = user.DateOfBirth.ToShortDateString();
+                    worksheet.Cell(currentRow, 5).Value = user.DateOfBirth.ToString("yyyy.MM.dd");
                     worksheet.Cell(currentRow, 6).Value = user.NameUz;
                     worksheet.Cell(currentRow, 7).Value = user.Address;
                     worksheet.Cell(currentRow, 8).Value = user.Snils;
                 }
 
-                worksheet.Columns().AdjustToContents();  // Adjust column width
+                worksheet.Columns().AdjustToContents();
                 worksheet.Rows().AdjustToContents();
 
                 using (var stream = new MemoryStream())
