@@ -40,6 +40,12 @@ namespace Application.Features.Users.Handlers.Commands
                 _mapper.Map(request, authUser.RegabiturCustomuser);
             }
 
+            if (authUser.RegabiturAdditionalinfo == null)
+            {
+                authUser.RegabiturAdditionalinfo = new RegabiturAdditionalinfo();
+                await _dbContext.SaveChangesAsync();
+            }
+
             var currentProfiles = await _dbContext.RegabiturAdditionalinfoEducationProfiles
                 .Where(x => x.AdditionalinfoId == authUser.RegabiturAdditionalinfo.Id)
                 .Select(x => x.Choicesprofile.Description)
