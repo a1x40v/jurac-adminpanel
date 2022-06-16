@@ -2,7 +2,7 @@ namespace Application.Common.QueryString
 {
     public class QueryParameters
     {
-        private const int MaxPageSize = 50;
+        private const int MaxPageSize = 250;
         private int _pageSize = 10;
         public int PageNumber { get; set; } = 1;
         public int PageSize

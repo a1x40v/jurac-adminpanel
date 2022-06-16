@@ -23,6 +23,7 @@ namespace Domain
 
         public virtual RegabiturAdditionalinfo RegabiturAdditionalinfo { get; set; }
         public virtual RegabiturCustomuser RegabiturCustomuser { get; set; }
+        public virtual RegabiturPublishrectab RegabiturPublishrectab { get; set; }
         public virtual RegabiturPublishtab RegabiturPublishtab { get; set; }
         public virtual ICollection<RegabiturDocumentuser> RegabiturDocumentusers { get; set; }
     }

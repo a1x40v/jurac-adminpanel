@@ -1,30 +1,39 @@
 import { Form, Formik } from 'formik';
 import { ReactElement } from 'react';
-import dateFormat from 'dateformat';
+import {
+  CHOICE_PROFILES,
+  SEND_STATUSES,
+  SEND_STATUS_DESC,
+} from '../../../app/constants/abiturientConstants';
 
-import { Abiturient, AbiturientUpdate } from '../../../app/models/Abiturient';
+import { AbiturientUpdate } from '../../../app/models/Abiturient';
+import { ChoiceProfile } from '../../../app/models/ChoiceProfile';
 import FormikInputText from '../../common/UI/formik/FormikInputText';
 import Button from '../../common/UI/inputs/Button';
 import InputDate from '../../common/UI/inputs/InputDate';
+import InputSelect, { SelectOption } from '../../common/UI/inputs/InputSelect';
 
 interface Props {
-  abitur: Abiturient;
+  abitur: AbiturientUpdate;
+  onSubmit: (updated: AbiturientUpdate) => void;
 }
 
-const AbiturientForm: React.FC<Props> = ({ abitur }) => {
-  const { documents, dateOfBirth, ...updatable } = abitur;
-  const initialValues = {
-    dateOfBirth: dateFormat(new Date(dateOfBirth), 'yyyy-mm-dd'),
-    ...updatable,
-  };
+const profileOptions = CHOICE_PROFILES.map((value) => ({
+  value,
+  label: value,
+}));
 
-  const handleSubmit = async (values: AbiturientUpdate) => {
-    console.log(new Date(values.dateOfBirth));
-  };
+const statusOptions = SEND_STATUSES.map((value) => ({
+  value,
+  label: SEND_STATUS_DESC[value],
+}));
+
+const AbiturientForm: React.FC<Props> = ({ abitur, onSubmit }) => {
+  const initialValues = abitur;
 
   return (
-    <Formik initialValues={initialValues} onSubmit={handleSubmit}>
-      {({ isSubmitting, isValid, dirty, getFieldProps }) => (
+    <Formik initialValues={initialValues} onSubmit={onSubmit}>
+      {({ isSubmitting, isValid, dirty, setFieldValue, getFieldProps }) => (
         <Form>
           <div className="flex flex-col items-start">
             <div className="flex justify-between w-full">
@@ -47,6 +56,7 @@ const AbiturientForm: React.FC<Props> = ({ abitur }) => {
             </div>
 
             <div className="flex flex-col mt-8 w-[100%]">
+              <FormField isFullWidth={true} name="email" label="Email" />
               <FormField
                 isFullWidth={true}
                 name="address"
@@ -71,6 +81,92 @@ const AbiturientForm: React.FC<Props> = ({ abitur }) => {
                     <br /> в формате ДД.ММ.ГГГГ
                   </span>
                 }
+              />
+              <FormField
+                isFullWidth={true}
+                name="commentAdmin"
+                label="Комментарий для внутренней работы"
+              />
+            </div>
+
+            <div className="flex my-8">
+              <div className="flex flex-col min-w-[200px] mr-20">
+                <span className="mb-2">Статус заявки:</span>
+                <InputSelect
+                  menuPlacement="top"
+                  options={statusOptions}
+                  defaultValue={{
+                    value: getFieldProps('sendingStatus').value,
+
+                    label:
+                      // @ts-ignore
+                      SEND_STATUS_DESC[getFieldProps('sendingStatus').value],
+                  }}
+                  onChange={(val) => {
+                    setFieldValue('sendingStatus', val);
+                  }}
+                />
+              </div>
+
+              <div className="flex flex-col">
+                <label className="flex items-center mb-6 cursor-pointer">
+                  <div className="mr-4 min-w-[200px]">
+                    Документы отправлены:
+                  </div>
+                  <input
+                    type="checkbox"
+                    checked={getFieldProps('completeFlag').value}
+                    {...getFieldProps('completeFlag')}
+                  />
+                </label>
+
+                <label className="flex items-center mb-6 cursor-pointer">
+                  <div className="mr-4 min-w-[200px]">Соглашение:</div>
+                  <input
+                    type="checkbox"
+                    className="grow"
+                    checked={getFieldProps('agreementFlag').value}
+                    {...getFieldProps('agreementFlag')}
+                  />
+                </label>
+
+                <label className="flex items-center mb-6 cursor-pointer">
+                  <div className="mr-4 min-w-[200px]">Взят в работу:</div>
+                  <input
+                    type="checkbox"
+                    checked={getFieldProps('workFlag').value}
+                    {...getFieldProps('workFlag')}
+                  />
+                </label>
+
+                <label className="flex items-center mb-6 cursor-pointer">
+                  <div className="mr-4 min-w-[200px]">Отработан:</div>
+                  <input
+                    type="checkbox"
+                    checked={getFieldProps('successFlag').value}
+                    {...getFieldProps('successFlag')}
+                  />
+                </label>
+              </div>
+            </div>
+
+            <div className="mb-6">
+              <p className="mb-2">Форма обучения:</p>
+              <InputSelect
+                isMulti
+                options={profileOptions}
+                menuWidth="600px"
+                menuPlacement="top"
+                defaultValue={getFieldProps('choicesProfiles').value.map(
+                  (value: string) => ({ value, label: value })
+                )}
+                onChange={(vals) => {
+                  const newOpts = vals as SelectOption<ChoiceProfile>[];
+                  setFieldValue(
+                    'choicesProfiles',
+                    newOpts.map(({ value }) => value)
+                  );
+                }}
               />
             </div>
 

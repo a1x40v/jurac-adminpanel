@@ -1,3 +1,5 @@
+import dateFormat from 'dateformat';
+
 interface Props {
   disabled?: boolean;
   value?: string;
@@ -13,6 +15,8 @@ const InputDate: React.FC<Props> = ({
   onChange,
   onBlur,
 }) => {
+  const formatedVal = value ? dateFormat(new Date(value), 'yyyy-mm-dd') : '';
+
   return (
     <input
       type="date"
@@ -20,7 +24,7 @@ const InputDate: React.FC<Props> = ({
       className="p-2 focus-visible:outline-sky-700"
       disabled={disabled}
       name={name}
-      value={value || ''}
+      value={formatedVal}
       onChange={onChange}
       onBlur={onBlur}
     />

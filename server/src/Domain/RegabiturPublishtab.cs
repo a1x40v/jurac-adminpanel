@@ -2,7 +2,7 @@
 
 namespace Domain
 {
-    public class RegabiturPublishtab
+    public partial class RegabiturPublishtab
     {
         public int Id { get; set; }
         public string IndividualStr { get; set; }
@@ -26,6 +26,8 @@ namespace Domain
         public bool AspOfoKs { get; set; }
         public bool AspZfoKs { get; set; }
         public int UserId { get; set; }
+        public bool AspOfoGp { get; set; }
+        public bool AspOfoUgp { get; set; }
 
         public virtual AuthUser User { get; set; }
     }

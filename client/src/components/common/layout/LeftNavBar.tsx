@@ -2,7 +2,6 @@ import { useCallback, useEffect, useState } from 'react';
 import { motion, useAnimation } from 'framer-motion';
 import { IconType } from 'react-icons/lib';
 import { BsBook } from 'react-icons/bs';
-import { BiStats } from 'react-icons/bi';
 import { BiArrowFromRight, BiArrowFromLeft } from 'react-icons/bi';
 import { FiSettings } from 'react-icons/fi';
 import { NavLink } from 'react-router-dom';
@@ -26,11 +25,6 @@ const data: MenuSection[] = [
         title: 'Абитуриенты',
         icon: BsBook,
         to: '/abiturients',
-      },
-      {
-        title: 'Статистика',
-        icon: BiStats,
-        to: '/stats',
       },
     ],
   },
@@ -97,14 +91,14 @@ const LeftNavBar = () => {
     >
       {active && (
         <BiArrowFromRight
-          className="hidden absolute top-8 -right-4 bg-sky-900 text-sky-900 fill-white rounded-2xl cursor-pointer hover:bg-white hover:fill-sky-900 group-hover:block"
+          className="absolute hidden cursor-pointer top-8 -right-4 bg-sky-900 text-sky-900 fill-white rounded-2xl hover:bg-white hover:fill-sky-900 group-hover:block"
           size="2rem"
           onClick={showLess}
         />
       )}
       {!active && (
         <BiArrowFromLeft
-          className="absolute top-8 -right-4 bg-sky-900 text-sky-900 fill-white rounded-2xl cursor-pointer hover:bg-white hover:fill-sky-900"
+          className="absolute cursor-pointer top-8 -right-4 bg-sky-900 text-sky-900 fill-white rounded-2xl hover:bg-white hover:fill-sky-900"
           size="2rem"
           onClick={showMore}
         />

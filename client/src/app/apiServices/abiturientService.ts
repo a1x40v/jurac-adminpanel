@@ -3,6 +3,7 @@ import dateFormat from 'dateformat';
 import {
   Abiturient,
   AbiturientListVm,
+  AbiturientUpdate,
   ExportedAbiturient,
 } from '../models/Abiturient';
 import { AbtFiltersState } from '../state/slices/abiturientSlice';
@@ -37,6 +38,22 @@ export const abiturientApi = baseApi.injectEndpoints({
             ]
           : [{ type: CacheTagType.Abiturients, id: 'PARTIAL-LIST' }],
     }),
+    getAbiturient: builder.query<{ user: Abiturient }, number>({
+      query: (id) => `users/${id}`,
+      providesTags: (result, error, id) => [
+        { type: CacheTagType.Abiturients, id },
+      ],
+    }),
+    updateAbiturient: builder.mutation<void, AbiturientUpdate>({
+      query: (updated) => ({
+        url: `users/${updated.id}`,
+        method: 'PUT',
+        body: updated,
+      }),
+      invalidatesTags: (result, error, { id }) => [
+        { type: CacheTagType.Abiturients, id },
+      ],
+    }),
   }),
 });
 
@@ -58,6 +75,15 @@ const transformToExported = ({
   nameUz,
   address,
   snils,
+});
+
+export const transformToUpdate = ({
+  documents,
+  dateJoined,
+  lastLogin,
+  ...updatable
+}: Abiturient): AbiturientUpdate => ({
+  ...updatable,
 });
 
 export const exportAbiturients = (abs: Abiturient[], jwtToken: string) => {
@@ -86,4 +112,8 @@ export const exportAbiturients = (abs: Abiturient[], jwtToken: string) => {
     });
 };
 
-export const { useGetAbiturientsQuery } = abiturientApi;
+export const {
+  useGetAbiturientsQuery,
+  useGetAbiturientQuery,
+  useUpdateAbiturientMutation,
+} = abiturientApi;

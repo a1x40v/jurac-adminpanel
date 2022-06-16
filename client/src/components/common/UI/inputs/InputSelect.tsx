@@ -8,6 +8,7 @@ export interface SelectOption<T> {
 interface Props<IsMulti extends boolean, OptValue> {
   options: SelectOption<OptValue>[];
   defaultValue: SelectOption<OptValue> | SelectOption<OptValue>[];
+  menuWidth?: string;
   isMulti?: IsMulti;
   menuPlacement?: MenuPlacement;
   onChange: (val: SelectOption<OptValue> | SelectOption<OptValue>[]) => void;
@@ -19,6 +20,7 @@ const InputSelect = <IsMulti extends boolean, OptValue>(
   const {
     options,
     defaultValue,
+    menuWidth,
     isMulti,
     menuPlacement = 'bottom',
     onChange,
@@ -29,6 +31,10 @@ const InputSelect = <IsMulti extends boolean, OptValue>(
     IsMulti,
     GroupBase<SelectOption<OptValue>>
   > = {
+    menu: (provided) => ({
+      ...provided,
+      width: menuWidth ? menuWidth : 'auto',
+    }),
     option: (provided, state) => ({
       ...provided,
       backgroundColor: state.isSelected
@@ -39,6 +45,7 @@ const InputSelect = <IsMulti extends boolean, OptValue>(
     }),
     control: (provided, state) => ({
       ...provided,
+      maxWidth: '1200px',
       borderColor: state.isFocused ? 'rgba(3,105,161)' : 'gray',
       boxShadow: 'none',
       ':hover': {

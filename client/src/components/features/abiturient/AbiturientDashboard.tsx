@@ -5,6 +5,7 @@ import { useGetAbiturientsQuery } from '../../../app/apiServices/abiturientServi
 import { SEND_STATUS_DESC } from '../../../app/constants/abiturientConstants';
 import { useAppSelector } from '../../../app/hooks/stateHooks';
 import {
+  Abiturient,
   AbtSortableField,
   DocSendStatus,
 } from '../../../app/models/Abiturient';
@@ -13,6 +14,7 @@ import AbiturientTable from './AbiturientTable';
 import AbiturientFilters from './AbiturientFilters';
 import { getSortingString } from '../../../utils/apiUtils';
 import { Link } from 'react-router-dom';
+import LoadingIndicator from '../../common/LoadingIndicator';
 
 const columns: Array<Column> = [
   {
@@ -28,6 +30,28 @@ const columns: Array<Column> = [
         {value}
       </Link>
     ),
+  },
+  {
+    Header: () => (
+      <AbiturientSortableHeader
+        field={AbtSortableField.Username}
+        title="Имя пользователя"
+      />
+    ),
+    accessor: 'username',
+    Cell: ({ value, row }) => {
+      const username = value as string;
+      const abitur = row.original as Abiturient;
+
+      return (
+        <Link
+          className="text-sky-700 hover:underline"
+          to={`/abiturients/${abitur.id}`}
+        >
+          {username.length > 18 ? `${username.substring(0, 18)}...` : username}
+        </Link>
+      );
+    },
   },
   {
     Header: () => (
@@ -97,14 +121,14 @@ const AbiturientDashboard = () => {
 
   const orderBy = sorting.length ? getSortingString(sorting) : undefined;
 
-  const { data } = useGetAbiturientsQuery({
+  const { data, isLoading } = useGetAbiturientsQuery({
     pageNumber: currentPage,
     pageSize,
     orderBy,
     filtering,
   });
 
-  if (!data) return <div>Loading...</div>;
+  if (!data || isLoading) return <LoadingIndicator />;
 
   return (
     <div>

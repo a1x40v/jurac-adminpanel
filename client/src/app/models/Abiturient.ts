@@ -1,7 +1,9 @@
+import { ChoiceProfile } from './ChoiceProfile';
 import { Pagination } from './Pagination';
 
 export enum AbtSortableField {
   Id = 'id',
+  Username = 'username',
   FirstName = 'firstName',
   LastName = 'lastName',
   DateJoined = 'dateJoined',
@@ -21,6 +23,7 @@ export enum DocSendStatus {
 
 export interface Abiturient {
   id: number;
+  username: string;
   firstName: string;
   lastName: string;
   email: string;
@@ -30,10 +33,10 @@ export interface Abiturient {
   dateOfBirth: string;
   phoneNumber: string;
   sendingStatus: DocSendStatus;
-  completeFlag: boolean;
-  agreementFlag: boolean;
-  workFlag: boolean;
-  successFlag: boolean;
+  completeFlag: boolean; // Документы отправлены
+  agreementFlag: boolean; // Соглашение
+  workFlag: boolean; // Взят в работу
+  successFlag: boolean; // Отработан
   address: string;
   commentAdmin: string;
   dateOfDoc: string;
@@ -42,9 +45,13 @@ export interface Abiturient {
   snils: string;
   message: string;
   documents: AbiturDocument[];
+  choicesProfiles: ChoiceProfile[];
 }
 
-export type AbiturientUpdate = Omit<Abiturient, 'documents'>;
+export type AbiturientUpdate = Omit<
+  Abiturient,
+  'documents' | 'dateJoined' | 'lastLogin'
+>;
 export interface AbiturDocument {
   id: number;
   datePub: Date;
