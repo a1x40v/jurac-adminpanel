@@ -1,30 +1,29 @@
 import { Link, useParams } from 'react-router-dom';
 
-import { abiturientApi } from '../../../app/apiServices/abiturientService';
-import { useAppSelector } from '../../../app/hooks/stateHooks';
-import { getSortingString } from '../../../utils/apiUtils';
+import {
+  abiturientApi,
+  transformToUpdate,
+  useGetAbiturientQuery,
+  useUpdateAbiturientMutation,
+} from '../../../app/apiServices/abiturientService';
+import { AbiturientUpdate } from '../../../app/models/Abiturient';
 import LoadingIndicator from '../../common/LoadingIndicator';
 import AbiturientForm from './AbiturientForm';
 
 const AbiturientDetail = () => {
   let { id } = useParams();
-  const { currentPage, pageSize, sorting, filtering } = useAppSelector(
-    (state) => state.abiturient
-  );
-  const orderBy = sorting.length ? getSortingString(sorting) : undefined;
 
-  const { abitur, isFetching } = abiturientApi.useGetAbiturientsQuery(
-    { pageNumber: currentPage, pageSize, orderBy, filtering },
-    {
-      selectFromResult: ({ data, isFetching }) => ({
-        abitur: data?.users.find((abitur) => abitur.id === Number(id)),
-        isFetching,
-      }),
-    }
-  );
+  const [updateAbiturient] = useUpdateAbiturientMutation();
 
-  if (!isFetching && !abitur) {
-    return <div>Пользователь с id = {id} не найден.</div>;
+  const { data, isFetching, error } = useGetAbiturientQuery(Number(id));
+  const abitur = data?.user;
+
+  const handleSubmit = async (values: AbiturientUpdate) => {
+    await updateAbiturient(values);
+  };
+
+  if (error) {
+    return <div>Не удалось загрузить пользователя с id = {id}.</div>;
   }
 
   if (isFetching || !abitur) {
@@ -44,7 +43,10 @@ const AbiturientDetail = () => {
         <span className="font-bold">Id: {id}</span>
       </div>
       <div>
-        <AbiturientForm abitur={abitur} />
+        <AbiturientForm
+          abitur={transformToUpdate(abitur)}
+          onSubmit={handleSubmit}
+        />
       </div>
     </div>
   );
