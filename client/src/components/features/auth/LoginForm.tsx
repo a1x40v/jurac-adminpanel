@@ -3,6 +3,7 @@ import * as Yup from 'yup';
 
 import { useLoginMutation } from '../../../app/apiServices/authService';
 import { useAppDispatch } from '../../../app/hooks/stateHooks';
+import { toastError } from '../../../app/react-toasts';
 import { setCredentials } from '../../../app/state/slices/authSlice';
 import FormikInputText from '../../common/UI/formik/FormikInputText';
 import Button from '../../common/UI/inputs/Button';
@@ -37,6 +38,7 @@ const LoginForm = () => {
       );
     } catch (err) {
       console.log(`ERROR: ${err}`);
+      toastError('Неправильный логин или пароль!');
     }
   };
 

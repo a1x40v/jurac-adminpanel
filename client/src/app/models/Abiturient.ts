@@ -54,7 +54,7 @@ export type AbiturientUpdate = Omit<
 >;
 export interface AbiturDocument {
   id: number;
-  datePub: Date;
+  datePub: string;
   nameDoc: string;
   doc: string;
 }

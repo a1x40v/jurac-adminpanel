@@ -1,7 +1,6 @@
 import { Link, useParams } from 'react-router-dom';
 
 import {
-  transformToUpdate,
   useGetAbiturientQuery,
   useUpdateAbiturientMutation,
 } from '../../../app/apiServices/abiturientService';
@@ -49,10 +48,7 @@ const AbiturientDetail = () => {
         <span className="font-bold">Id: {id}</span>
       </div>
       <div>
-        <AbiturientForm
-          abitur={transformToUpdate(abitur)}
-          onSubmit={handleSubmit}
-        />
+        <AbiturientForm abitur={abitur} onSubmit={handleSubmit} />
       </div>
     </div>
   );

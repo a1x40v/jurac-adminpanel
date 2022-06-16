@@ -23,7 +23,7 @@ namespace Application.Features.Account.Handlers.Queries
 
         public async Task<AuthenticateResponse> Handle(AuthenticateQuery request, CancellationToken cancellationToken)
         {
-            var user = await _dbContext.AuthUsers.FirstOrDefaultAsync(x => x.Username == request.Username);
+            var user = await _dbContext.AuthUsers.FirstOrDefaultAsync(x => x.Username == request.Username && x.IsStaff == true);
 
             if (user == null)
             {

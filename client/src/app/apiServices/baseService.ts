@@ -10,7 +10,7 @@ export const baseApi = createApi({
   reducerPath: 'applicationApi',
   tagTypes: [CacheTagType.Abiturients],
   baseQuery: fetchBaseQuery({
-    baseUrl: 'http://localhost:5285/api',
+    baseUrl: process.env.REACT_APP_API_URL,
     prepareHeaders: (headers, { getState }) => {
       const token = (getState() as RootState).auth.token;
       if (token) {

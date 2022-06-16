@@ -110,7 +110,23 @@ const columns: Array<Column> = [
       />
     ),
     accessor: 'sendingStatus',
-    Cell: (props) => <>{SEND_STATUS_DESC[props.value as DocSendStatus]}</>,
+    Cell: ({ value, row }) => {
+      const abitur = row.original as Abiturient;
+      let className = '';
+      if (
+        abitur.sendingStatus === 'success' ||
+        abitur.sendingStatus === 'send'
+      ) {
+        if (abitur.successFlag) className = 'text-white bg-green-800';
+        if (!abitur.successFlag && abitur.workFlag)
+          className = 'text-white bg-orange-800';
+      }
+      return (
+        <span className={className}>
+          {SEND_STATUS_DESC[value as DocSendStatus]}
+        </span>
+      );
+    },
   },
 ];
 

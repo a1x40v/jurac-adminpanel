@@ -1,3 +1,4 @@
+import dateFormat from 'dateformat';
 import { Form, Formik } from 'formik';
 import { ReactElement } from 'react';
 import {
@@ -6,15 +7,20 @@ import {
   SEND_STATUS_DESC,
 } from '../../../app/constants/abiturientConstants';
 
-import { AbiturientUpdate } from '../../../app/models/Abiturient';
+import {
+  AbiturDocument,
+  Abiturient,
+  AbiturientUpdate,
+} from '../../../app/models/Abiturient';
 import { ChoiceProfile } from '../../../app/models/ChoiceProfile';
+import DropwdownMenu from '../../common/layout/DropwdownMenu';
 import FormikInputText from '../../common/UI/formik/FormikInputText';
 import Button from '../../common/UI/inputs/Button';
 import InputDate from '../../common/UI/inputs/InputDate';
 import InputSelect, { SelectOption } from '../../common/UI/inputs/InputSelect';
 
 interface Props {
-  abitur: AbiturientUpdate;
+  abitur: Abiturient;
   onSubmit: (updated: AbiturientUpdate) => void;
 }
 
@@ -29,7 +35,8 @@ const statusOptions = SEND_STATUSES.map((value) => ({
 }));
 
 const AbiturientForm: React.FC<Props> = ({ abitur, onSubmit }) => {
-  const initialValues = abitur;
+  const { documents, lastLogin, dateJoined, ...updatable } = abitur;
+  const initialValues = updatable;
 
   return (
     <Formik initialValues={initialValues} onSubmit={onSubmit}>
@@ -168,6 +175,32 @@ const AbiturientForm: React.FC<Props> = ({ abitur, onSubmit }) => {
                   );
                 }}
               />
+            </div>
+
+            <div className="mb-6">
+              <DropwdownMenu
+                label={`Документы (${
+                  documents.length ? `${documents.length} шт.` : 'отсутствуют'
+                }):`}
+              >
+                {documents.length ? (
+                  <ul>
+                    {documents.map((doc: AbiturDocument, idx) => (
+                      <li key={doc.id} className="mb-1">
+                        <p>
+                          {idx + 1}. {doc.doc}
+                        </p>
+                        <p className="pl-5">
+                          Подан:{' '}
+                          {dateFormat(new Date(doc.datePub), 'dd.mm.yy hh:MM')}
+                        </p>
+                      </li>
+                    ))}
+                  </ul>
+                ) : (
+                  <p>Документы отсутствуют</p>
+                )}
+              </DropwdownMenu>
             </div>
 
             <Button

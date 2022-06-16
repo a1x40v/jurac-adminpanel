@@ -77,20 +77,11 @@ const transformToExported = ({
   snils,
 });
 
-export const transformToUpdate = ({
-  documents,
-  dateJoined,
-  lastLogin,
-  ...updatable
-}: Abiturient): AbiturientUpdate => ({
-  ...updatable,
-});
-
 export const exportAbiturients = (abs: Abiturient[], jwtToken: string) => {
   const exported: ExportedAbiturient[] = abs.map(transformToExported);
   const fileName = `Export_${dateFormat(new Date(), 'hh-MM_dd-mm-yy')}.xlsx`;
 
-  fetch('http://localhost:5285/api/users/export', {
+  fetch(`${process.env.REACT_APP_API_URL}/users/export`, {
     method: 'post',
     headers: {
       'Content-Type': 'application/json',

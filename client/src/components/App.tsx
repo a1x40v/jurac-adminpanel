@@ -17,6 +17,7 @@ const App = () => {
       <div className="flex flex-col items-center mt-10 font-nanito">
         <h1 className="mb-6">Панель управления базой данных СПбЮА</h1>
         <LoginForm />
+        <ToastContainer />
       </div>
     );
   }
