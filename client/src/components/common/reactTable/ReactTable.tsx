@@ -2,9 +2,10 @@ import { TableInstance } from 'react-table';
 
 interface Props {
   tableInstance: TableInstance;
+  isLoading?: boolean;
 }
 
-const ReactTable: React.FC<Props> = ({ tableInstance }) => {
+const ReactTable: React.FC<Props> = ({ tableInstance, isLoading = false }) => {
   const { headerGroups, rows, getTableProps, getTableBodyProps, prepareRow } =
     tableInstance;
 
@@ -27,7 +28,10 @@ const ReactTable: React.FC<Props> = ({ tableInstance }) => {
           {rows.map((row) => {
             prepareRow(row);
             return (
-              <tr {...row.getRowProps()}>
+              <tr
+                className={isLoading ? 'opacity-50' : ''}
+                {...row.getRowProps()}
+              >
                 {row.cells.map((cell) => (
                   <td className="p-3" {...cell.getCellProps()}>
                     {cell.render('Cell')}

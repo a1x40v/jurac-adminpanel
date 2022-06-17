@@ -16,9 +16,14 @@ import PaginationBar from '../../common/reactTable/PaginationBar';
 interface Props {
   columns: Array<Column>;
   data: AbiturientListVm;
+  isLoading?: boolean;
 }
 
-const AbiturientTable: React.FC<Props> = ({ columns, data }) => {
+const AbiturientTable: React.FC<Props> = ({
+  columns,
+  data,
+  isLoading = false,
+}) => {
   const dispatch = useAppDispatch();
   const {
     currentPage,
@@ -94,7 +99,7 @@ const AbiturientTable: React.FC<Props> = ({ columns, data }) => {
     <>
       <div className="relative flex items-start">
         <div>
-          <ReactTable tableInstance={tableInstance} />
+          <ReactTable tableInstance={tableInstance} isLoading={isLoading} />
           <PaginationBar tableInstance={tableInstance} />
         </div>
         <div className="sticky mt-[50px] ml-5 top-20 text-sky-900 font-nanito">

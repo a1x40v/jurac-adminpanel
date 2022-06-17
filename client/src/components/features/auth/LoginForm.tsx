@@ -25,7 +25,7 @@ const initialValues: FormValues = {
 
 const LoginForm = () => {
   const dispatch = useAppDispatch();
-  const [login] = useLoginMutation();
+  const [login, { isLoading }] = useLoginMutation();
 
   const handleSubmit = async (values: FormValues) => {
     try {
@@ -63,7 +63,7 @@ const LoginForm = () => {
 
               <Button
                 type="submit"
-                label="Войти"
+                label={isLoading ? 'Загрузка...' : 'Войти'}
                 disabled={isSubmitting || !isValid || !dirty}
               />
             </div>

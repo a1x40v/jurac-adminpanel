@@ -115,7 +115,8 @@ const columns: Array<Column> = [
       let className = '';
       if (
         abitur.sendingStatus === 'success' ||
-        abitur.sendingStatus === 'send'
+        abitur.sendingStatus === 'send' ||
+        abitur.sendingStatus === 'working'
       ) {
         if (abitur.successFlag) className = 'text-white bg-green-800';
         if (!abitur.successFlag && abitur.workFlag)
@@ -137,7 +138,7 @@ const AbiturientDashboard = () => {
 
   const orderBy = sorting.length ? getSortingString(sorting) : undefined;
 
-  const { data, isLoading } = useGetAbiturientsQuery({
+  const { data, isLoading, isFetching } = useGetAbiturientsQuery({
     pageNumber: currentPage,
     pageSize,
     orderBy,
@@ -149,7 +150,7 @@ const AbiturientDashboard = () => {
   return (
     <div>
       <AbiturientFilters />
-      <AbiturientTable columns={columns} data={data} />
+      <AbiturientTable columns={columns} data={data} isLoading={isFetching} />
     </div>
   );
 };
