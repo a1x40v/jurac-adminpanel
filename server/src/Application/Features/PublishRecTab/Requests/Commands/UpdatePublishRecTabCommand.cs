@@ -4,7 +4,7 @@ namespace Application.Features.PublishRecTab.Requests.Commands
 {
     public class UpdatePublishRecTabCommand : IRequest, IPublishRecTabCommand
     {
-        public int Id { get; set; }
+        public int UserId { get; set; }
         public string TestType { get; set; } // ЕГЭ, Вступительные испытания
         public bool Sogl { get; set; } // Не подано  
         public bool SostType { get; set; } // Рекомендован, Не рекомендован

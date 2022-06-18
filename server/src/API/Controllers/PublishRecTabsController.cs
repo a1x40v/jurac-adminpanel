@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers
 {
-    public class PublishRecTabController : BaseApiController
+    public class PublishRecTabsController : BaseApiController
     {
         [HttpGet]
         public async Task<ActionResult<ICollection<PublishRecTabDto>>> GetAllPublishRecTabs()
@@ -21,20 +21,20 @@ namespace API.Controllers
             return NoContent();
         }
 
-        [HttpPut("{id}")]
-        public async Task<ActionResult> UpdatePublishRecTab(int id, UpdatePublishRecTabCommand command)
+        [HttpPut("users/{userId}")]
+        public async Task<ActionResult> UpdatePublishRecTab(int userId, UpdatePublishRecTabCommand command)
         {
-            if (id != command.Id) return BadRequest();
+            if (userId != command.UserId) return BadRequest();
 
             await Mediator.Send(command);
 
             return NoContent();
         }
 
-        [HttpDelete("{id}")]
-        public async Task<ActionResult> DeletePublishRecTab(int id)
+        [HttpDelete("users/{userId}")]
+        public async Task<ActionResult> DeletePublishRecTab(int userId)
         {
-            await Mediator.Send(new DeletePublishRecTabCommand { Id = id });
+            await Mediator.Send(new DeletePublishRecTabCommand { UserId = userId });
 
             return NoContent();
         }
