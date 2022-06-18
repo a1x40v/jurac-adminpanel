@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useState } from 'react';
 import { motion, useAnimation } from 'framer-motion';
 import { IconType } from 'react-icons/lib';
-import { BsBook } from 'react-icons/bs';
+import { BsBook, BsList, BsListCheck } from 'react-icons/bs';
 import { BiArrowFromRight, BiArrowFromLeft } from 'react-icons/bi';
 import { FiSettings } from 'react-icons/fi';
 import { NavLink } from 'react-router-dom';
@@ -25,6 +25,11 @@ const data: MenuSection[] = [
         title: 'Абитуриенты',
         icon: BsBook,
         to: '/abiturients',
+      },
+      {
+        title: 'Подавшие',
+        icon: BsList,
+        to: '/publishtabs',
       },
     ],
   },

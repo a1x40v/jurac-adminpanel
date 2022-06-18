@@ -19,3 +19,24 @@ export enum ChoiceProfile {
   AspOfoGp = 'Аспирантура Теоретико-исторические правовые науки (ОЧНАЯ ФОРМА ОБУЧЕНИЯ)',
   AspOfoUgp = 'Аспирантура Уголовно-правовые науки (ОЧНАЯ ФОРМА ОБУЧЕНИЯ)',
 }
+
+export interface ChoiceProfileSet {
+  bakOfoUp: boolean;
+  bakOfoGp: boolean;
+  bakZfoUp: boolean;
+  bakZfoGp: boolean;
+  bakOzfoUp: boolean;
+  bakOzfoGp: boolean;
+  specOfoSd: boolean;
+  magOfoPo: boolean;
+  magZfoPo: boolean;
+  magOfoTp: boolean;
+  magZfoTp: boolean;
+  aspOfoTip: boolean;
+  aspZfoTip: boolean;
+  aspOfoUp: boolean;
+  aspZfoUp: boolean;
+  aspOfoKs: boolean;
+  aspOfoGp: boolean;
+  aspOfoUgp: boolean;
+}

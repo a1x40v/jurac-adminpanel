@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers
 {
-    public class PublishTabController : BaseApiController
+    public class PublishTabsController : BaseApiController
     {
         [HttpGet]
         public async Task<ActionResult<ICollection<PublishTabDto>>> GetAllPublishTabs()

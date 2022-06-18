@@ -21,6 +21,11 @@ export enum DocSendStatus {
   Back = 'back',
 }
 
+export enum AbiturientTestType {
+  Ege = 'ЕГЭ',
+  Vi = 'Вступительные испытания'
+}
+
 export interface Abiturient {
   id: number;
   username: string;
