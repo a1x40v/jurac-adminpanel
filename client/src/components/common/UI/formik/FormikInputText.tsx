@@ -5,12 +5,14 @@ import InputText from '../inputs/InputText';
 interface Props {
   name: string;
   type?: React.HTMLInputTypeAttribute;
+  placeholder?: string;
   isFullWidth?: boolean;
 }
 
 const FormikInputText: React.FC<Props> = ({
   name,
   type,
+  placeholder,
   isFullWidth = false,
 }) => {
   const [field, meta] = useField(name);
@@ -24,8 +26,9 @@ const FormikInputText: React.FC<Props> = ({
   return (
     <div className="relative font-nanito" style={style}>
       <InputText
-        isError={isError}
         type={type}
+        placeholder={placeholder}
+        isError={isError}
         styles={isFullWidth ? { width: '100%' } : undefined}
         {...field}
       />

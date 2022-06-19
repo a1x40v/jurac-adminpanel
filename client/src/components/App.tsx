@@ -7,6 +7,7 @@ import LeftNavBar from './common/layout/LeftNavBar';
 import AbiturientDashboard from './features/abiturient/AbiturientDashboard';
 import AbiturientDetail from './features/abiturient/AbiturientDetail';
 import LoginForm from './features/auth/LoginForm';
+import PublishTabDashboard from './features/publishTab/PublishTabDashboard';
 import AppSettings from './features/settings/AppSettings';
 
 const App = () => {
@@ -26,11 +27,12 @@ const App = () => {
     <Router>
       <div className="flex font-nanito">
         <LeftNavBar />
-        <div className="py-6 pr-6 mx-auto pl-9">
+        <div className="flex justify-center w-full py-6 pr-6 pl-9">
           <Routes>
             <Route path="/" element={<Navigate to="/abiturients" />} />
             <Route path="/abiturients" element={<AbiturientDashboard />} />
             <Route path="/abiturients/:id" element={<AbiturientDetail />} />
+            <Route path="/publishtabs" element={<PublishTabDashboard />} />
             <Route path="/settings" element={<AppSettings />} />
             <Route path="*" element={<AbiturientDashboard />} />
           </Routes>

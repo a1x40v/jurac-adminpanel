@@ -2,6 +2,7 @@ import { CSSProperties } from 'react';
 
 interface Props {
   name: string;
+  placeholder?: string;
   value: string;
   styles?: CSSProperties;
   type?: React.HTMLInputTypeAttribute;
@@ -13,6 +14,7 @@ interface Props {
 const InputText: React.FC<Props> = ({
   value,
   name,
+  placeholder,
   isError = false,
   type = 'text',
   styles,
@@ -26,6 +28,7 @@ const InputText: React.FC<Props> = ({
   return (
     <input
       className={`py-2 px-4 border ${errorClasses}`}
+      placeholder={placeholder}
       style={styles}
       type={type}
       name={name}

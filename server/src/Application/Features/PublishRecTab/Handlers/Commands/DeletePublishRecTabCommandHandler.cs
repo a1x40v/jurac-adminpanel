@@ -15,11 +15,11 @@ namespace Application.Features.PublishRecTab.Handlers.Commands
         }
         public async Task<Unit> Handle(DeletePublishRecTabCommand request, CancellationToken cancellationToken)
         {
-            var publishRecTab = await _dbContext.RegabiturPublishrectabs.FirstOrDefaultAsync(x => x.Id == request.Id);
+            var publishRecTab = await _dbContext.RegabiturPublishrectabs.FirstOrDefaultAsync(x => x.User.Id == request.UserId);
 
             if (publishRecTab == null)
             {
-                throw new NotFoundException("PublishRecTab", request.Id);
+                throw new NotFoundException("PublishRecTab with AuthUser with Id", request.UserId);
             }
 
             _dbContext.Remove(publishRecTab);

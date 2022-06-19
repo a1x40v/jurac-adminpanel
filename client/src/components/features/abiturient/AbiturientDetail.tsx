@@ -1,39 +1,41 @@
-import { Link, useParams } from 'react-router-dom';
+import { Link } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 
-import {
-  useGetAbiturientQuery,
-  useUpdateAbiturientMutation,
-} from '../../../app/apiServices/abiturientService';
-import { AbiturientUpdate } from '../../../app/models/Abiturient';
-import { toastError, toastSuccess } from '../../../app/react-toasts';
+import { useGetAbiturientQuery } from '../../../app/apiServices/abiturientService';
+import Tabs from '../../common/layout/tabs/Tabs';
 import LoadingIndicator from '../../common/LoadingIndicator';
-import AbiturientForm from './AbiturientForm';
+import PublishTabDetail from '../publishTab/PublishTabDetail';
+import AbiturientData from './AbiturientData';
 
 const AbiturientDetail = () => {
   let { id } = useParams();
+  const userId = Number(id);
 
-  const [updateAbiturient] = useUpdateAbiturientMutation();
-
-  const { data, isFetching, error } = useGetAbiturientQuery(Number(id));
+  const { data, isFetching, error } = useGetAbiturientQuery(userId);
   const abitur = data?.user;
 
-  const handleSubmit = async (values: AbiturientUpdate) => {
-    try {
-      await updateAbiturient(values);
-      toastSuccess('Пользователь обновлён');
-    } catch (err) {
-      console.log(err);
-      toastError('Что-то пошло не так');
-    }
-  };
-
   if (error) {
-    return <div>Не удалось загрузить пользователя с id = {id}.</div>;
+    return <div>Не удалось загрузить пользователя с id = {userId}.</div>;
   }
 
   if (isFetching || !abitur) {
     return <LoadingIndicator />;
   }
+
+  const tabsData = [
+    {
+      navTitle: 'Данные',
+      content: <AbiturientData abitur={abitur} />,
+    },
+    {
+      navTitle: 'Публиковать в списке подавших',
+      content: <PublishTabDetail userId={userId} />,
+    },
+    {
+      navTitle: 'Публиковать в списке рекомендованных к зачислению',
+      content: <p>Tab 3</p>,
+    },
+  ];
 
   return (
     <div className="min-w-[1200px] font-nanito">
@@ -41,15 +43,13 @@ const AbiturientDetail = () => {
         Вернуться к списку
       </Link>
       <div className="flex items-center justify-between">
-        <h1 className="mt-6 mb-10 text-xl font-bold">
+        <h1 className="mt-6 mb-6 text-xl font-bold">
           {abitur.lastName} {abitur.firstName} {abitur.patronymic},{' '}
           {abitur.username}
         </h1>
-        <span className="font-bold">Id: {id}</span>
+        <span className="font-bold">Id: {userId}</span>
       </div>
-      <div>
-        <AbiturientForm abitur={abitur} onSubmit={handleSubmit} />
-      </div>
+      <Tabs data={tabsData} />
     </div>
   );
 };

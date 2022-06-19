@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useState } from 'react';
 import { motion, useAnimation } from 'framer-motion';
 import { IconType } from 'react-icons/lib';
-import { BsBook } from 'react-icons/bs';
+import { BsBook, BsList, BsListCheck } from 'react-icons/bs';
 import { BiArrowFromRight, BiArrowFromLeft } from 'react-icons/bi';
 import { FiSettings } from 'react-icons/fi';
 import { NavLink } from 'react-router-dom';
@@ -26,6 +26,11 @@ const data: MenuSection[] = [
         icon: BsBook,
         to: '/abiturients',
       },
+      {
+        title: 'Подавшие',
+        icon: BsList,
+        to: '/publishtabs',
+      },
     ],
   },
   {
@@ -49,6 +54,7 @@ const LeftNavBar = () => {
   const showMore = useCallback(() => {
     controls.start({
       width: '15rem',
+      minWidth: '15rem',
       transition: { duration: 0.001 },
     });
     controlText.start({
@@ -67,6 +73,7 @@ const LeftNavBar = () => {
   const showLess = useCallback(() => {
     controls.start({
       width: '3.5rem',
+      minWidth: '3.5rem',
       transition: { duration: 0.001 },
     });
     controlText.start({
@@ -87,7 +94,7 @@ const LeftNavBar = () => {
   return (
     <motion.div
       animate={controls}
-      className="relative max-w-[15rem] min-h-screen py-14 border-gray-700 bg-sky-900 text-gray-200 duration-300 group"
+      className="relative min-w-[15rem] min-h-screen py-14 border-gray-700 bg-sky-900 text-gray-200 duration-300 group"
     >
       {active && (
         <BiArrowFromRight

@@ -1,12 +1,11 @@
 import dateFormat from 'dateformat';
 import { Form, Formik } from 'formik';
-import { ReactElement } from 'react';
+
 import {
   CHOICE_PROFILES,
   SEND_STATUSES,
   SEND_STATUS_DESC,
 } from '../../../app/constants/abiturientConstants';
-
 import {
   AbiturDocument,
   Abiturient,
@@ -14,7 +13,7 @@ import {
 } from '../../../app/models/Abiturient';
 import { ChoiceProfile } from '../../../app/models/ChoiceProfile';
 import DropwdownMenu from '../../common/layout/DropwdownMenu';
-import FormikInputText from '../../common/UI/formik/FormikInputText';
+import FormField from '../../common/UI/formik/FormField';
 import Button from '../../common/UI/inputs/Button';
 import InputDate from '../../common/UI/inputs/InputDate';
 import InputSelect, { SelectOption } from '../../common/UI/inputs/InputSelect';
@@ -212,19 +211,6 @@ const AbiturientForm: React.FC<Props> = ({ abitur, onSubmit }) => {
         </Form>
       )}
     </Formik>
-  );
-};
-
-const FormField: React.FC<{
-  name: string;
-  label: string | ReactElement;
-  isFullWidth?: boolean;
-}> = ({ name, label, isFullWidth }) => {
-  return (
-    <div className="flex items-center justify-between mb-6">
-      <div className="mr-4">{label}:</div>
-      <FormikInputText isFullWidth={isFullWidth} name={name} />
-    </div>
   );
 };
 
