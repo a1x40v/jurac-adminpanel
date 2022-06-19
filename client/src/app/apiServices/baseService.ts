@@ -4,11 +4,12 @@ import { RootState } from '../state/store';
 
 export enum CacheTagType {
   Abiturients = 'Abiturients',
+  PublishTabs = 'PublishTabs',
 }
 
 export const baseApi = createApi({
   reducerPath: 'applicationApi',
-  tagTypes: [CacheTagType.Abiturients],
+  tagTypes: [CacheTagType.Abiturients, CacheTagType.PublishTabs],
   baseQuery: fetchBaseQuery({
     baseUrl: process.env.REACT_APP_API_URL,
     prepareHeaders: (headers, { getState }) => {

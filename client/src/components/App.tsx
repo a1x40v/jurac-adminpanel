@@ -27,7 +27,7 @@ const App = () => {
     <Router>
       <div className="flex font-nanito">
         <LeftNavBar />
-        <div className="py-6 pr-6 mx-auto pl-9">
+        <div className="flex justify-center w-full py-6 pr-6 pl-9">
           <Routes>
             <Route path="/" element={<Navigate to="/abiturients" />} />
             <Route path="/abiturients" element={<AbiturientDashboard />} />

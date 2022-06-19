@@ -54,6 +54,7 @@ const LeftNavBar = () => {
   const showMore = useCallback(() => {
     controls.start({
       width: '15rem',
+      minWidth: '15rem',
       transition: { duration: 0.001 },
     });
     controlText.start({
@@ -72,6 +73,7 @@ const LeftNavBar = () => {
   const showLess = useCallback(() => {
     controls.start({
       width: '3.5rem',
+      minWidth: '3.5rem',
       transition: { duration: 0.001 },
     });
     controlText.start({
@@ -92,7 +94,7 @@ const LeftNavBar = () => {
   return (
     <motion.div
       animate={controls}
-      className="relative max-w-[15rem] min-h-screen py-14 border-gray-700 bg-sky-900 text-gray-200 duration-300 group"
+      className="relative min-w-[15rem] min-h-screen py-14 border-gray-700 bg-sky-900 text-gray-200 duration-300 group"
     >
       {active && (
         <BiArrowFromRight

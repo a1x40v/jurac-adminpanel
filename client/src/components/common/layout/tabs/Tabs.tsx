@@ -27,7 +27,7 @@ const Tabs: React.FC<Props> = ({ data }) => {
 
   return (
     <div>
-      <ul className="flex mb-3 border-b border-sky-700">
+      <ul className="flex mb-8 border-b border-sky-700">
         {tabs.map((t) => (
           <TabNavItem
             key={t.id}

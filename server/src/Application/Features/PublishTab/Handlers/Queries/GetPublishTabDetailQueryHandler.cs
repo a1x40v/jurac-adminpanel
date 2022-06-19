@@ -1,4 +1,3 @@
-using Application.Common.Exceptions;
 using Application.DTO.PublishTab;
 using Application.Features.PublishTab.Requests.Queries;
 using AutoMapper;
@@ -24,11 +23,6 @@ namespace Application.Features.PublishTab.Handlers.Queries
                 .Where(x => x.User.Id == request.UserId)
                 .ProjectTo<PublishTabDto>(_mapper.ConfigurationProvider)
                 .FirstOrDefaultAsync();
-
-            if (publishTab == null)
-            {
-                throw new NotFoundException("PublishTab for AuthUser with Id", request.UserId);
-            }
 
             return publishTab;
         }

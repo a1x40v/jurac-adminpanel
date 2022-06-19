@@ -1,6 +1,11 @@
 import { ChoiceProfile, ChoiceProfileSet } from '../models/ChoiceProfile';
-import { PublishTab, PublishTabView } from '../models/PublishTab';
-import { baseApi } from './baseService';
+import {
+  PublishTab,
+  PublishTabCreateModel,
+  PublishTabUpdateModel,
+  PublishTabView,
+} from '../models/PublishTab';
+import { baseApi, CacheTagType } from './baseService';
 
 export const publishTabApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
@@ -18,13 +23,64 @@ export const publishTabApi = baseApi.injectEndpoints({
           })
         );
       },
+      providesTags: (result) =>
+        result
+          ? [
+              ...result.map(
+                ({ userId }) =>
+                  ({ id: userId, type: CacheTagType.PublishTabs } as const)
+              ),
+              { type: CacheTagType.PublishTabs, id: 'LIST' },
+            ]
+          : [{ type: CacheTagType.PublishTabs, id: 'LIST' }],
+    }),
+    getPublishTab: builder.query<PublishTab | null, number>({
+      query: (userId) => `publishtabs/users/${userId}`,
+      providesTags: (result, error, userId) => [
+        { type: CacheTagType.PublishTabs, id: userId },
+      ],
+    }),
+    createPublishTab: builder.mutation<void, PublishTabCreateModel>({
+      query: (model) => ({
+        url: `publishtabs`,
+        method: 'POST',
+        body: model,
+      }),
+      invalidatesTags: (result, error, { userId }) => [
+        { type: CacheTagType.PublishTabs, id: userId },
+      ],
+    }),
+    updatePublishTab: builder.mutation<void, PublishTabUpdateModel>({
+      query: (model) => ({
+        url: `publishtabs/users/${model.userId}`,
+        method: 'PUT',
+        body: model,
+      }),
+      invalidatesTags: (result, error, { userId }) => [
+        { type: CacheTagType.PublishTabs, id: userId },
+      ],
+    }),
+    deletePublishTab: builder.mutation<void, number>({
+      query: (userId) => ({
+        url: `publishtabs/users/${userId}`,
+        method: 'DELETE',
+      }),
+      invalidatesTags: (result, error, userId) => [
+        { type: CacheTagType.PublishTabs, id: userId },
+      ],
     }),
   }),
 });
 
-export const { useGetPublishTabsQuery } = publishTabApi;
+export const {
+  useGetPublishTabsQuery,
+  useGetPublishTabQuery,
+  useCreatePublishTabMutation,
+  useUpdatePublishTabMutation,
+  useDeletePublishTabMutation,
+} = publishTabApi;
 
-const publishProfilesToArray = (
+export const publishProfilesToArray = (
   profiles: ChoiceProfileSet
 ): ChoiceProfile[] => {
   const result: ChoiceProfile[] = [];
@@ -32,9 +88,24 @@ const publishProfilesToArray = (
   Object.entries(profiles).forEach(([key, value]) => {
     if (value) {
       const upperKey = key.charAt(0).toUpperCase() + key.slice(1);
-      result.push(ChoiceProfile[upperKey as keyof typeof ChoiceProfile]);
+      const profile = ChoiceProfile[upperKey as keyof typeof ChoiceProfile];
+      if (profile) result.push(profile);
     }
   });
 
   return result;
+};
+
+export const publishProfilesToSet = (
+  profiles: ChoiceProfile[]
+): ChoiceProfileSet => {
+  const result: Record<string, boolean> = {};
+
+  Object.entries(ChoiceProfile).forEach(([key, val]) => {
+    const lowerKey = key.charAt(0).toLowerCase() + key.slice(1);
+    result[lowerKey] = profiles.includes(val);
+  });
+
+  // @ts-ignore
+  return result as ChoiceProfileSet;
 };

@@ -1,4 +1,4 @@
-import { DocSendStatus } from '../models/Abiturient';
+import { AbiturientTestType, DocSendStatus } from '../models/Abiturient';
 import { ChoiceProfile } from '../models/ChoiceProfile';
 
 export const SEND_STATUS_DESC: { [key in DocSendStatus]: string } = {
@@ -22,12 +22,6 @@ export const CHOICE_PROFILES = [
   ChoiceProfile.MagZfoPo,
   ChoiceProfile.MagOfoTp,
   ChoiceProfile.MagZfoTp,
-  ChoiceProfile.AspOfoTip,
-  ChoiceProfile.AspZfoTip,
-  ChoiceProfile.AspOfoUp,
-  ChoiceProfile.AspZfoUp,
-  ChoiceProfile.AspOfoKs,
-  ChoiceProfile.AspZfoKs,
   ChoiceProfile.AspOfoGp,
   ChoiceProfile.AspOfoUgp,
 ];
@@ -39,4 +33,9 @@ export const SEND_STATUSES: DocSendStatus[] = [
   DocSendStatus.Working,
   DocSendStatus.Success,
   DocSendStatus.Back,
+];
+
+export const TEST_TYPES: AbiturientTestType[] = [
+  AbiturientTestType.Ege,
+  AbiturientTestType.Vi,
 ];
