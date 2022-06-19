@@ -1,55 +1,29 @@
-import { Link, useParams } from 'react-router-dom';
-
-import {
-  useGetAbiturientQuery,
-  useUpdateAbiturientMutation,
-} from '../../../app/apiServices/abiturientService';
-import { AbiturientUpdate } from '../../../app/models/Abiturient';
-import { toastError, toastSuccess } from '../../../app/react-toasts';
-import LoadingIndicator from '../../common/LoadingIndicator';
-import AbiturientForm from './AbiturientForm';
+import { useParams } from 'react-router-dom';
+import Tabs from '../../common/layout/tabs/Tabs';
+import AbiturientData from './AbiturientData';
 
 const AbiturientDetail = () => {
   let { id } = useParams();
+  const userId = Number(id);
 
-  const [updateAbiturient] = useUpdateAbiturientMutation();
-
-  const { data, isFetching, error } = useGetAbiturientQuery(Number(id));
-  const abitur = data?.user;
-
-  const handleSubmit = async (values: AbiturientUpdate) => {
-    try {
-      await updateAbiturient(values);
-      toastSuccess('Пользователь обновлён');
-    } catch (err) {
-      console.log(err);
-      toastError('Что-то пошло не так');
-    }
-  };
-
-  if (error) {
-    return <div>Не удалось загрузить пользователя с id = {id}.</div>;
-  }
-
-  if (isFetching || !abitur) {
-    return <LoadingIndicator />;
-  }
+  const tabsData = [
+    {
+      navTitle: 'Данные',
+      content: <AbiturientData userId={userId} />,
+    },
+    {
+      navTitle: 'Публиковать в списке подавших',
+      content: <p>Tab 2</p>,
+    },
+    {
+      navTitle: 'Публиковать в списке рекомендованных к зачислению',
+      content: <p>Tab 3</p>,
+    },
+  ];
 
   return (
     <div className="min-w-[1200px] font-nanito">
-      <Link className="text-sky-700 hover:underline" to={`/abiturients`}>
-        Вернуться к списку
-      </Link>
-      <div className="flex items-center justify-between">
-        <h1 className="mt-6 mb-10 text-xl font-bold">
-          {abitur.lastName} {abitur.firstName} {abitur.patronymic},{' '}
-          {abitur.username}
-        </h1>
-        <span className="font-bold">Id: {id}</span>
-      </div>
-      <div>
-        <AbiturientForm abitur={abitur} onSubmit={handleSubmit} />
-      </div>
+      <Tabs data={tabsData} />
     </div>
   );
 };
