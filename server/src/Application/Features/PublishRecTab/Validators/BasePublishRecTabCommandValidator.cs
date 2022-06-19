@@ -9,7 +9,8 @@ namespace Application.Features.PublishRecTab.Validators
         public BasePublishRecTabCommandValidator()
         {
             RuleFor(x => x.TestType)
-                .Must(testType => {
+                .Must(testType =>
+                {
                     var acceptedValues = new string[] { UserTestType.Ege, UserTestType.VI };
                     return acceptedValues.Contains(testType);
                 });
