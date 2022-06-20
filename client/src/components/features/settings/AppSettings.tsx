@@ -7,11 +7,13 @@ const AppSettings = () => {
   const { account } = useAppSelector((state) => state.auth);
 
   return (
-    <div>
-      <h2 className="text-center">Авторизация</h2>
-      <div className="flex flex-col mt-6">
-        <span className="mb-2">Вы авторизованы как: {account?.username}</span>
-        <Button label="Выйти" onClick={() => dispatch(removeCredentials())} />
+    <div className="flex justify-center w-full py-6 pr-6 pl-9">
+      <div>
+        <h2 className="text-center">Авторизация</h2>
+        <div className="flex flex-col mt-6">
+          <span className="mb-2">Вы авторизованы как: {account?.username}</span>
+          <Button label="Выйти" onClick={() => dispatch(removeCredentials())} />
+        </div>
       </div>
     </div>
   );

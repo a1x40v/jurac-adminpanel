@@ -19,7 +19,11 @@ const AbiturientDetail = () => {
   }
 
   if (isFetching || !abitur) {
-    return <LoadingIndicator />;
+    return (
+      <div className="w-full">
+        <LoadingIndicator />
+      </div>
+    );
   }
 
   const tabsData = [
@@ -31,14 +35,10 @@ const AbiturientDetail = () => {
       navTitle: 'Публиковать в списке подавших',
       content: <PublishTabDetail userId={userId} />,
     },
-    {
-      navTitle: 'Публиковать в списке рекомендованных к зачислению',
-      content: <p>Tab 3</p>,
-    },
   ];
 
   return (
-    <div className="min-w-[1200px] font-nanito">
+    <div className="min-w-[1200px] ml-[200px] font-nanito">
       <Link className="text-sky-700 hover:underline" to={`/abiturients`}>
         Вернуться к списку
       </Link>

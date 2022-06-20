@@ -47,7 +47,7 @@ const AbiturientSortableHeader: React.FC<Props> = ({
 
   return (
     <div className="flex" style={styles}>
-      <div className="relative pr-14">
+      <div className={`relative pr-14`}>
         <button
           className={`${isFirstSort ? '' : 'hover:underline'}`}
           disabled={isFirstSort}

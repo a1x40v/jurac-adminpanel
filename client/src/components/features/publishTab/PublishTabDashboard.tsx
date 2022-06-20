@@ -55,9 +55,11 @@ const PublishTabDashboard = () => {
   }
 
   return (
-    <div>
-      <h2 className="mb-6 text-xl text-center">Список подавших документы</h2>
-      <PublishTabTable columns={columns} data={data} />
+    <div className="flex justify-center w-full py-6 pr-6 pl-9">
+      <div>
+        <h2 className="mb-6 text-xl text-center">Список подавших документы</h2>
+        <PublishTabTable columns={columns} data={data} />
+      </div>
     </div>
   );
 };

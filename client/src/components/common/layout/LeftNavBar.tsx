@@ -46,7 +46,7 @@ const data: MenuSection[] = [
 ];
 
 const LeftNavBar = () => {
-  const [active, setActive] = useState(true);
+  const [active, setActive] = useState(false);
   const controls = useAnimation();
   const controlText = useAnimation();
   const controlTitleText = useAnimation();
@@ -88,12 +88,13 @@ const LeftNavBar = () => {
   }, [controls, controlText, controlTitleText]);
 
   useEffect(() => {
-    showMore();
+    // showMore();
   }, [showMore]);
 
   return (
     <motion.div
       animate={controls}
+      style={{ width: '3.5rem', minWidth: '3.5rem' }}
       className="relative min-w-[15rem] min-h-screen py-14 border-gray-700 bg-sky-900 text-gray-200 duration-300 group"
     >
       {active && (
@@ -113,7 +114,11 @@ const LeftNavBar = () => {
       <div>
         {data.map((group, idx) => (
           <div key={idx} className="my-2">
-            <motion.p animate={controlTitleText} className="mb-2 ml-4">
+            <motion.p
+              style={{ opacity: 0 }}
+              animate={controlTitleText}
+              className="mb-2 ml-4"
+            >
               {group.name}
             </motion.p>
 
@@ -129,6 +134,7 @@ const LeftNavBar = () => {
               >
                 <item.icon size="1.5rem" />
                 <motion.p
+                  style={{ opacity: 0, display: 'none' }}
                   animate={controlText}
                   className="ml-4 text-sm font-bold"
                 >

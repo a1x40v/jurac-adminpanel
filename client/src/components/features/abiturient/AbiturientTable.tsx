@@ -98,7 +98,7 @@ const AbiturientTable: React.FC<Props> = ({
   return (
     <>
       <div className="relative flex items-start">
-        <div>
+        <div className="grow">
           <ReactTable tableInstance={tableInstance} isLoading={isLoading} />
           <PaginationBar tableInstance={tableInstance} />
         </div>

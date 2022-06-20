@@ -35,7 +35,7 @@ const columns: Array<Column> = [
     Header: () => (
       <AbiturientSortableHeader
         field={AbtSortableField.Username}
-        title="Имя пользователя"
+        title="Пользователь"
       />
     ),
     accessor: 'username',
@@ -80,7 +80,7 @@ const columns: Array<Column> = [
       />
     ),
     accessor: 'dateJoined',
-    Cell: (props) => <>{dateFormat(new Date(props.value), 'dd.mm.yy hh:MM')}</>,
+    Cell: (props) => <>{dateFormat(new Date(props.value), 'dd.mm.yy')}</>,
   },
   {
     Header: () => (
@@ -129,6 +129,10 @@ const columns: Array<Column> = [
       );
     },
   },
+  {
+    Header: () => <div className="">Комментарий</div>,
+    accessor: 'commentAdmin',
+  },
 ];
 
 const AbiturientDashboard = () => {
@@ -145,12 +149,19 @@ const AbiturientDashboard = () => {
     filtering,
   });
 
-  if (!data || isLoading) return <LoadingIndicator />;
+  if (!data || isLoading)
+    return (
+      <div className="w-full">
+        <LoadingIndicator />
+      </div>
+    );
 
   return (
-    <div>
-      <AbiturientFilters />
-      <AbiturientTable columns={columns} data={data} isLoading={isFetching} />
+    <div className="flex justify-center w-full py-6 pr-6 pl-9">
+      <div className="w-full">
+        <AbiturientFilters />
+        <AbiturientTable columns={columns} data={data} isLoading={isFetching} />
+      </div>
     </div>
   );
 };
