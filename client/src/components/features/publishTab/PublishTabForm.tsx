@@ -60,7 +60,7 @@ const PublishTabForm: React.FC<Props> = ({ values, onSubmit }) => {
           <div className="flex flex-col items-start">
             <div className="flex flex-col mb-6">
               <div className="mb-2">Поток/Год:</div>
-              <FormikInputText name={'individualStr'} placeholder="35/22" />
+              <FormikInputText name={'individualStr'} />
             </div>
 
             <div className="flex flex-col mb-6">

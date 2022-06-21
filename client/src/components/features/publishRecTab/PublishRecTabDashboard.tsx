@@ -1,11 +1,9 @@
 import { Link } from 'react-router-dom';
 import { Column } from 'react-table';
-
-import { useGetPublishTabsQuery } from '../../../app/apiServices/publishTabService';
+import { useGetPublishRecTabsQuery } from '../../../app/apiServices/publishRecTabService';
 import { ChoiceProfile } from '../../../app/models/ChoiceProfile';
-import { PublishTabView } from '../../../app/models/PublishTab';
 import LoadingIndicator from '../../common/LoadingIndicator';
-import PublishTabTable from './PublishTabTable';
+import PublishRecTabTable from './PublishRecTabTable';
 
 const columns: Array<Column> = [
   {
@@ -25,15 +23,24 @@ const columns: Array<Column> = [
     accessor: 'fullName',
   },
   {
-    Header: 'Номер',
-    accessor: 'individualStr',
-    Cell: ({ value, row }) => (
-      <>{`${value}-${(row.original as PublishTabView).userId}`}</>
-    ),
-  },
-  {
     Header: 'Испытание',
     accessor: 'testType',
+  },
+  {
+    Header: 'Сумма баллов',
+    accessor: 'sumPoints',
+  },
+  {
+    Header: 'Состояние',
+    accessor: 'sostType',
+  },
+  {
+    Header: 'Согласие',
+    accessor: 'sogl',
+  },
+  {
+    Header: 'Приемущ. право',
+    accessor: 'advantage',
   },
   {
     Header: 'Профили обучения',
@@ -48,8 +55,8 @@ const columns: Array<Column> = [
   },
 ];
 
-const PublishTabDashboard = () => {
-  const { data, isLoading } = useGetPublishTabsQuery();
+const PublishRecTabDashboard = () => {
+  const { data, isLoading } = useGetPublishRecTabsQuery();
 
   if (!data || isLoading)
     return (
@@ -61,18 +68,20 @@ const PublishTabDashboard = () => {
   if (data.length === 0)
     return (
       <div className="w-full text-center pt-14 text-lg">
-        Подавшие документы отсутствуют
+        Рекомендованные к зачислению отсутствуют
       </div>
     );
 
   return (
     <div className="flex justify-center w-full py-6 pr-6 pl-9">
       <div>
-        <h2 className="mb-6 text-xl text-center">Список подавших документы</h2>
-        <PublishTabTable columns={columns} data={data} />
+        <h2 className="mb-6 text-xl text-center">
+          Список рекомендованных к зачислению
+        </h2>
+        <PublishRecTabTable columns={columns} data={data} />
       </div>
     </div>
   );
 };
 
-export default PublishTabDashboard;
+export default PublishRecTabDashboard;

@@ -13,6 +13,12 @@ namespace API.Controllers
             return Ok(await Mediator.Send(new GetPublishRecTabListQuery()));
         }
 
+        [HttpGet("users/{userId}")]
+        public async Task<ActionResult<ICollection<PublishRecTabDto>>> GetPublishRecTabForUser(int userId)
+        {
+            return Ok(await Mediator.Send(new GetPublishRecTabDetailQuery { UserId = userId }));
+        }
+
         [HttpPost]
         public async Task<ActionResult> CreatePublishRecTabs(CreatePublishRecTabCommand command)
         {

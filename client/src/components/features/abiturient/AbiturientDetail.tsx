@@ -4,6 +4,7 @@ import { useParams } from 'react-router-dom';
 import { useGetAbiturientQuery } from '../../../app/apiServices/abiturientService';
 import Tabs from '../../common/layout/tabs/Tabs';
 import LoadingIndicator from '../../common/LoadingIndicator';
+import PublishRecTabDetail from '../publishRecTab/PublishRecTabDetail';
 import PublishTabDetail from '../publishTab/PublishTabDetail';
 import AbiturientData from './AbiturientData';
 
@@ -34,6 +35,10 @@ const AbiturientDetail = () => {
     {
       navTitle: 'Публиковать в списке подавших',
       content: <PublishTabDetail userId={userId} />,
+    },
+    {
+      navTitle: 'Публиковать в списке рекомендованных',
+      content: <PublishRecTabDetail userId={userId} />,
     },
   ];
 

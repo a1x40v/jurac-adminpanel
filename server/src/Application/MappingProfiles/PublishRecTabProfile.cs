@@ -11,7 +11,8 @@ namespace Application.MappingProfiles
     {
         public PublishRecTabProfile()
         {
-            CreateMap<RegabiturPublishrectab, PublishRecTabDto>();
+            CreateMap<RegabiturPublishrectab, PublishRecTabDto>()
+                .ForMember(d => d.FullName, o => o.MapFrom(s => $"{s.User.FirstName} {s.User.LastName}"));
 
             CreateMap<CreatePublishRecTabCommand, RegabiturPublishrectab>()
                 .ForMember(d => d.Sogl, (o) => o.MapFrom(s => s.Sogl ? UserSogl.Sent : UserSogl.NotSent))

@@ -17,7 +17,8 @@ namespace API.Filters
                 { typeof(ValidationException), HandleValidationException },
                 { typeof(NotFoundException), HandleNotFoundException },
                 { typeof(DatabaseException), HandleDatabaseException},
-                { typeof(AuthException), HandleAuthException}
+                { typeof(AuthException), HandleAuthException},
+                { typeof(ExternalResourceException), HandleExternalResourceException}
             };
         }
 
@@ -123,6 +124,25 @@ namespace API.Filters
             context.Result = new ObjectResult(details)
             {
                 StatusCode = StatusCodes.Status401Unauthorized
+            };
+
+            context.ExceptionHandled = true;
+        }
+
+        private void HandleExternalResourceException(ExceptionContext context)
+        {
+            var exception = context.Exception as ExternalResourceException;
+
+            var details = new ProblemDetails()
+            {
+                Type = "https://httpwg.org/specs/rfc7231.html#status.503",
+                Title = "Service Unavailable.",
+                Detail = exception.Message
+            };
+
+            context.Result = new ObjectResult(details)
+            {
+                StatusCode = StatusCodes.Status503ServiceUnavailable
             };
 
             context.ExceptionHandled = true;

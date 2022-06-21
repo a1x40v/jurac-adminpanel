@@ -31,6 +31,11 @@ const data: MenuSection[] = [
         icon: BsList,
         to: '/publishtabs',
       },
+      {
+        title: 'Рекомендованные',
+        icon: BsListCheck,
+        to: '/publishrectabs',
+      },
     ],
   },
   {

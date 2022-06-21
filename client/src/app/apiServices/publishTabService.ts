@@ -85,10 +85,11 @@ export const publishProfilesToArray = (
 ): ChoiceProfile[] => {
   const result: ChoiceProfile[] = [];
 
-  Object.entries(profiles).forEach(([key, value]) => {
-    if (value) {
-      const upperKey = key.charAt(0).toUpperCase() + key.slice(1);
-      const profile = ChoiceProfile[upperKey as keyof typeof ChoiceProfile];
+  Object.keys(ChoiceProfile).forEach((key) => {
+    const lowerKey = (key.charAt(0).toLowerCase() +
+      key.slice(1)) as keyof ChoiceProfileSet;
+    if (profiles[lowerKey]) {
+      const profile = ChoiceProfile[key as keyof typeof ChoiceProfile];
       if (profile) result.push(profile);
     }
   });

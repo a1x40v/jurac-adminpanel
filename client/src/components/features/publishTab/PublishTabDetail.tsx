@@ -71,13 +71,15 @@ const PublishTabDetail: React.FC<Props> = ({ userId }) => {
         {isExisting ? (
           <>
             <AiFillCheckCircle className="mr-2" size={25} color="green" />
-            <span className="mr-4">Абитуриент опубликован</span>
+            <span className="mr-4">
+              Абитуриент уже опубликован в списке подавших документы
+            </span>
             <Button label="Удалить публикацию" onClick={handleDelete} />
           </>
         ) : (
           <>
             <AiFillCloseCircle className="mr-2" size={25} color="red" />
-            <span>Абитуриент ещё не опубликован</span>
+            <span>Абитуриент ещё не опубликован в списке подавших</span>
           </>
         )}
       </div>

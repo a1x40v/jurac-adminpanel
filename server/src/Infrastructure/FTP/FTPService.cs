@@ -1,4 +1,5 @@
 using System.Diagnostics;
+using Application.Common.Exceptions;
 using Application.Contracts.Infrastructure;
 using Application.DTO.FTP;
 using Infrastructure.Configurations;
@@ -42,6 +43,7 @@ namespace Infrastructure.FTP
                 else
                 {
                     Debug.WriteLine("I couldn't connect");
+                    throw new ExternalResourceException("Couldn't connect to the FTP server");
                 }
 
                 client.Disconnect();

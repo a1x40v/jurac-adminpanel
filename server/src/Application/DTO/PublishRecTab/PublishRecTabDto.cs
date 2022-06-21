@@ -5,7 +5,6 @@ namespace Application.DTO.PublishRecTab
         public int Id { get; set; }
         public int UserId { get; set; }
         public string TestType { get; set; }
-        public DateTime? DatePub { get; set; }
         public string Sogl { get; set; }
         public string SostType { get; set; }
         public string Advantage { get; set; }
@@ -40,5 +39,6 @@ namespace Application.DTO.PublishRecTab
         public bool AspZfoKs { get; set; }
         public bool AspOfoGp { get; set; }
         public bool AspOfoUgp { get; set; }
+        public string FullName { get; set; }
     }
 }
