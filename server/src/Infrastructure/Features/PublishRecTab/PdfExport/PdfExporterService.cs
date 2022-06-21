@@ -1,7 +1,7 @@
+using Application.Contracts.Infrastructure;
 using Application.DTO.PublishRecTab;
 using DinkToPdf;
 using DinkToPdf.Contracts;
-using Infrastructure.Interfaces;
 
 namespace Infrastructure.Features.PublishRecTab.PdfExport
 {
@@ -12,9 +12,9 @@ namespace Infrastructure.Features.PublishRecTab.PdfExport
         {
             _converter = converter;
         }
-        public byte[] GeneratePdfExport(ICollection<PublishRecTabExportDto> recTabs)
+        public byte[] GeneratePdfExport(ICollection<PublishRecTabDeployDto> recTabs, string title)
         {
-            var html = HtmlTemplateGenerator.GetHTMLString(recTabs);
+            var html = HtmlTemplateGenerator.GetHTMLString(recTabs, title);
 
             GlobalSettings globalSettings = new GlobalSettings();
             globalSettings.ColorMode = ColorMode.Color;
@@ -28,8 +28,7 @@ namespace Infrastructure.Features.PublishRecTab.PdfExport
 
             WebSettings webSettings = new WebSettings();
             webSettings.DefaultEncoding = "utf-8";
-            // webSettings.UserStyleSheet = Path.Combine(Directory.GetCurrentDirectory(), @"..\", "Assets", "rectab-styles.css");
-            // /home/steelyrat/Projects/academy/jurac-adminpanel/server/src/API
+
             webSettings.UserStyleSheet = Path.Combine(Directory.GetCurrentDirectory(), "../Infrastructure/Features/PublishRecTab/PdfExport/Assets", "rectab-styles.css");
 
             HeaderSettings headerSettings = new HeaderSettings();

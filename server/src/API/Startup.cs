@@ -33,6 +33,8 @@ namespace API
             services.AddEndpointsApiExplorer();
             services.AddSwaggerGen();
 
+            services.AddOptions();
+
             services.AddPersistenceServices(Configuration);
             services.AddApplicationServices(Configuration);
             services.AddInfrastructureServices(Configuration);

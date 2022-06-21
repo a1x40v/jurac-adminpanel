@@ -1,6 +1,6 @@
 namespace Application.DTO.PublishRecTab
 {
-    public class PublishRecTabExportDto
+    public class PublishRecTabDeployDto
     {
         public int UserId { get; set; }
         public string Snils { get; set; }

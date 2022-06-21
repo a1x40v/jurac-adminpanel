@@ -5,43 +5,27 @@ namespace Infrastructure.Features.PublishRecTab.PdfExport
 {
     public static class HtmlTemplateGenerator
     {
-        public static string GetHTMLString(ICollection<PublishRecTabExportDto> recTabs)
+        private static string GetTabsBody(ICollection<PublishRecTabDeployDto> recTabs)
         {
-            var sb = new StringBuilder();
-            sb.Append(@"
-                        <!DOCTYPE html>
-                        <html>
-                            <head>
-                            <style>
-                                body {
-                                    padding-top: 10px;
-                                }
+            if (recTabs.Count == 0) return "<div style='text-align:center;font-size:25px;padding:18px;'>Нет рекомендованых к зачислению</div>";
 
-                                td, th {
-                                    padding: 10px;
-                                    text-align: center;
-                                }
-                            </style>
-                            </head>
-                            <body>
-                                <h1>
-                                    Список рекомендованных к зачислению<br/>
-                                    Бакалавриат ОФО Гражданско-правовой профиль
-                                </h1>
-                                <table align='center'>
-                                    <tr>
-                                        <th>Идентифик<br/>ационный<br/>номер</th>
-                                        <th>СНИЛС</th>
-                                        <th>ВИ</th>
-                                        <th>Сумма баллов</th>
-                                        <th>Обществоз<br/>нание</th>
-                                        <th>Русский<br/>язык</th>
-                                        <th>Предмет<br/>по выбору:<br/>ТГП/ОКП</th>
-                                        <th>Инд. достижения</th>
-                                        <th>Состояние</th>
-                                        <th>Согласие на<br/>зачисление</th>
-                                        <th>Приемущественное<br/>право</th>
-                                    </tr>");
+            var sb = new StringBuilder();
+
+            sb.Append(@"
+                <table align='center'>
+                    <tr>
+                        <th>Идентифик<br/>ационный<br/>номер</th>
+                        <th>СНИЛС</th>
+                        <th>ВИ</th>
+                        <th>Сумма баллов</th>
+                        <th>Обществоз<br/>нание</th>
+                        <th>Русский<br/>язык</th>
+                        <th>Предмет<br/>по выбору:<br/>ТГП/ОКП</th>
+                        <th>Инд. достижения</th>
+                        <th>Состояние</th>
+                        <th>Согласие на<br/>зачисление</th>
+                        <th>Приемущественное<br/>право</th>
+                    </tr>");
 
             foreach (var rec in recTabs)
             {
@@ -63,8 +47,36 @@ namespace Infrastructure.Features.PublishRecTab.PdfExport
                     rec.ChosenPoint, rec.IndividPoint > 0 ? rec.IndividPoint : "-", rec.SostType, rec.Sogl, rec.Advantage);
             }
 
+            sb.Append("</table>");
+
+            return sb.ToString();
+        }
+        public static string GetHTMLString(ICollection<PublishRecTabDeployDto> recTabs, string title)
+        {
+            var sb = new StringBuilder();
             sb.Append(@"
-                                </table>
+                <!DOCTYPE html>
+                <html>
+                    <head>
+                    <style>
+                        body {
+                            padding-top: 10px;
+                        }
+
+                        td, th {
+                            padding: 10px;
+                            text-align: center;
+                        }
+                    </style>
+                    </head>
+                    <body>");
+
+            sb.Append($"<h1>Список рекомендованных к зачислению<br/>{title}</h1>");
+
+
+            sb.Append(GetTabsBody(recTabs));
+
+            sb.Append(@"
                             </body>
                         </html>");
 
