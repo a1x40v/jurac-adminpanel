@@ -82,6 +82,12 @@ export const publishRecTabApi = baseApi.injectEndpoints({
         { type: CacheTagType.PublishRecTabs, id: userId },
       ],
     }),
+    deployPublishRecTabs: builder.mutation<void, void>({
+      query: () => ({
+        url: 'publishrectabs/deploy',
+        method: 'POST',
+      }),
+    }),
   }),
 });
 
@@ -91,4 +97,5 @@ export const {
   useCreatePublishRecTabMutation,
   useUpdatePublishRecTabMutation,
   useDeletePublishRecTabMutation,
+  useDeployPublishRecTabsMutation,
 } = publishRecTabApi;

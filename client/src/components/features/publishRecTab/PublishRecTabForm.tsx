@@ -1,4 +1,6 @@
 import { Form, Formik } from 'formik';
+import * as Yup from 'yup';
+
 import {
   CHOICE_PROFILES,
   REC_ADVANTAGES,
@@ -66,6 +68,22 @@ const soglsOptions = REC_SOGLS.map((value) => ({
   label: value,
 }));
 
+const POSITIVE_MESSAGE = 'должен быть положительным';
+
+const validationSchema = Yup.object({
+  individ: Yup.number().moreThan(-1, POSITIVE_MESSAGE),
+  rusPoint: Yup.number().moreThan(-1, POSITIVE_MESSAGE),
+  obshPoint: Yup.number().moreThan(-1, POSITIVE_MESSAGE),
+  historyPoint: Yup.number().moreThan(-1, POSITIVE_MESSAGE),
+  foreignLanguagePoint: Yup.number().moreThan(-1, POSITIVE_MESSAGE),
+  gpPoint: Yup.number().moreThan(-1, POSITIVE_MESSAGE),
+  upPoint: Yup.number().moreThan(-1, POSITIVE_MESSAGE),
+  kpPoint: Yup.number().moreThan(-1, POSITIVE_MESSAGE),
+  specPoint: Yup.number().moreThan(-1, POSITIVE_MESSAGE),
+  tgpPoint: Yup.number().moreThan(-1, POSITIVE_MESSAGE),
+  okpPoint: Yup.number().moreThan(-1, POSITIVE_MESSAGE),
+});
+
 const PublishRecTabForm: React.FC<Props> = ({ values, onSubmit }) => {
   const isExisting = Boolean(values.id);
 
@@ -78,16 +96,10 @@ const PublishRecTabForm: React.FC<Props> = ({ values, onSubmit }) => {
     <Formik
       initialValues={values}
       onSubmit={onSubmit}
+      validationSchema={validationSchema}
       enableReinitialize={true}
     >
-      {({
-        values,
-        isSubmitting,
-        isValid,
-        dirty,
-        setFieldValue,
-        getFieldProps,
-      }) => (
+      {({ values, isSubmitting, isValid, dirty, setFieldValue }) => (
         <Form>
           <div className="flex flex-col items-start">
             <div className="flex justify-between w-full">
@@ -187,8 +199,8 @@ const PublishRecTabForm: React.FC<Props> = ({ values, onSubmit }) => {
                 </div>
 
                 <div className="flex flex-col mb-6">
-                  <div className="mb-2">УП:</div>
-                  <FormikInputText type="number" name="upPoint" />
+                  <div className="mb-2">ОКП:</div>
+                  <FormikInputText type="number" name="okpPoint" />
                 </div>
               </div>
               <div>
@@ -198,8 +210,8 @@ const PublishRecTabForm: React.FC<Props> = ({ values, onSubmit }) => {
                 </div>
 
                 <div className="flex flex-col mb-6">
-                  <div className="mb-2">ОКП:</div>
-                  <FormikInputText type="number" name="okpPoint" />
+                  <div className="mb-2">УП:</div>
+                  <FormikInputText type="number" name="upPoint" />
                 </div>
 
                 <div className="flex flex-col mb-6">
