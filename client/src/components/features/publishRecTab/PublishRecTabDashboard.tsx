@@ -74,13 +74,6 @@ const PublishRecTabDashboard = () => {
       </div>
     );
 
-  if (data.length === 0)
-    return (
-      <div className="w-full text-center pt-14 text-lg">
-        Рекомендованные к зачислению отсутствуют
-      </div>
-    );
-
   const handleDeploy = async () => {
     try {
       await deployRecTabs().unwrap();
@@ -91,28 +84,38 @@ const PublishRecTabDashboard = () => {
     }
   };
 
+  const deployEl = (
+    <div className="flex items-center py-4">
+      <span className="mr-4">
+        Разместить файлы с рекомендованными к зачислению на сайт
+      </span>
+      <Button
+        label={isDeploying ? 'Загрузка...' : 'Разместить'}
+        disabled={isDeploying}
+        onClick={handleDeploy}
+      />
+      {isDeploying ? (
+        <div className="ml-4">
+          <ScaleLoader color="rgb(12,74,110)" />
+        </div>
+      ) : null}
+    </div>
+  );
+
   return (
     <div className="flex justify-center w-full py-6 pr-6 pl-9">
-      <div>
+      <div className="w-full">
         <h2 className="mb-6 text-xl text-center">
           Список рекомендованных к зачислению
         </h2>
-        <div className="flex items-center py-4">
-          <span className="mr-4">
-            Разместить файлы с рекомендованными к зачислению на сайт
-          </span>
-          <Button
-            label="Разместить"
-            disabled={isDeploying}
-            onClick={handleDeploy}
-          />
-          {isDeploying ? (
-            <div className="ml-4">
-              <ScaleLoader color="rgb(12,74,110)" />
-            </div>
-          ) : null}
-        </div>
-        <PublishRecTabTable columns={columns} data={data} />
+        {deployEl}
+        {data.length === 0 ? (
+          <div className="w-full text-lg text-center pt-14">
+            Рекомендованные к зачислению отсутствуют
+          </div>
+        ) : (
+          <PublishRecTabTable columns={columns} data={data} />
+        )}
       </div>
     </div>
   );

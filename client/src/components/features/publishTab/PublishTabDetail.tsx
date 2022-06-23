@@ -25,7 +25,8 @@ const PublishTabDetail: React.FC<Props> = ({ userId }) => {
   const { data, isLoading, error } = useGetPublishTabQuery(userId);
   const [createPublishTab] = useCreatePublishTabMutation();
   const [updatePublishTab] = useUpdatePublishTabMutation();
-  const [deletePublishTab] = useDeletePublishTabMutation();
+  const [deletePublishTab, { isLoading: isDeleting }] =
+    useDeletePublishTabMutation();
 
   if (isLoading) return <div>Загрузка...</div>;
 
@@ -57,7 +58,7 @@ const PublishTabDetail: React.FC<Props> = ({ userId }) => {
 
   const handleDelete = async () => {
     try {
-      await deletePublishTab(userId);
+      await deletePublishTab(userId).unwrap();
       toastSuccess('Публикация удалена');
     } catch (err) {
       console.log(err);
@@ -74,7 +75,11 @@ const PublishTabDetail: React.FC<Props> = ({ userId }) => {
             <span className="mr-4">
               Абитуриент уже опубликован в списке подавших документы
             </span>
-            <Button label="Удалить публикацию" onClick={handleDelete} />
+            <Button
+              label={isDeleting ? 'Загрузка...' : 'Удалить публикацию'}
+              disabled={isDeleting}
+              onClick={handleDelete}
+            />
           </>
         ) : (
           <>

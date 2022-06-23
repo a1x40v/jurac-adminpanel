@@ -61,6 +61,7 @@ export const publishRecTabApi = baseApi.injectEndpoints({
       }),
       invalidatesTags: (result, error, { userId }) => [
         { type: CacheTagType.PublishRecTabs, id: userId },
+        { type: CacheTagType.PublishRecTabs, id: 'LIST' },
       ],
     }),
     updatePublishRecTab: builder.mutation<void, PublishRecTabUpdateModel>({

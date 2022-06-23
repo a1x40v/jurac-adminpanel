@@ -29,6 +29,7 @@ RUN dotnet restore
 COPY ./server .
 RUN dotnet publish -c Release -o out
 
+COPY ./server/src/Infrastructure/Assets ./out/assets
 
 # Build runtime image
 FROM mcr.microsoft.com/dotnet/aspnet:6.0

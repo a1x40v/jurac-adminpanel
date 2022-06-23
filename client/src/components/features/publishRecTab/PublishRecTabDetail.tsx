@@ -31,7 +31,8 @@ const PublishRecTabDetail: React.FC<Props> = ({ userId }) => {
   const { data, isLoading, error } = useGetPublishRecTabQuery(userId);
   const [createPublishRecTab] = useCreatePublishRecTabMutation();
   const [updatePublishRecTab] = useUpdatePublishRecTabMutation();
-  const [deletePublishRecTab] = useDeletePublishRecTabMutation();
+  const [deletePublishRecTab, { isLoading: isDeleting }] =
+    useDeletePublishRecTabMutation();
 
   if (isLoading) return <div>Загрузка...</div>;
 
@@ -109,7 +110,7 @@ const PublishRecTabDetail: React.FC<Props> = ({ userId }) => {
 
   const handleDelete = async () => {
     try {
-      await deletePublishRecTab(userId);
+      await deletePublishRecTab(userId).unwrap();
       toastSuccess('Публикация удалена');
     } catch (err) {
       console.log(err);
@@ -126,7 +127,11 @@ const PublishRecTabDetail: React.FC<Props> = ({ userId }) => {
             <span className="mr-4">
               Абитуриент опубликован в списке рекомендованных
             </span>
-            <Button label="Удалить публикацию" onClick={handleDelete} />
+            <Button
+              label={isDeleting ? 'Загрузка...' : 'Удалить публикацию'}
+              disabled={isDeleting}
+              onClick={handleDelete}
+            />
           </>
         ) : (
           <>
@@ -136,7 +141,7 @@ const PublishRecTabDetail: React.FC<Props> = ({ userId }) => {
         )}
       </div>
       {
-        <div className="w-full text-center py-2 mt-4 border-b-2 border-sky-700">
+        <div className="w-full py-2 mt-4 text-center border-b-2 border-sky-700">
           {isExisting ? 'Обновить публикацию' : 'Создать публикацию'}
         </div>
       }

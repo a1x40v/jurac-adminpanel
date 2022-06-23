@@ -14,6 +14,9 @@ namespace Infrastructure.Features.PublishRecTab.PdfExport
         }
         public byte[] GeneratePdfExport(ICollection<PublishRecTabDeployDto> recTabs, string title)
         {
+            bool isDevelopment = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") == "Development";
+            string assetsPath = isDevelopment ? Path.Combine(Directory.GetCurrentDirectory(), "../Infrastructure/Assets") : "/app/assets";
+
             var html = HtmlTemplateGenerator.GetHTMLString(recTabs, title);
 
             GlobalSettings globalSettings = new GlobalSettings();
@@ -29,7 +32,7 @@ namespace Infrastructure.Features.PublishRecTab.PdfExport
             WebSettings webSettings = new WebSettings();
             webSettings.DefaultEncoding = "utf-8";
 
-            webSettings.UserStyleSheet = Path.Combine(Directory.GetCurrentDirectory(), "../Infrastructure/Features/PublishRecTab/PdfExport/Assets", "rectab-styles.css");
+            webSettings.UserStyleSheet = Path.Combine(assetsPath, "rectab-styles.css");
 
             HeaderSettings headerSettings = new HeaderSettings();
             headerSettings.FontSize = 15;

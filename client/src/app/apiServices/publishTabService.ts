@@ -48,6 +48,7 @@ export const publishTabApi = baseApi.injectEndpoints({
       }),
       invalidatesTags: (result, error, { userId }) => [
         { type: CacheTagType.PublishTabs, id: userId },
+        { type: CacheTagType.PublishTabs, id: 'LIST' },
       ],
     }),
     updatePublishTab: builder.mutation<void, PublishTabUpdateModel>({
