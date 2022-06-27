@@ -20,8 +20,8 @@ namespace Application.Features.Users.Handlers.Queries
         }
         public async Task<UserDetailVm> Handle(GetUserDetailQuery request, CancellationToken cancellationToken)
         {
-            var user = await _dbContext.RegabiturCustomusers
-                .Where(x => x.User.Id == request.Id)
+            var user = await _dbContext.AuthUsers
+                .Where(x => x.Id == request.Id)
                 .ProjectTo<UserDto>(_mapper.ConfigurationProvider)
                 .FirstOrDefaultAsync();
 

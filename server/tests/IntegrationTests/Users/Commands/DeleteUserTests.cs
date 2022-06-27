@@ -25,6 +25,20 @@ namespace IntegrationTests.Users.Commands
         {
             var id = await CreateUser();
 
+            await SendAsync(new DeleteUserCommand
+            {
+                Id = id
+            });
+
+            var user = await FindAsync<AuthUser>(id);
+
+            Assert.IsNull(user);
+        }
+
+        [Test]
+        public async Task ShouldDeleteUserWithRelatedEntities()
+        {
+            var id = await CreateUser(true, true, true);
 
             await SendAsync(new DeleteUserCommand
             {
