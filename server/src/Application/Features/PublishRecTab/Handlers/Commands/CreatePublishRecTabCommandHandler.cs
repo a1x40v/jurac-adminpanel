@@ -2,6 +2,7 @@ using Application.Common.Exceptions;
 using Application.Features.PublishRecTab.Requests.Commands;
 using AutoMapper;
 using Domain;
+using Domain.Factories;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Persistence;
@@ -21,6 +22,7 @@ namespace Application.Features.PublishRecTab.Handlers.Commands
         {
             var user = await _dbContext.AuthUsers
                 .Include(x => x.RegabiturPublishrectab)
+                .Include(x => x.RegabiturCustomuser)
                 .FirstOrDefaultAsync(x => x.Id == request.UserId);
 
             if (user == null)
@@ -31,6 +33,11 @@ namespace Application.Features.PublishRecTab.Handlers.Commands
             if (user.RegabiturPublishrectab != null)
             {
                 throw new NotFoundException($"User with id '{request.UserId}' already has publish tab");
+            }
+
+            if (user.RegabiturCustomuser == null)
+            {
+                user.RegabiturCustomuser = RegabiturCustomuserFactory.CreateEmpty();
             }
 
             var publishRecTab = new RegabiturPublishrectab();

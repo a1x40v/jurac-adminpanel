@@ -25,9 +25,10 @@ import PublishRecTabForm, {
 
 interface Props {
   userId: number;
+  isSnils: boolean;
 }
 
-const PublishRecTabDetail: React.FC<Props> = ({ userId }) => {
+const PublishRecTabDetail: React.FC<Props> = ({ userId, isSnils }) => {
   const { data, isLoading, error } = useGetPublishRecTabQuery(userId);
   const [createPublishRecTab] = useCreatePublishRecTabMutation();
   const [updatePublishRecTab] = useUpdatePublishRecTabMutation();
@@ -120,6 +121,11 @@ const PublishRecTabDetail: React.FC<Props> = ({ userId }) => {
 
   const statusEl = (
     <div className="flex flex-col items-start my-6">
+      {isSnils ? null : (
+        <div className="mb-4 py-4 px-6 bg-red-200 border border-red-700 rounded-md">
+          Для пользователя не указан СНИЛС
+        </div>
+      )}
       <div className="flex items-center">
         {isExisting ? (
           <>
@@ -166,7 +172,7 @@ const PublishRecTabDetail: React.FC<Props> = ({ userId }) => {
           ...newVals,
           ...profilesSet,
         };
-        await updatePublishRecTab(upateModel);
+        await updatePublishRecTab(upateModel).unwrap();
         toastSuccess('Публикация обновлена');
       } else {
         const createModel: PublishRecTabCreateModel = {

@@ -18,6 +18,7 @@ namespace Application.Features.Users.Handlers.Commands
             var authUser = await _dbContext.AuthUsers
                 .Include(x => x.RegabiturCustomuser)
                 .Include(x => x.RegabiturPublishtab)
+                .Include(x => x.RegabiturPublishrectab)
                 .Include(x => x.RegabiturDocumentusers)
                 .Include(x => x.RegabiturAdditionalinfo)
                 .FirstOrDefaultAsync(x => x.Id == request.Id);
@@ -27,9 +28,21 @@ namespace Application.Features.Users.Handlers.Commands
                 throw new NotFoundException("AuthUser", request.Id);
             }
 
-            // Delete linked tables
-            _dbContext.Remove(authUser.RegabiturCustomuser);
-            _dbContext.Remove(authUser.RegabiturPublishtab);
+            // Delete custom info
+            if (authUser.RegabiturCustomuser != null)
+            {
+                _dbContext.Remove(authUser.RegabiturCustomuser);
+            }
+
+            // Delete publishes
+            if (authUser.RegabiturPublishtab != null)
+            {
+                _dbContext.Remove(authUser.RegabiturPublishtab);
+            }
+            if (authUser.RegabiturPublishrectab != null)
+            {
+                _dbContext.Remove(authUser.RegabiturPublishrectab);
+            }
 
             // Delete user documents
             foreach (var doc in authUser.RegabiturDocumentusers)
@@ -38,15 +51,19 @@ namespace Application.Features.Users.Handlers.Commands
             }
 
             // Delete education profiles
-            var eduProfiles = _dbContext.RegabiturAdditionalinfoEducationProfiles
-                .Where(x => x.AdditionalinfoId == authUser.RegabiturAdditionalinfo.Id);
-
-            foreach (var ep in eduProfiles)
+            if (authUser.RegabiturAdditionalinfo != null)
             {
-                _dbContext.Remove(ep);
+                var eduProfiles = _dbContext.RegabiturAdditionalinfoEducationProfiles
+                    .Where(x => x.AdditionalinfoId == authUser.RegabiturAdditionalinfo.Id);
+
+                foreach (var ep in eduProfiles)
+                {
+                    _dbContext.Remove(ep);
+                }
+
+                _dbContext.Remove(authUser.RegabiturAdditionalinfo);
             }
 
-            _dbContext.Remove(authUser.RegabiturAdditionalinfo);
 
             _dbContext.Remove(authUser);
 

@@ -23,7 +23,7 @@ export enum DocSendStatus {
 
 export enum AbiturientTestType {
   Ege = 'ЕГЭ',
-  Vi = 'Вступительные испытания'
+  Vi = 'Вступительные испытания',
 }
 
 export interface Abiturient {
@@ -48,7 +48,6 @@ export interface Abiturient {
   nameUz: string;
   passport: string;
   snils: string;
-  message: string;
   documents: AbiturDocument[];
   choicesProfiles: ChoiceProfile[];
 }

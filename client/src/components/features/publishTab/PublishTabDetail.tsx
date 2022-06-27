@@ -19,9 +19,10 @@ import PublishTabForm, { PublishTabFormValues } from './PublishTabForm';
 
 interface Props {
   userId: number;
+  isSnils: boolean;
 }
 
-const PublishTabDetail: React.FC<Props> = ({ userId }) => {
+const PublishTabDetail: React.FC<Props> = ({ userId, isSnils }) => {
   const { data, isLoading, error } = useGetPublishTabQuery(userId);
   const [createPublishTab] = useCreatePublishTabMutation();
   const [updatePublishTab] = useUpdatePublishTabMutation();
@@ -68,6 +69,12 @@ const PublishTabDetail: React.FC<Props> = ({ userId }) => {
 
   const statusEl = (
     <div className="flex flex-col items-start my-6">
+      {isSnils ? null : (
+        <div className="mb-4 py-4 px-6 bg-red-200 border border-red-700 rounded-md">
+          Для пользователя не указан СНИЛС
+        </div>
+      )}
+
       <div className="flex items-center">
         {isExisting ? (
           <>
@@ -110,7 +117,7 @@ const PublishTabDetail: React.FC<Props> = ({ userId }) => {
           testType,
           ...profilesSet,
         };
-        await updatePublishTab(upateModel);
+        await updatePublishTab(upateModel).unwrap();
         toastSuccess('Публикация обновлена');
       } else {
         const createModel: PublishTabCreateModel = {

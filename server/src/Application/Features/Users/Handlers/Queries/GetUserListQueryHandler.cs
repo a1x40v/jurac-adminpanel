@@ -24,7 +24,7 @@ namespace Application.Features.Users.Handlers.Queries
 
         public async Task<UserListVm> Handle(GetUserListQuery request, CancellationToken cancellationToken)
         {
-            var query = _dbContext.RegabiturCustomusers.ProjectTo<UserDto>(_mapper.ConfigurationProvider);
+            var query = _dbContext.AuthUsers.ProjectTo<UserDto>(_mapper.ConfigurationProvider);
 
             var filteredQuery = query
                 .Where(x => x.DateJoined >= request.QueryParams.MinDateJoined &&

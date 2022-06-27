@@ -15,18 +15,25 @@ namespace Application.MappingProfiles
 
             // User
             CreateMap<UpdateUserCommand, AuthUser>();
+
             CreateMap<UpdateUserCommand, RegabiturCustomuser>()
                 .ForMember(d => d.Id, o => o.Ignore());
 
             CreateMap<AuthUser, UserDto>()
+                .ForMember(d => d.DateOfBirth, o => o.MapFrom(s => s.RegabiturCustomuser != null ? s.RegabiturCustomuser.DateOfBirth : DateTime.MinValue))
+                .ForMember(d => d.Patronymic, o => o.MapFrom(s => s.RegabiturCustomuser != null ? s.RegabiturCustomuser.Patronymic : String.Empty))
+                .ForMember(d => d.PhoneNumber, o => o.MapFrom(s => s.RegabiturCustomuser != null ? s.RegabiturCustomuser.PhoneNumber : String.Empty))
+                .ForMember(d => d.SendingStatus, o => o.MapFrom(s => s.RegabiturCustomuser != null ? s.RegabiturCustomuser.SendingStatus : String.Empty))
+                .ForMember(d => d.Address, o => o.MapFrom(s => s.RegabiturCustomuser != null ? s.RegabiturCustomuser.Address : String.Empty))
+                .ForMember(d => d.CommentAdmin, o => o.MapFrom(s => s.RegabiturCustomuser != null ? s.RegabiturCustomuser.CommentAdmin : String.Empty))
+                .ForMember(d => d.DateOfDoc, o => o.MapFrom(s => s.RegabiturCustomuser != null ? s.RegabiturCustomuser.DateOfDoc : String.Empty))
+                .ForMember(d => d.NameUz, o => o.MapFrom(s => s.RegabiturCustomuser != null ? s.RegabiturCustomuser.NameUz : String.Empty))
+                .ForMember(d => d.Passport, o => o.MapFrom(s => s.RegabiturCustomuser != null ? s.RegabiturCustomuser.Passport : String.Empty))
+                .ForMember(d => d.Snils, o => o.MapFrom(s => s.RegabiturCustomuser != null ? s.RegabiturCustomuser.Snils : String.Empty))
+                .ForMember(d => d.Documents, o => o.MapFrom(s => s.RegabiturDocumentusers))
                 .ForMember(d => d.ChoicesProfiles, o => o.MapFrom(s =>
                     s.RegabiturAdditionalinfo.RegabiturAdditionalinfoEducationProfiles
                         .Select(x => x.Choicesprofile.Description)));
-
-            CreateMap<RegabiturCustomuser, UserDto>()
-                .ForMember(d => d.Id, o => o.MapFrom(s => s.User.Id))
-                .ForMember(d => d.Documents, o => o.MapFrom(s => s.User.RegabiturDocumentusers))
-                .IncludeMembers(s => s.User);
         }
     }
 }

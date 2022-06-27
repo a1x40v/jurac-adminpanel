@@ -2,6 +2,7 @@ using Application.Common.Exceptions;
 using Application.Features.Users.Requests.Commands;
 using AutoMapper;
 using Domain;
+using Domain.Factories;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
@@ -20,32 +21,8 @@ namespace Application.Features.Users.Handlers.Commands
             _mapper = mapper;
         }
 
-        public async Task<Unit> Handle(UpdateUserCommand request, CancellationToken cancellationToken)
+        private async Task UpdateEduProfiles(UpdateUserCommand request, AuthUser authUser)
         {
-            var authUser = await _dbContext.AuthUsers
-                .Include(x => x.RegabiturCustomuser)
-                .Include(x => x.RegabiturAdditionalinfo)
-                .ThenInclude(x => x.RegabiturAdditionalinfoEducationProfiles)
-                .FirstOrDefaultAsync(x => x.Id == request.Id);
-
-            if (authUser == null)
-            {
-                throw new NotFoundException("AuthUser", request.Id);
-            }
-
-            _mapper.Map(request, authUser);
-
-            if (authUser.RegabiturCustomuser != null)
-            {
-                _mapper.Map(request, authUser.RegabiturCustomuser);
-            }
-
-            if (authUser.RegabiturAdditionalinfo == null)
-            {
-                authUser.RegabiturAdditionalinfo = new RegabiturAdditionalinfo();
-                await _dbContext.SaveChangesAsync();
-            }
-
             var currentProfiles = await _dbContext.RegabiturAdditionalinfoEducationProfiles
                 .Where(x => x.AdditionalinfoId == authUser.RegabiturAdditionalinfo.Id)
                 .Select(x => x.Choicesprofile.Description)
@@ -71,6 +48,37 @@ namespace Application.Features.Users.Handlers.Commands
                     );
                 }
             }
+        }
+
+        public async Task<Unit> Handle(UpdateUserCommand request, CancellationToken cancellationToken)
+        {
+            var authUser = await _dbContext.AuthUsers
+                .Include(x => x.RegabiturCustomuser)
+                .Include(x => x.RegabiturAdditionalinfo)
+                .ThenInclude(x => x.RegabiturAdditionalinfoEducationProfiles)
+                .FirstOrDefaultAsync(x => x.Id == request.Id);
+
+            if (authUser == null)
+            {
+                throw new NotFoundException("AuthUser", request.Id);
+            }
+
+            _mapper.Map(request, authUser);
+
+            if (authUser.RegabiturCustomuser == null)
+            {
+                authUser.RegabiturCustomuser = RegabiturCustomuserFactory.CreateEmpty();
+            }
+
+            _mapper.Map(request, authUser.RegabiturCustomuser);
+
+            if (authUser.RegabiturAdditionalinfo == null)
+            {
+                authUser.RegabiturAdditionalinfo = new RegabiturAdditionalinfo();
+                await _dbContext.SaveChangesAsync();
+            }
+
+            await UpdateEduProfiles(request, authUser);
 
             if (!_dbContext.ChangeTracker.HasChanges())
             {

@@ -12,7 +12,7 @@ const AbiturientData: React.FC<Props> = ({ abitur }) => {
 
   const handleSubmit = async (values: AbiturientUpdate) => {
     try {
-      await updateAbiturient(values);
+      await updateAbiturient(values).unwrap();
       toastSuccess('Пользователь обновлён');
     } catch (err) {
       console.log(err);

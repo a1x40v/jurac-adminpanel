@@ -1,5 +1,6 @@
 import dateFormat from 'dateformat';
 import { Form, Formik } from 'formik';
+import * as Yup from 'yup';
 
 import {
   CHOICE_PROFILES,
@@ -33,13 +34,28 @@ const statusOptions = SEND_STATUSES.map((value) => ({
   label: SEND_STATUS_DESC[value],
 }));
 
+const validationSchema = Yup.object({
+  sendingStatus: Yup.string().required('Обязательное поле'),
+});
+
 const AbiturientForm: React.FC<Props> = ({ abitur, onSubmit }) => {
   const { documents, lastLogin, dateJoined, ...updatable } = abitur;
   const initialValues = updatable;
 
   return (
-    <Formik initialValues={initialValues} onSubmit={onSubmit}>
-      {({ isSubmitting, isValid, dirty, setFieldValue, getFieldProps }) => (
+    <Formik
+      initialValues={initialValues}
+      validationSchema={validationSchema}
+      onSubmit={onSubmit}
+    >
+      {({
+        errors,
+        isSubmitting,
+        isValid,
+        dirty,
+        setFieldValue,
+        getFieldProps,
+      }) => (
         <Form>
           <div className="flex flex-col items-start">
             <div className="flex justify-between w-full">
@@ -112,6 +128,11 @@ const AbiturientForm: React.FC<Props> = ({ abitur, onSubmit }) => {
                     setFieldValue('sendingStatus', val);
                   }}
                 />
+                {errors.sendingStatus ? (
+                  <div className="pt-2 text-center text-red-600">
+                    {errors.sendingStatus}
+                  </div>
+                ) : null}
               </div>
 
               <div className="flex flex-col">

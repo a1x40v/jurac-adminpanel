@@ -44,7 +44,7 @@ namespace IntegrationTests
             });
         }
 
-        protected async Task<int> CreateUser()
+        protected async Task<int> CreateUser(bool addCustom = false, bool addProfiles = false, bool addPublishes = false)
         {
             var authUser = new AuthUser
             {
@@ -60,44 +60,50 @@ namespace IntegrationTests
             };
 
             // Custom User
-            var customUser = new RegabiturCustomuser
+            if (addCustom)
             {
-                DateOfBirth = DateTime.Now,
-                Patronymic = "Testpatronymic",
-                PhoneNumber = "123456",
-                SendingStatus = UserDocSendingStatus.No,
-                CompleteFlag = false,
-                AgreementFlag = false,
-                WorkFlag = false,
-                SuccessFlag = false,
-                Address = "Test address",
-                CommentAdmin = "Test comment admin",
-                DateOfDoc = "Test date of doc",
-                NameUz = "Test name uz",
-                Passport = "12345678",
-                Snils = "12345678901",
-                Message = "Test message"
-            };
-            authUser.RegabiturCustomuser = customUser;
+                var customUser = new RegabiturCustomuser
+                {
+                    DateOfBirth = DateTime.Now,
+                    Patronymic = "Testpatronymic",
+                    PhoneNumber = "123456",
+                    SendingStatus = UserDocSendingStatus.No,
+                    CompleteFlag = false,
+                    AgreementFlag = false,
+                    WorkFlag = false,
+                    SuccessFlag = false,
+                    Address = "Test address",
+                    CommentAdmin = "Test comment admin",
+                    DateOfDoc = "Test date of doc",
+                    NameUz = "Test name uz",
+                    Passport = "12345678",
+                    Snils = "12345678901",
+                    Message = "Test message"
+                };
+                authUser.RegabiturCustomuser = customUser;
+            }
 
             // Additional Info
-            var addInfo = new RegabiturAdditionalinfo();
-            authUser.RegabiturAdditionalinfo = addInfo;
-
-            // Choises profile
-            addInfo.RegabiturAdditionalinfoEducationProfiles = new List<RegabiturAdditionalinfoEducationProfile>
+            if (addProfiles)
             {
-                 new RegabiturAdditionalinfoEducationProfile
-                 {
-                     Additionalinfo = addInfo,
-                     Choicesprofile = new RegabiturChoicesprofile { Description = UserChoisesProfile.BakOfoUp}
-                 },
-                 new RegabiturAdditionalinfoEducationProfile
-                 {
-                     Additionalinfo = addInfo,
-                     Choicesprofile = new RegabiturChoicesprofile { Description = UserChoisesProfile.BakOfoGp}
-                 }
-            };
+                var addInfo = new RegabiturAdditionalinfo();
+                authUser.RegabiturAdditionalinfo = addInfo;
+
+                // Choises profile
+                addInfo.RegabiturAdditionalinfoEducationProfiles = new List<RegabiturAdditionalinfoEducationProfile>
+                {
+                     new RegabiturAdditionalinfoEducationProfile
+                     {
+                         Additionalinfo = addInfo,
+                         Choicesprofile = new RegabiturChoicesprofile { Description = UserChoisesProfile.BakOfoUp}
+                     },
+                     new RegabiturAdditionalinfoEducationProfile
+                     {
+                         Additionalinfo = addInfo,
+                         Choicesprofile = new RegabiturChoicesprofile { Description = UserChoisesProfile.BakOfoGp}
+                     }
+                };
+            }
 
             // Documentuser
             var docUser = new RegabiturDocumentuser
@@ -109,13 +115,25 @@ namespace IntegrationTests
                 docUser
             };
 
-            // Publishtab
-            var publishtab = new RegabiturPublishtab
+            if (addPublishes)
             {
-                IndividualStr = "Test Ind Str",
-                TestType = "Test testtype"
-            };
-            authUser.RegabiturPublishtab = publishtab;
+                // Publishtab
+                var publishtab = new RegabiturPublishtab
+                {
+                    IndividualStr = "Test Ind Str",
+                    TestType = "Test testtype"
+                };
+                authUser.RegabiturPublishtab = publishtab;
+
+                var publishRecTab = new RegabiturPublishrectab
+                {
+                    TestType = "Test testtype",
+                    Advantage = "adv",
+                    SostType = "sost",
+                    Sogl = "sogl"
+                };
+                authUser.RegabiturPublishrectab = publishRecTab;
+            }
 
             await AddAsync<AuthUser>(authUser);
 
