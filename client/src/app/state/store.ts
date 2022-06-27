@@ -14,19 +14,25 @@ import { baseApi } from '../apiServices/baseService';
 import abiturientReducer from './slices/abiturientSlice';
 import authReducer from './slices/authSlice';
 
-const persistConfig = {
+const rootPersistConfig = {
   key: 'root',
-  whitelist: ['auth', 'abiturient'],
+  whitelist: ['auth'],
+  storage,
+};
+
+const abtrPersistConfig = {
+  key: 'abiturient',
+  blacklist: ['search'],
   storage,
 };
 
 const reducer = combineReducers({
   [baseApi.reducerPath]: baseApi.reducer,
   auth: authReducer,
-  abiturient: abiturientReducer,
+  abiturient: persistReducer(abtrPersistConfig, abiturientReducer),
 });
 
-const persistedReducer = persistReducer(persistConfig, reducer);
+const persistedReducer = persistReducer(rootPersistConfig, reducer);
 
 export const store = configureStore({
   reducer: persistedReducer,

@@ -136,7 +136,7 @@ const columns: Array<Column> = [
 ];
 
 const AbiturientDashboard = () => {
-  const { currentPage, pageSize, sorting, filtering } = useAppSelector(
+  const { currentPage, pageSize, sorting, filtering, search } = useAppSelector(
     (state) => state.abiturient
   );
 
@@ -147,6 +147,7 @@ const AbiturientDashboard = () => {
     pageSize,
     orderBy,
     filtering,
+    search,
   });
 
   if (!data || isLoading)

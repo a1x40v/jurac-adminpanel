@@ -12,5 +12,7 @@ namespace Application.Common.QueryString
         }
 
         public string OrderBy { get; set; }
+
+        public string Search { get; set; } = String.Empty;
     }
 }

@@ -26,6 +26,18 @@ namespace Application.Features.Users.Handlers.Queries
         {
             var query = _dbContext.AuthUsers.ProjectTo<UserDto>(_mapper.ConfigurationProvider);
 
+            // searching
+            string search = request.QueryParams.Search.Trim().ToLower();
+            if (!String.IsNullOrEmpty(search))
+            {
+                query = query.Where(x => x.FirstName.ToLower().Contains(search) ||
+                                    x.LastName.ToLower().Contains(search) ||
+                                    x.Id.ToString().Contains(search) ||
+                                    x.Email.ToLower().Contains(search) ||
+                                    x.PhoneNumber.ToLower().Contains(search));
+            }
+
+            // filtering
             var filteredQuery = query
                 .Where(x => x.DateJoined >= request.QueryParams.MinDateJoined &&
                     x.DateJoined <= request.QueryParams.MaxDateJoined);

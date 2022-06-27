@@ -15,13 +15,8 @@ interface AbiturientState {
   pageSize: number;
   sorting: SortingValue<AbtSortableField>[];
   filtering: AbtFiltersState;
+  search?: string;
 }
-
-// interface ChangeFilteringPaylaod {
-//   minDateJoined?: string;
-//   maxDateJoined?: string;
-//   docStatuses?: DocSendStatus[];
-// }
 
 const initialState: AbiturientState = {
   currentPage: 1,
@@ -75,6 +70,9 @@ const slice = createSlice({
       state.filtering.minDateJoined = payload.minDateJoined;
       state.filtering.docStatuses = [...payload.docStatuses];
     },
+    changeSearch: (state, { payload }: PayloadAction<string | undefined>) => {
+      state.search = payload;
+    },
   },
 });
 
@@ -86,6 +84,7 @@ export const {
   toggleSorting,
   removeSorting,
   changeFiltering,
+  changeSearch,
 } = slice.actions;
 
 export default slice.reducer;

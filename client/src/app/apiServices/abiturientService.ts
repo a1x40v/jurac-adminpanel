@@ -14,6 +14,7 @@ interface GetAbiturientsParams {
   pageSize: number;
   orderBy?: string;
   filtering: AbtFiltersState;
+  search?: string;
 }
 
 export const abiturientApi = baseApi.injectEndpoints({

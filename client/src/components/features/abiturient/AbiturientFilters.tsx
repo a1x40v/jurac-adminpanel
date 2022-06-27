@@ -3,12 +3,16 @@ import { useMemo, useState } from 'react';
 import { SEND_STATUS_DESC } from '../../../app/constants/abiturientConstants';
 import { useAppDispatch, useAppSelector } from '../../../app/hooks/stateHooks';
 import { DocSendStatus } from '../../../app/models/Abiturient';
-import { changeFiltering } from '../../../app/state/slices/abiturientSlice';
+import {
+  changeFiltering,
+  changeSearch,
+} from '../../../app/state/slices/abiturientSlice';
 import { removeTime } from '../../../utils/datetimeUtils';
 import DropwdownMenu from '../../common/layout/DropwdownMenu';
 import Button from '../../common/UI/inputs/Button';
 import InputDate from '../../common/UI/inputs/InputDate';
 import InputSelect, { SelectOption } from '../../common/UI/inputs/InputSelect';
+import InputText from '../../common/UI/inputs/InputText';
 
 interface DocStatusOption {
   value: DocSendStatus;
@@ -26,13 +30,15 @@ const options: DocStatusOption[] = [
 
 const AbiturientFilters = () => {
   const dispatch = useAppDispatch();
-  const { minDateJoined, maxDateJoined, docStatuses } = useAppSelector(
-    (state) => state.abiturient.filtering
-  );
+  const {
+    filtering: { minDateJoined, maxDateJoined, docStatuses },
+    search,
+  } = useAppSelector((state) => state.abiturient);
 
   const [minJoined, setMinJoined] = useState(minDateJoined);
   const [maxJoined, setMaxJoined] = useState(maxDateJoined);
   const [statuses, setStatuses] = useState(docStatuses);
+  const [searching, setSearching] = useState(search);
 
   const isUntouched = useMemo(() => {
     const isDateUntouch =
@@ -40,15 +46,19 @@ const AbiturientFilters = () => {
     const isStatusesUntouch =
       statuses.length === docStatuses.length &&
       statuses.every((x) => docStatuses.includes(x));
+    const isSearchUntouch =
+      search === searching || (searching === '' && search === undefined);
 
-    return isDateUntouch && isStatusesUntouch;
+    return isDateUntouch && isStatusesUntouch && isSearchUntouch;
   }, [
     minDateJoined,
     maxDateJoined,
     docStatuses,
+    search,
     minJoined,
     maxJoined,
     statuses,
+    searching,
   ]);
 
   const validationErrors: string[] = useMemo(() => {
@@ -94,16 +104,30 @@ const AbiturientFilters = () => {
         docStatuses: statuses,
       })
     );
+    dispatch(changeSearch(searching));
   };
 
+  const dropDownLabel = (
+    <div className="flex">
+      <span className="mr-6">
+        {'Используемые фильтры: '}
+        <span className="font-bold underline">
+          {appliedFilters.length ? appliedFilters.join(', ') : 'отсутствуют'}
+        </span>
+      </span>
+      <span>
+        {'Поисковая строка: '}
+        <span className="font-bold underline">
+          {search ? search : 'отсутствует'}
+        </span>
+      </span>
+    </div>
+  );
+
   return (
-    <div className="mb-4">
-      <DropwdownMenu
-        label={`Используемые фильтры: ${
-          appliedFilters.length ? appliedFilters.join(', ') : 'отсутствуют'
-        }`}
-      >
-        <div className="flex font-nanito">
+    <div>
+      <DropwdownMenu label={dropDownLabel}>
+        <div className="flex font-nanito mt-3">
           <div className="relative flex flex-col p-5 border-t border-sky-700">
             <div className="absolute top-0 left-[50%] px-1 bg-white -translate-y-[60%] -translate-x-[50%]">
               Дата&nbsp;регистрации
@@ -155,6 +179,18 @@ const AbiturientFilters = () => {
                   const newOpts = vals as SelectOption<DocSendStatus>[];
                   setStatuses(newOpts.map(({ value }) => value));
                 }}
+              />
+            </div>
+          </div>
+
+          <div className="relative flex flex-col justify-center min-w-[300px] p-5 border-t ml-7 border-sky-700">
+            <div className="absolute top-0 left-[50%] px-1 bg-white -translate-y-[60%] -translate-x-[50%]">
+              Поиск
+            </div>
+            <div>
+              <InputText
+                value={searching || ''}
+                onChange={(evt) => setSearching(evt.target.value)}
               />
             </div>
           </div>

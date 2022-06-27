@@ -1,7 +1,7 @@
 import { CSSProperties } from 'react';
 
 interface Props {
-  name: string;
+  name?: string;
   placeholder?: string;
   value: string;
   styles?: CSSProperties;

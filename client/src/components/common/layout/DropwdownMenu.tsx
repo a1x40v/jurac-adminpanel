@@ -1,7 +1,7 @@
 import { useState } from 'react';
 
 interface Props {
-  label: string;
+  label: string | React.ReactNode;
   isActiveDefault?: boolean;
   children?: React.ReactNode;
 }
@@ -16,7 +16,7 @@ const DropwdownMenu: React.FC<Props> = ({
   return (
     <div className="flex flex-col items-start">
       <div
-        className="flex items-center p-2 mb-5 text-white rounded-lg cursor-pointer bg-sky-700"
+        className="flex items-center py-2 px-4 mb-4 text-white rounded-lg cursor-pointer bg-sky-700"
         onClick={() => setActive((state) => !state)}
       >
         <div
@@ -24,7 +24,7 @@ const DropwdownMenu: React.FC<Props> = ({
             active ? '' : '-rotate-90'
           }`}
         ></div>
-        <span>{label}</span>
+        <div>{label}</div>
       </div>
       <div className={`${!active ? 'hidden' : ''}`}>{children}</div>
     </div>
