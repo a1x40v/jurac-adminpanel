@@ -15,6 +15,7 @@ namespace Application.MappingProfiles
 
             // User
             CreateMap<UpdateUserCommand, AuthUser>();
+
             CreateMap<UpdateUserCommand, RegabiturCustomuser>()
                 .ForMember(d => d.Id, o => o.Ignore());
 

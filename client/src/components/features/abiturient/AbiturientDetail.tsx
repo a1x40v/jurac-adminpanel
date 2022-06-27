@@ -34,11 +34,15 @@ const AbiturientDetail = () => {
     },
     {
       navTitle: 'Публиковать в списке подавших',
-      content: <PublishTabDetail userId={userId} />,
+      content: (
+        <PublishTabDetail userId={userId} isSnils={Boolean(abitur.snils)} />
+      ),
     },
     {
       navTitle: 'Публиковать в списке рекомендованных',
-      content: <PublishRecTabDetail userId={userId} />,
+      content: (
+        <PublishRecTabDetail userId={userId} isSnils={Boolean(abitur.snils)} />
+      ),
     },
   ];
 

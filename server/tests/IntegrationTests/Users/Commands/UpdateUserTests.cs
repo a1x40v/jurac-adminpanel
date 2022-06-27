@@ -35,7 +35,6 @@ namespace IntegrationTests.Users.Commands
                 NameUz = "New Name Uz",
                 Passport = "09213333",
                 Snils = "11112222997",
-                Message = "New updated message",
             };
         }
 
@@ -104,7 +103,6 @@ namespace IntegrationTests.Users.Commands
             Assert.AreEqual(customUser.NameUz, command.NameUz);
             Assert.AreEqual(customUser.Passport, command.Passport);
             Assert.AreEqual(customUser.Snils, command.Snils);
-            Assert.AreEqual(customUser.Message, command.Message);
         }
 
         [Test]

@@ -22,7 +22,6 @@ namespace Application.Features.Users.Requests.Commands
         public string NameUz { get; set; }
         public string Passport { get; set; }
         public string Snils { get; set; }
-        public string Message { get; set; }
         public ICollection<string> ChoicesProfiles { get; set; } = new List<string>();
     }
 }
