@@ -1,4 +1,5 @@
 using Application.Common.QueryString;
+using Application.Contracts.Infrastructure;
 using Application.DTO.User;
 using Application.Features.Users.Requests.Commands;
 using Application.Features.Users.Requests.Queries;
@@ -52,6 +53,14 @@ namespace API.Controllers
                 content,
                 "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
                 "users.xlsx");
+        }
+
+        [HttpPost("email")]
+        public async Task<ActionResult> SendEmail(SendEmailToUserCommand command)
+        {
+            await Mediator.Send(command);
+
+            return NoContent();
         }
     }
 
