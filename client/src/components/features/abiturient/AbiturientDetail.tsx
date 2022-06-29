@@ -7,6 +7,7 @@ import LoadingIndicator from '../../common/LoadingIndicator';
 import PublishRecTabDetail from '../publishRecTab/PublishRecTabDetail';
 import PublishTabDetail from '../publishTab/PublishTabDetail';
 import AbiturientData from './AbiturientData';
+import AbiturientEmail from './AbiturientEmail';
 
 const AbiturientDetail = () => {
   let { id } = useParams();
@@ -43,6 +44,10 @@ const AbiturientDetail = () => {
       content: (
         <PublishRecTabDetail userId={userId} isSnils={Boolean(abitur.snils)} />
       ),
+    },
+    {
+      navTitle: 'Написать на почту',
+      content: <AbiturientEmail userEmail={abitur.email} />,
     },
   ];
 
