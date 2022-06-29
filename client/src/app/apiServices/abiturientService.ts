@@ -20,12 +20,13 @@ interface GetAbiturientsParams {
 export const abiturientApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
     getAbiturients: builder.query<AbiturientListVm, GetAbiturientsParams>({
-      query: ({ pageNumber, pageSize, orderBy, filtering }) => ({
+      query: ({ pageNumber, pageSize, orderBy, filtering, search }) => ({
         url: 'users',
         params: {
           pageNumber,
           pageSize,
           orderBy,
+          search,
           ...filtering,
         },
       }),
