@@ -78,9 +78,3 @@ export interface ExportedAbiturient {
   address: string;
   snils: string;
 }
-
-export interface AbiturientEmail {
-  userEmail: string;
-  subject: string;
-  content: string;
-}

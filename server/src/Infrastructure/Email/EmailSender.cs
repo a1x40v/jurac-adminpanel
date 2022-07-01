@@ -1,4 +1,3 @@
-using Application.Common.Exceptions;
 using Application.Contracts.Infrastructure;
 using Infrastructure.Configurations;
 using MailKit.Net.Smtp;
@@ -53,7 +52,7 @@ namespace Infrastructure.Email
                 catch (Exception ex)
                 {
                     Console.WriteLine(ex.Message);
-                    throw new ExternalResourceException(ex.Message);
+                    throw ex;
                 }
                 finally
                 {
@@ -77,7 +76,7 @@ namespace Infrastructure.Email
                 catch (Exception ex)
                 {
                     Console.WriteLine(ex.Message);
-                    throw new ExternalResourceException(ex.Message);
+                    throw ex;
                 }
                 finally
                 {

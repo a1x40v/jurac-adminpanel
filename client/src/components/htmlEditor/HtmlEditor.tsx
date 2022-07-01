@@ -9,18 +9,6 @@ interface Props {
   onChange: (state: EditorState) => void;
 }
 
-const styleMap = {
-  FONT_SIZE_SMALL: {
-    fontSize: 'small',
-  },
-  FONT_SIZE_MEDIUM: {
-    fontSize: 'medium',
-  },
-  FONT_SIZE_LARGE: {
-    fontSize: 'large',
-  },
-};
-
 const HtmlEditor: React.FC<Props> = ({ value, onChange }) => {
   // font styles
   const onBoldClick = useCallback(() => {
@@ -35,29 +23,10 @@ const HtmlEditor: React.FC<Props> = ({ value, onChange }) => {
     onChange(RichUtils.toggleInlineStyle(value, 'UNDERLINE'));
   }, [value]);
 
-  // font sizes
-  const onFontSmallClick = useCallback(() => {
-    onChange(RichUtils.toggleInlineStyle(value, 'FONT_SIZE_SMALL'));
-  }, [value]);
-
-  const onFontMediumClick = useCallback(() => {
-    onChange(RichUtils.toggleInlineStyle(value, 'FONT_SIZE_MEDIUM'));
-  }, [value]);
-
-  const onFontLargeClick = useCallback(() => {
-    onChange(RichUtils.toggleInlineStyle(value, 'FONT_SIZE_LARGE'));
-  }, [value]);
-
   const stylesControls = [
     { label: 'Жирный', onClick: onBoldClick },
     { label: 'Курсив', onClick: onItalicClick },
     { label: 'Подчеркнуть', onClick: onUnderlineClick },
-  ];
-
-  const sizesControls = [
-    { label: 'Маленький', onClick: onFontSmallClick },
-    { label: 'Средний', onClick: onFontMediumClick },
-    { label: 'Большой', onClick: onFontLargeClick },
   ];
 
   return (
@@ -66,16 +35,9 @@ const HtmlEditor: React.FC<Props> = ({ value, onChange }) => {
         <div className="mr-6">
           <EditorControls controls={stylesControls} />
         </div>
-        <div>
-          <EditorControls controls={sizesControls} />
-        </div>
       </div>
       <div className="border-sky-700 border p-4">
-        <Editor
-          editorState={value}
-          customStyleMap={styleMap}
-          onChange={onChange}
-        />
+        <Editor editorState={value} onChange={onChange} />
       </div>
     </div>
   );

@@ -47,12 +47,12 @@ const AbiturientDetail = () => {
     },
     {
       navTitle: 'Написать на почту',
-      content: <AbiturientEmail userEmail={abitur.email} />,
+      content: <AbiturientEmail userId={userId} userEmail={abitur.email} />,
     },
   ];
 
   return (
-    <div className="min-w-[1200px] ml-[200px] font-nanito">
+    <div className="min-w-[1200px] ml-[200px] py-6 font-nanito">
       <Link className="text-sky-700 hover:underline" to={`/abiturients`}>
         Вернуться к списку
       </Link>

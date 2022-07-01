@@ -6,7 +6,7 @@ interface Props {
 }
 
 const ReactTable: React.FC<Props> = ({ tableInstance, isLoading = false }) => {
-  const { headerGroups, rows, getTableProps, getTableBodyProps, prepareRow } =
+  const { headerGroups, page, getTableProps, getTableBodyProps, prepareRow } =
     tableInstance;
 
   return (
@@ -24,7 +24,7 @@ const ReactTable: React.FC<Props> = ({ tableInstance, isLoading = false }) => {
       </thead>
 
       <tbody className="divide-y" {...getTableBodyProps()}>
-        {rows.map((row) => {
+        {page.map((row) => {
           prepareRow(row);
           return (
             <tr

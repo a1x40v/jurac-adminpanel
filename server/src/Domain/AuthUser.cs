@@ -6,6 +6,8 @@ namespace Domain
     {
         public AuthUser()
         {
+            AdminpanelEmailmessageRecipients = new HashSet<AdminpanelEmailmessage>();
+            AdminpanelEmailmessageSenders = new HashSet<AdminpanelEmailmessage>();
             RegabiturDocumentusers = new HashSet<RegabiturDocumentuser>();
         }
 
@@ -25,6 +27,8 @@ namespace Domain
         public virtual RegabiturCustomuser RegabiturCustomuser { get; set; }
         public virtual RegabiturPublishrectab RegabiturPublishrectab { get; set; }
         public virtual RegabiturPublishtab RegabiturPublishtab { get; set; }
+        public virtual ICollection<AdminpanelEmailmessage> AdminpanelEmailmessageRecipients { get; set; }
+        public virtual ICollection<AdminpanelEmailmessage> AdminpanelEmailmessageSenders { get; set; }
         public virtual ICollection<RegabiturDocumentuser> RegabiturDocumentusers { get; set; }
     }
 }

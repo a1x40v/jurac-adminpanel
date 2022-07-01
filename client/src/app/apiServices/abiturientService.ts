@@ -2,11 +2,11 @@ import dateFormat from 'dateformat';
 
 import {
   Abiturient,
-  AbiturientEmail,
   AbiturientListVm,
   AbiturientUpdate,
   ExportedAbiturient,
 } from '../models/Abiturient';
+import { CreateEmailMessageModel } from '../models/EmailMessage';
 import { AbtFiltersState } from '../state/slices/abiturientSlice';
 import { baseApi, CacheTagType } from './baseService';
 
@@ -55,13 +55,6 @@ export const abiturientApi = baseApi.injectEndpoints({
       invalidatesTags: (result, error, { id }) => [
         { type: CacheTagType.Abiturients, id },
       ],
-    }),
-    sendAbiturientEmail: builder.mutation<void, AbiturientEmail>({
-      query: (email) => ({
-        url: 'users/email',
-        method: 'POST',
-        body: email,
-      }),
     }),
   }),
 });
@@ -116,5 +109,4 @@ export const {
   useGetAbiturientsQuery,
   useGetAbiturientQuery,
   useUpdateAbiturientMutation,
-  useSendAbiturientEmailMutation,
 } = abiturientApi;

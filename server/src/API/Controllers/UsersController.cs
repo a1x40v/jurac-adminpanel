@@ -54,14 +54,6 @@ namespace API.Controllers
                 "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
                 "users.xlsx");
         }
-
-        [HttpPost("email")]
-        public async Task<ActionResult> SendEmail(SendEmailToUserCommand command)
-        {
-            await Mediator.Send(command);
-
-            return NoContent();
-        }
     }
 
 }
