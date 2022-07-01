@@ -7,6 +7,7 @@ import LoadingIndicator from '../../common/LoadingIndicator';
 import PublishRecTabDetail from '../publishRecTab/PublishRecTabDetail';
 import PublishTabDetail from '../publishTab/PublishTabDetail';
 import AbiturientData from './AbiturientData';
+import AbiturientEmail from './AbiturientEmail';
 
 const AbiturientDetail = () => {
   let { id } = useParams();
@@ -44,10 +45,14 @@ const AbiturientDetail = () => {
         <PublishRecTabDetail userId={userId} isSnils={Boolean(abitur.snils)} />
       ),
     },
+    {
+      navTitle: 'Написать на почту',
+      content: <AbiturientEmail userId={userId} userEmail={abitur.email} />,
+    },
   ];
 
   return (
-    <div className="min-w-[1200px] ml-[200px] font-nanito">
+    <div className="min-w-[1200px] ml-[200px] py-6 font-nanito">
       <Link className="text-sky-700 hover:underline" to={`/abiturients`}>
         Вернуться к списку
       </Link>

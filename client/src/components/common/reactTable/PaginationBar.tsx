@@ -1,3 +1,4 @@
+import { useMemo } from 'react';
 import { TableInstance } from 'react-table';
 
 import InputSelect from '../UI/inputs/InputSelect';
@@ -5,6 +6,7 @@ import PaginationButton from '../UI/pagination/PaginationButton';
 
 interface Props {
   tableInstance: TableInstance;
+  pageSizes?: number[];
 }
 
 interface PageSizeOption {
@@ -12,16 +14,10 @@ interface PageSizeOption {
   label: string;
 }
 
-const options: PageSizeOption[] = [
-  { value: 10, label: '10' },
-  { value: 25, label: '25' },
-  { value: 50, label: '50' },
-  { value: 100, label: '100' },
-];
-
+const DEFAULT_PAGE_SIZES = [10, 25, 50, 100];
 const MAX_NUMBERS_AMOUNT = 7;
 
-const PaginationBar: React.FC<Props> = ({ tableInstance }) => {
+const PaginationBar: React.FC<Props> = ({ tableInstance, pageSizes }) => {
   const {
     canPreviousPage,
     canNextPage,
@@ -32,6 +28,15 @@ const PaginationBar: React.FC<Props> = ({ tableInstance }) => {
     setPageSize,
     state: { pageIndex, pageSize },
   } = tableInstance;
+
+  const pageSizeOptions: PageSizeOption[] = useMemo(
+    () =>
+      (pageSizes || DEFAULT_PAGE_SIZES).map((value) => ({
+        value,
+        label: `${value}`,
+      })),
+    [pageSizes]
+  );
 
   if (pageCount <= 0) return null;
 
@@ -77,7 +82,7 @@ const PaginationBar: React.FC<Props> = ({ tableInstance }) => {
         <span>Размер страницы:</span>
         <InputSelect
           menuPlacement="top"
-          options={options}
+          options={pageSizeOptions}
           defaultValue={{ value: pageSize, label: `${pageSize}` }}
           onChange={(val) => setPageSize(Number(val))}
         />

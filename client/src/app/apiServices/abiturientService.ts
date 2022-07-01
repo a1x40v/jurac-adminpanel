@@ -6,6 +6,7 @@ import {
   AbiturientUpdate,
   ExportedAbiturient,
 } from '../models/Abiturient';
+import { CreateEmailMessageModel } from '../models/EmailMessage';
 import { AbtFiltersState } from '../state/slices/abiturientSlice';
 import { baseApi, CacheTagType } from './baseService';
 

@@ -7,6 +7,7 @@ import LeftNavBar from './common/layout/LeftNavBar';
 import AbiturientDashboard from './features/abiturient/AbiturientDashboard';
 import AbiturientDetail from './features/abiturient/AbiturientDetail';
 import LoginForm from './features/auth/LoginForm';
+import EmailMessageDetail from './features/email/EmailMessageDetail';
 import PublishRecTabDashboard from './features/publishRecTab/PublishRecTabDashboard';
 import PublishTabDashboard from './features/publishTab/PublishTabDashboard';
 import AppSettings from './features/settings/AppSettings';
@@ -34,6 +35,7 @@ const App = () => {
           <Route path="/abiturients/:id" element={<AbiturientDetail />} />
           <Route path="/publishtabs" element={<PublishTabDashboard />} />
           <Route path="/publishrectabs" element={<PublishRecTabDashboard />} />
+          <Route path="/emailmessages/:id" element={<EmailMessageDetail />} />
           <Route path="/settings" element={<AppSettings />} />
           <Route path="*" element={<AbiturientDashboard />} />
         </Routes>

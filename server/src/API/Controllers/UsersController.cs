@@ -1,4 +1,5 @@
 using Application.Common.QueryString;
+using Application.Contracts.Infrastructure;
 using Application.DTO.User;
 using Application.Features.Users.Requests.Commands;
 using Application.Features.Users.Requests.Queries;

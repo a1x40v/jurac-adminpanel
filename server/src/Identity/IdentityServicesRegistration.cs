@@ -1,5 +1,6 @@
 using System.Text;
 using Application.Contracts.Identity;
+using Identity.Security;
 using Identity.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.Extensions.Configuration;
@@ -30,6 +31,8 @@ namespace Identity
 
             services.AddScoped<ITokenService, TokenService>();
             services.AddScoped<IPasswordHashingService, PasswordHashingService>();
+
+            services.AddScoped<IUserAccessor, UserAccessor>();
 
             return services;
         }

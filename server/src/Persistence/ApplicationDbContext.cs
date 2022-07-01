@@ -30,6 +30,7 @@ namespace Persistence
         public virtual DbSet<AbiturResult> AbiturResults { get; set; }
         public virtual DbSet<AbiturResultasp> AbiturResultasps { get; set; }
         public virtual DbSet<AbiturResultmag> AbiturResultmags { get; set; }
+        public virtual DbSet<AdminpanelEmailmessage> AdminpanelEmailmessages { get; set; }
         public virtual DbSet<AuthUser> AuthUsers { get; set; }
         public virtual DbSet<RegabiturAdditionalinfo> RegabiturAdditionalinfos { get; set; }
         public virtual DbSet<RegabiturAdditionalinfoEducationProfile> RegabiturAdditionalinfoEducationProfiles { get; set; }
@@ -48,7 +49,7 @@ namespace Persistence
             {
                 entity.ToTable("abitur_educationalform");
 
-                entity.HasCharSet("utf8mb3")
+                entity.HasCharSet("utf8")
                     .UseCollation("utf8_unicode_ci");
 
                 entity.Property(e => e.Id).HasColumnName("id");
@@ -63,7 +64,7 @@ namespace Persistence
             {
                 entity.ToTable("abitur_educationalformasp");
 
-                entity.HasCharSet("utf8mb3")
+                entity.HasCharSet("utf8")
                     .UseCollation("utf8_unicode_ci");
 
                 entity.Property(e => e.Id).HasColumnName("id");
@@ -78,7 +79,7 @@ namespace Persistence
             {
                 entity.ToTable("abitur_educationalformmag");
 
-                entity.HasCharSet("utf8mb3")
+                entity.HasCharSet("utf8")
                     .UseCollation("utf8_unicode_ci");
 
                 entity.Property(e => e.Id).HasColumnName("id");
@@ -93,7 +94,7 @@ namespace Persistence
             {
                 entity.ToTable("abitur_educationalformspec");
 
-                entity.HasCharSet("utf8mb3")
+                entity.HasCharSet("utf8")
                     .UseCollation("utf8_unicode_ci");
 
                 entity.Property(e => e.Id).HasColumnName("id");
@@ -108,7 +109,7 @@ namespace Persistence
             {
                 entity.ToTable("abitur_orders");
 
-                entity.HasCharSet("utf8mb3")
+                entity.HasCharSet("utf8")
                     .UseCollation("utf8_unicode_ci");
 
                 entity.HasIndex(e => e.EducationalFormId, "abitur_orders_educational_form_id_85a4ec2b_fk_abitur_ed");
@@ -149,7 +150,7 @@ namespace Persistence
             {
                 entity.ToTable("abitur_ordersasp");
 
-                entity.HasCharSet("utf8mb3")
+                entity.HasCharSet("utf8")
                     .UseCollation("utf8_unicode_ci");
 
                 entity.HasIndex(e => e.EducationalFormId, "abitur_ordersasp_educational_form_id_9681a2a1_fk_abitur_ed");
@@ -190,7 +191,7 @@ namespace Persistence
             {
                 entity.ToTable("abitur_ordersmag");
 
-                entity.HasCharSet("utf8mb3")
+                entity.HasCharSet("utf8")
                     .UseCollation("utf8_unicode_ci");
 
                 entity.HasIndex(e => e.EducationalFormId, "abitur_ordersmag_educational_form_id_110b11ab_fk_abitur_ed");
@@ -231,7 +232,7 @@ namespace Persistence
             {
                 entity.ToTable("abitur_ordersspec");
 
-                entity.HasCharSet("utf8mb3")
+                entity.HasCharSet("utf8")
                     .UseCollation("utf8_unicode_ci");
 
                 entity.HasIndex(e => e.EducationalFormId, "abitur_ordersspec_educational_form_id_2c238eeb_fk_abitur_ed");
@@ -272,7 +273,7 @@ namespace Persistence
             {
                 entity.ToTable("abitur_recommendedlist");
 
-                entity.HasCharSet("utf8mb3")
+                entity.HasCharSet("utf8")
                     .UseCollation("utf8_unicode_ci");
 
                 entity.HasIndex(e => e.EducationalFormId, "abitur_recommendedli_educational_form_id_c510b5d4_fk_abitur_ed");
@@ -308,7 +309,7 @@ namespace Persistence
             {
                 entity.ToTable("abitur_recommendedlistasp");
 
-                entity.HasCharSet("utf8mb3")
+                entity.HasCharSet("utf8")
                     .UseCollation("utf8_unicode_ci");
 
                 entity.HasIndex(e => e.EducationalFormId, "abitur_recommendedli_educational_form_id_a9089bd8_fk_abitur_ed");
@@ -344,7 +345,7 @@ namespace Persistence
             {
                 entity.ToTable("abitur_recommendedlistmag");
 
-                entity.HasCharSet("utf8mb3")
+                entity.HasCharSet("utf8")
                     .UseCollation("utf8_unicode_ci");
 
                 entity.HasIndex(e => e.EducationalFormId, "abitur_recommendedli_educational_form_id_20ab5d2e_fk_abitur_ed");
@@ -380,7 +381,7 @@ namespace Persistence
             {
                 entity.ToTable("abitur_result");
 
-                entity.HasCharSet("utf8mb3")
+                entity.HasCharSet("utf8")
                     .UseCollation("utf8_unicode_ci");
 
                 entity.HasIndex(e => e.EducationalFormId, "abitur_result_educational_form_id_6873845e_fk_abitur_ed");
@@ -421,7 +422,7 @@ namespace Persistence
             {
                 entity.ToTable("abitur_resultasp");
 
-                entity.HasCharSet("utf8mb3")
+                entity.HasCharSet("utf8")
                     .UseCollation("utf8_unicode_ci");
 
                 entity.HasIndex(e => e.EducationalFormId, "abitur_resultasp_educational_form_id_b9f800bc_fk_abitur_ed");
@@ -462,7 +463,7 @@ namespace Persistence
             {
                 entity.ToTable("abitur_resultmag");
 
-                entity.HasCharSet("utf8mb3")
+                entity.HasCharSet("utf8")
                     .UseCollation("utf8_unicode_ci");
 
                 entity.HasIndex(e => e.EducationalFormId, "abitur_resultmag_educational_form_id_44f2ad0d_fk_abitur_ed");
@@ -499,11 +500,60 @@ namespace Persistence
                     .HasConstraintName("abitur_resultmag_educational_form_id_44f2ad0d_fk_abitur_ed");
             });
 
+            modelBuilder.Entity<AdminpanelEmailmessage>(entity =>
+            {
+                entity.ToTable("adminpanel_emailmessage");
+
+                entity.HasCharSet("utf8")
+                    .UseCollation("utf8_unicode_ci");
+
+                entity.HasIndex(e => e.RecipientId, "adminpanel_emailmessage_recipient_id_a8779636_fk_auth_user_id");
+
+                entity.HasIndex(e => e.SenderId, "adminpanel_emailmessage_sender_id_7d5eda7b_fk_auth_user_id");
+
+                entity.Property(e => e.Id).HasColumnName("id");
+
+                entity.Property(e => e.Content)
+                    .IsRequired()
+                    .HasMaxLength(4096)
+                    .HasColumnName("content");
+
+                entity.Property(e => e.RecipientEmail)
+                    .IsRequired()
+                    .HasMaxLength(100)
+                    .HasColumnName("recipientEmail");
+
+                entity.Property(e => e.RecipientId).HasColumnName("recipient_id");
+
+                entity.Property(e => e.SenderId).HasColumnName("sender_id");
+
+                entity.Property(e => e.SentAt)
+                    .HasMaxLength(6)
+                    .HasColumnName("sent_at");
+
+                entity.Property(e => e.Subject)
+                    .IsRequired()
+                    .HasMaxLength(100)
+                    .HasColumnName("subject");
+
+                entity.HasOne(d => d.Recipient)
+                    .WithMany(p => p.AdminpanelEmailmessageRecipients)
+                    .HasForeignKey(d => d.RecipientId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("adminpanel_emailmessage_recipient_id_a8779636_fk_auth_user_id");
+
+                entity.HasOne(d => d.Sender)
+                    .WithMany(p => p.AdminpanelEmailmessageSenders)
+                    .HasForeignKey(d => d.SenderId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("adminpanel_emailmessage_sender_id_7d5eda7b_fk_auth_user_id");
+            });
+
             modelBuilder.Entity<AuthUser>(entity =>
             {
                 entity.ToTable("auth_user");
 
-                entity.HasCharSet("utf8mb3")
+                entity.HasCharSet("utf8")
                     .UseCollation("utf8_unicode_ci");
 
                 entity.HasIndex(e => e.Username, "username")
@@ -555,7 +605,7 @@ namespace Persistence
             {
                 entity.ToTable("regabitur_additionalinfo");
 
-                entity.HasCharSet("utf8mb3")
+                entity.HasCharSet("utf8")
                     .UseCollation("utf8_unicode_ci");
 
                 entity.HasIndex(e => e.UserId, "user_id")
@@ -576,7 +626,7 @@ namespace Persistence
             {
                 entity.ToTable("regabitur_additionalinfo_education_profile");
 
-                entity.HasCharSet("utf8mb3")
+                entity.HasCharSet("utf8")
                     .UseCollation("utf8_unicode_ci");
 
                 entity.HasIndex(e => e.ChoicesprofileId, "regabitur_additional_choicesprofile_id_c3becd9c_fk_regabitur");
@@ -607,7 +657,7 @@ namespace Persistence
             {
                 entity.ToTable("regabitur_choicesprofile");
 
-                entity.HasCharSet("utf8mb3")
+                entity.HasCharSet("utf8")
                     .UseCollation("utf8_unicode_ci");
 
                 entity.Property(e => e.Id).HasColumnName("id");
@@ -622,7 +672,7 @@ namespace Persistence
             {
                 entity.ToTable("regabitur_customuser");
 
-                entity.HasCharSet("utf8mb3")
+                entity.HasCharSet("utf8")
                     .UseCollation("utf8_unicode_ci");
 
                 entity.HasIndex(e => e.UserId, "user_id")
@@ -701,7 +751,7 @@ namespace Persistence
             {
                 entity.ToTable("regabitur_documentuser");
 
-                entity.HasCharSet("utf8mb3")
+                entity.HasCharSet("utf8")
                     .UseCollation("utf8_unicode_ci");
 
                 entity.HasIndex(e => e.UserId, "regabitur_documentuser_user_id_2349932c_fk_auth_user_id");
@@ -735,7 +785,7 @@ namespace Persistence
             {
                 entity.ToTable("regabitur_publishrectab");
 
-                entity.HasCharSet("utf8mb3")
+                entity.HasCharSet("utf8")
                     .UseCollation("utf8_unicode_ci");
 
                 entity.HasIndex(e => e.UserId, "user_id")
@@ -842,7 +892,7 @@ namespace Persistence
             {
                 entity.ToTable("regabitur_publishtab");
 
-                entity.HasCharSet("utf8mb3")
+                entity.HasCharSet("utf8")
                     .UseCollation("utf8_unicode_ci");
 
                 entity.HasIndex(e => e.UserId, "user_id")
