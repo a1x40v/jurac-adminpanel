@@ -30,6 +30,12 @@ namespace Application.MappingProfiles
                 .ForMember(d => d.NameUz, o => o.MapFrom(s => s.RegabiturCustomuser != null ? s.RegabiturCustomuser.NameUz : String.Empty))
                 .ForMember(d => d.Passport, o => o.MapFrom(s => s.RegabiturCustomuser != null ? s.RegabiturCustomuser.Passport : String.Empty))
                 .ForMember(d => d.Snils, o => o.MapFrom(s => s.RegabiturCustomuser != null ? s.RegabiturCustomuser.Snils : String.Empty))
+
+                .ForMember(d => d.CompleteFlag, o => o.MapFrom(s => s.RegabiturCustomuser != null ? s.RegabiturCustomuser.CompleteFlag : false))
+                .ForMember(d => d.AgreementFlag, o => o.MapFrom(s => s.RegabiturCustomuser != null ? s.RegabiturCustomuser.AgreementFlag : false))
+                .ForMember(d => d.WorkFlag, o => o.MapFrom(s => s.RegabiturCustomuser != null ? s.RegabiturCustomuser.WorkFlag : false))
+                .ForMember(d => d.SuccessFlag, o => o.MapFrom(s => s.RegabiturCustomuser != null ? s.RegabiturCustomuser.SuccessFlag : false))
+
                 .ForMember(d => d.Documents, o => o.MapFrom(s => s.RegabiturDocumentusers))
                 .ForMember(d => d.ChoicesProfiles, o => o.MapFrom(s =>
                     s.RegabiturAdditionalinfo.RegabiturAdditionalinfoEducationProfiles
