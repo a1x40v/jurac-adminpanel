@@ -4,7 +4,11 @@ import { SiMicrosoftexcel } from 'react-icons/si';
 
 import { exportAbiturients } from '../../../app/apiServices/abiturientService';
 import { useAppDispatch, useAppSelector } from '../../../app/hooks/stateHooks';
-import { Abiturient, AbiturientListVm } from '../../../app/models/Abiturient';
+import {
+  Abiturient,
+  AbiturientListVm,
+  DocSendStatus,
+} from '../../../app/models/Abiturient';
 import {
   changeCurrentPage,
   changePageSize,
@@ -60,8 +64,19 @@ const AbiturientTable: React.FC<Props> = ({
           },
           Cell: ({ row }) => {
             const { indeterminate, ...props } = row.getToggleRowSelectedProps();
+            const abt = row.original as Abiturient;
+
+            let docsMarkClasses = '';
+
+            if (abt.documents.length > 0) {
+              const isDocsSent = abt.sendingStatus !== DocSendStatus.No;
+              docsMarkClasses = `before:absolute before:w-2 before:h-2 before:rounded-full before:-left-4 before:top-[50%] before:-translate-y-[50%] ${
+                isDocsSent ? 'before:bg-lime-700' : 'before:bg-amber-600'
+              }`;
+            }
+
             return (
-              <div className="px-3">
+              <div className={`relative px-3 ${docsMarkClasses}`}>
                 <input type="checkbox" {...props} />
               </div>
             );

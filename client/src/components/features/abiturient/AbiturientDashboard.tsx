@@ -120,7 +120,7 @@ const columns: Array<Column> = [
       ) {
         if (abitur.successFlag) className = 'text-white bg-green-800';
         if (!abitur.successFlag && abitur.workFlag)
-          className = 'text-white bg-orange-800';
+          className = 'text-white bg-amber-800';
       }
       return (
         <span className={className}>

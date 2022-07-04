@@ -1,6 +1,7 @@
-import { Column, useTable } from 'react-table';
+import { Column, usePagination, useTable } from 'react-table';
 
 import { PublishTabView } from '../../../app/models/PublishTab';
+import PaginationBar from '../../common/reactTable/PaginationBar';
 import ReactTable from '../../common/reactTable/ReactTable';
 
 interface Props {
@@ -9,14 +10,19 @@ interface Props {
 }
 
 const PublishTabTable: React.FC<Props> = ({ columns, data }) => {
-  const tableInstace = useTable({
-    columns,
-    data,
-  });
+  const tableInstance = useTable(
+    {
+      columns,
+      data,
+      initialState: { pageIndex: 0, pageSize: 25 },
+    },
+    usePagination
+  );
 
   return (
     <div>
-      <ReactTable tableInstance={tableInstace} />
+      <ReactTable tableInstance={tableInstance} />
+      <PaginationBar tableInstance={tableInstance} />
     </div>
   );
 };
