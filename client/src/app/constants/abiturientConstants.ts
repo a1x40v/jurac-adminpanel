@@ -1,4 +1,8 @@
-import { AbiturientTestType, DocSendStatus } from '../models/Abiturient';
+import {
+  AbiturientTestType,
+  DocExistStatus,
+  DocSendStatus,
+} from '../models/Abiturient';
 import { ChoiceProfile } from '../models/ChoiceProfile';
 import {
   PublishRecAdvantage,
@@ -13,6 +17,11 @@ export const SEND_STATUS_DESC: { [key in DocSendStatus]: string } = {
   working: 'В работе',
   success: 'Обработаны',
   back: 'Отозваны',
+};
+
+export const EXIST_STATUS_DESC: { [key in DocExistStatus]: string } = {
+  exist: 'Есть документы',
+  notExist: 'Документов нет',
 };
 
 export const CHOICE_PROFILES = [

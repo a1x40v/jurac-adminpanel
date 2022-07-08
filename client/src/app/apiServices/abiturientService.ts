@@ -6,7 +6,6 @@ import {
   AbiturientUpdate,
   ExportedAbiturient,
 } from '../models/Abiturient';
-import { CreateEmailMessageModel } from '../models/EmailMessage';
 import { AbtFiltersState } from '../state/slices/abiturientSlice';
 import { baseApi, CacheTagType } from './baseService';
 
@@ -21,7 +20,7 @@ interface GetAbiturientsParams {
 export const abiturientApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
     getAbiturients: builder.query<AbiturientListVm, GetAbiturientsParams>({
-      query: ({ pageNumber, pageSize, orderBy, filtering, search }) => ({
+      query: ({ pageNumber, pageSize, orderBy, search, filtering }) => ({
         url: 'users',
         params: {
           pageNumber,

@@ -1,9 +1,12 @@
 import { Form, Formik, FormikErrors } from 'formik';
 import { useMemo } from 'react';
 
-import { SEND_STATUS_DESC } from '../../../app/constants/abiturientConstants';
+import {
+  EXIST_STATUS_DESC,
+  SEND_STATUS_DESC,
+} from '../../../app/constants/abiturientConstants';
 import { useAppDispatch, useAppSelector } from '../../../app/hooks/stateHooks';
-import { DocSendStatus } from '../../../app/models/Abiturient';
+import { DocExistStatus, DocSendStatus } from '../../../app/models/Abiturient';
 import {
   changeFiltering,
   changeSearch,
@@ -19,15 +22,11 @@ interface FormValues {
   minJoined: string;
   maxJoined: string;
   statuses: DocSendStatus[];
+  existStatus?: DocExistStatus;
   searching: string;
 }
 
-interface DocStatusOption {
-  value: DocSendStatus;
-  label: string;
-}
-
-const options: DocStatusOption[] = [
+const docStatusOpts: SelectOption<DocSendStatus>[] = [
   { value: DocSendStatus.Error, label: SEND_STATUS_DESC['error'] },
   { value: DocSendStatus.No, label: SEND_STATUS_DESC['no'] },
   { value: DocSendStatus.Send, label: SEND_STATUS_DESC['send'] },
@@ -36,10 +35,16 @@ const options: DocStatusOption[] = [
   { value: DocSendStatus.Back, label: SEND_STATUS_DESC['back'] },
 ];
 
+const docExistOpts: SelectOption<DocExistStatus | undefined>[] = [
+  { value: undefined, label: 'Не учитывается' },
+  { value: DocExistStatus.Exist, label: 'Есть документы' },
+  { value: DocExistStatus.NotExist, label: 'Нет документов' },
+];
+
 const AbiturientFilters = () => {
   const dispatch = useAppDispatch();
   const {
-    filtering: { minDateJoined, maxDateJoined, docStatuses },
+    filtering: { minDateJoined, maxDateJoined, docStatuses, docExistStatus },
     search,
   } = useAppSelector((state) => state.abiturient);
 
@@ -47,6 +52,7 @@ const AbiturientFilters = () => {
     minJoined: minDateJoined || '',
     maxJoined: maxDateJoined || '',
     statuses: docStatuses,
+    existStatus: docExistStatus,
     searching: search || '',
   };
 
@@ -61,16 +67,21 @@ const AbiturientFilters = () => {
       result.push('статус документов');
     }
 
+    if (docExistStatus) {
+      result.push('наличие документов');
+    }
+
     return result;
-  }, [minDateJoined, maxDateJoined, docStatuses]);
+  }, [minDateJoined, maxDateJoined, docStatuses, docExistStatus]);
 
   const handleApplyFilters = async (values: FormValues) => {
-    const { minJoined, maxJoined, searching, statuses } = values;
+    const { minJoined, maxJoined, searching, statuses, existStatus } = values;
     dispatch(
       changeFiltering({
         minDateJoined: minJoined || undefined,
         maxDateJoined: maxJoined || undefined,
         docStatuses: statuses,
+        docExistStatus: existStatus,
       })
     );
     dispatch(changeSearch(searching || undefined));
@@ -121,6 +132,7 @@ const AbiturientFilters = () => {
       initialValues={initialValues}
       validate={validate}
       onSubmit={handleApplyFilters}
+      enableReinitialize={true}
     >
       {({
         errors,
@@ -171,8 +183,8 @@ const AbiturientFilters = () => {
                   <div>
                     <InputSelect
                       isMulti
-                      options={options}
-                      defaultValue={options.filter(({ value }) =>
+                      options={docStatusOpts}
+                      defaultValue={docStatusOpts.filter(({ value }) =>
                         getFieldProps('statuses').value.includes(value)
                       )}
                       onChange={(vals) => {
@@ -182,6 +194,24 @@ const AbiturientFilters = () => {
                           newOpts.map(({ value }) => value)
                         );
                       }}
+                    />
+                  </div>
+                </div>
+
+                <div className="relative flex flex-col justify-center min-w-[300px] p-5 border-t ml-7 border-sky-700">
+                  <div className="absolute top-0 left-[50%] px-1 bg-white -translate-y-[60%] -translate-x-[50%]">
+                    Наличие&nbsp;документов
+                  </div>
+                  <div>
+                    <InputSelect
+                      options={docExistOpts}
+                      defaultValue={{
+                        value: docExistStatus,
+                        label: docExistStatus
+                          ? EXIST_STATUS_DESC[docExistStatus]
+                          : docExistOpts[0].label,
+                      }}
+                      onChange={(val) => setFieldValue('existStatus', val)}
                     />
                   </div>
                 </div>

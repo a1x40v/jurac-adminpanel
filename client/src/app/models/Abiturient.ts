@@ -10,6 +10,7 @@ export enum AbtSortableField {
   Phone = 'phoneNumber',
   Email = 'email',
   Status = 'sendingStatus',
+  NewestDocumentDate = 'newestDocumentDate',
 }
 
 export enum DocSendStatus {
@@ -19,6 +20,11 @@ export enum DocSendStatus {
   Working = 'working',
   Success = 'success',
   Back = 'back',
+}
+
+export enum DocExistStatus {
+  Exist = 'exist',
+  NotExist = 'notExist',
 }
 
 export enum AbiturientTestType {
@@ -48,13 +54,14 @@ export interface Abiturient {
   nameUz: string;
   passport: string;
   snils: string;
+  newestDocumentDate: string | null;
   documents: AbiturDocument[];
   choicesProfiles: ChoiceProfile[];
 }
 
 export type AbiturientUpdate = Omit<
   Abiturient,
-  'documents' | 'dateJoined' | 'lastLogin'
+  'documents' | 'dateJoined' | 'lastLogin' | 'newestDocumentDate'
 >;
 export interface AbiturDocument {
   id: number;

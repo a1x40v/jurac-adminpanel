@@ -56,6 +56,22 @@ const columns: Array<Column> = [
   {
     Header: () => (
       <AbiturientSortableHeader
+        field={AbtSortableField.NewestDocumentDate}
+        title="ДД"
+      />
+    ),
+    accessor: 'newestDocumentDate',
+    Cell: (props) => (
+      <>
+        {props.value == null
+          ? '-'
+          : dateFormat(new Date(props.value), 'dd.mm.yy')}
+      </>
+    ),
+  },
+  {
+    Header: () => (
+      <AbiturientSortableHeader
         field={AbtSortableField.FirstName}
         title="Имя"
         styles={{ minWidth: '120px' }}

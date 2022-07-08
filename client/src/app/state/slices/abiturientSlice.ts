@@ -1,11 +1,16 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
-import { AbtSortableField, DocSendStatus } from '../../models/Abiturient';
+import {
+  AbtSortableField,
+  DocExistStatus,
+  DocSendStatus,
+} from '../../models/Abiturient';
 import { SortingValue } from '../../models/Sorting';
 
 export interface AbtFiltersState {
   minDateJoined?: string;
   maxDateJoined?: string;
+  docExistStatus?: DocExistStatus;
   docStatuses: DocSendStatus[];
 }
 
@@ -69,6 +74,7 @@ const slice = createSlice({
       state.filtering.maxDateJoined = payload.maxDateJoined;
       state.filtering.minDateJoined = payload.minDateJoined;
       state.filtering.docStatuses = [...payload.docStatuses];
+      state.filtering.docExistStatus = payload.docExistStatus;
     },
     changeSearch: (state, { payload }: PayloadAction<string | undefined>) => {
       state.search = payload;

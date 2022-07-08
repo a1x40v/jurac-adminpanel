@@ -6,6 +6,7 @@ namespace Application.Common.QueryString
         public DateTime MinDateJoined { get; set; } = DateTime.MinValue;
         public DateTime MaxDateJoined { get; set; } = DateTime.UtcNow;
         public bool ValidDateJoinedRange => MaxDateJoined > MinDateJoined;
+        public string DocExistStatus { get; set; }
 
         public UserQueryParameters()
         {
