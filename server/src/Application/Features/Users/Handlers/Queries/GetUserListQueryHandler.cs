@@ -7,6 +7,7 @@ using Persistence;
 using Microsoft.EntityFrameworkCore;
 using AutoMapper;
 using Application.Contracts.Common;
+using Domain.Constants.User;
 
 namespace Application.Features.Users.Handlers.Queries
 {
@@ -48,7 +49,22 @@ namespace Application.Features.Users.Handlers.Queries
                 filteredQuery = filteredQuery.Where(x => statuses.Contains(x.SendingStatus));
             }
 
+            if (request.QueryParams.DocExistStatus != null)
+            {
+                switch (request.QueryParams.DocExistStatus)
+                {
+                    case UserDocExistingStatus.Exist:
+                        filteredQuery = filteredQuery.Where(x => x.Documents.Count != 0);
+                        break;
+                    case UserDocExistingStatus.NotExist:
+                        filteredQuery = filteredQuery.Where(x => x.Documents.Count == 0);
+                        break;
+                }
+            }
+
+            // sorting
             var sortedQuery = _sortHelper.ApplySort(filteredQuery, request.QueryParams.OrderBy);
+
             var pagination = await Pagination<UserDto>.CreateAsync(sortedQuery, request.QueryParams);
 
             var users = await pagination.Query.ToListAsync();

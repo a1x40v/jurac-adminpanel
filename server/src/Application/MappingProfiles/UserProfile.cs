@@ -36,6 +36,8 @@ namespace Application.MappingProfiles
                 .ForMember(d => d.WorkFlag, o => o.MapFrom(s => s.RegabiturCustomuser != null ? s.RegabiturCustomuser.WorkFlag : false))
                 .ForMember(d => d.SuccessFlag, o => o.MapFrom(s => s.RegabiturCustomuser != null ? s.RegabiturCustomuser.SuccessFlag : false))
 
+                .ForMember(d => d.NewestDocumentDate, o => o.MapFrom(s => s.RegabiturDocumentusers.OrderByDescending(x => x.DatePub).FirstOrDefault().DatePub.Date))
+
                 .ForMember(d => d.Documents, o => o.MapFrom(s => s.RegabiturDocumentusers))
                 .ForMember(d => d.ChoicesProfiles, o => o.MapFrom(s =>
                     s.RegabiturAdditionalinfo.RegabiturAdditionalinfoEducationProfiles
