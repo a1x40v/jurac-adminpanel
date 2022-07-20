@@ -15,7 +15,7 @@ namespace Infrastructure.FTP
         {
             _config = config;
         }
-        public void UploadFiles(ICollection<FTPUploadDto> fileOpts)
+        public void UploadFiles(ICollection<FTPUploadDto> fileOpts, string uploadPath)
         {
             var conf = _config.Value;
 
@@ -36,7 +36,7 @@ namespace Infrastructure.FTP
                             }
                             fileStream.Seek(0, SeekOrigin.Begin);
                             client.BufferSize = 4 * 1024;
-                            client.UploadFile(fileStream, Path.Combine(conf.RecTabsDeployPath, fileOpt.FileName));
+                            client.UploadFile(fileStream, Path.Combine(uploadPath, fileOpt.FileName));
                         }
                     }
                 }
@@ -48,6 +48,13 @@ namespace Infrastructure.FTP
 
                 client.Disconnect();
             }
+        }
+
+        public void DeployPublishRecTabs(ICollection<FTPUploadDto> fileOpts)
+        {
+            var conf = _config.Value;
+
+            UploadFiles(fileOpts, conf.RecTabsDeployPath);
         }
     }
 }

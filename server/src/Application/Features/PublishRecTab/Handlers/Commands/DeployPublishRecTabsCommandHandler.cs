@@ -17,13 +17,13 @@ namespace Application.Features.PublishRecTab.Handlers.Commands
         private readonly ApplicationDbContext _dbContext;
         private readonly IMapper _mapper;
         private readonly IPdfExporterService _exporterService;
-        private readonly IFTPService _fTPService;
+        private readonly IFTPService _ftpService;
         public DeployPublishRecTabsCommandHandler(ApplicationDbContext dbContext, IMapper mapper,
-            IPdfExporterService exporterService, IFTPService fTPService)
+            IPdfExporterService exporterService, IFTPService ftpService)
         {
             _dbContext = dbContext;
             _mapper = mapper;
-            _fTPService = fTPService;
+            _ftpService = ftpService;
             _exporterService = exporterService;
         }
         public async Task<Unit> Handle(DeployPublishRecTabsCommand request, CancellationToken cancellationToken)
@@ -59,7 +59,7 @@ namespace Application.Features.PublishRecTab.Handlers.Commands
                 filesToUpload.Add(new FTPUploadDto { FileName = deplOpt.FileName, Data = pdfFile });
             }
 
-            _fTPService.UploadFiles(filesToUpload);
+            _ftpService.DeployPublishRecTabs(filesToUpload);
 
             return Unit.Value;
         }
