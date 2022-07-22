@@ -11,42 +11,65 @@ namespace Infrastructure.FTP
     public class FTPService : IFTPService
     {
         private readonly IOptions<FTPConfig> _config;
+        private SftpClient _sftpClient;
         public FTPService(IOptions<FTPConfig> config)
         {
             _config = config;
         }
-        public void UploadFiles(ICollection<FTPUploadDto> fileOpts, string uploadPath)
+        private void CreateClient()
         {
             var conf = _config.Value;
-
-            using (var client = new SftpClient(conf.Host, conf.Port, conf.Username, conf.Password))
+            var client = new SftpClient(conf.Host, conf.Port, conf.Username, conf.Password);
+            client.Connect();
+            if (client.IsConnected)
             {
-                client.Connect();
-                if (client.IsConnected)
+                Debug.WriteLine("Connected to the SFTP server");
+                _sftpClient = client;
+            }
+            else
+            {
+                Debug.WriteLine("Couldn't connect to the SFTP server");
+                throw new ExternalResourceException("Couldn't connect to the SFTP server");
+            }
+        }
+        private void CloseClient()
+        {
+            if (_sftpClient != null)
+            {
+                _sftpClient.Disconnect();
+                _sftpClient.Dispose();
+            }
+        }
+        private void UploadFiles(ICollection<FTPUploadDto> fileOpts, string path)
+        {
+            foreach (var fileOpt in fileOpts)
+            {
+                using (var fileStream = new MemoryStream())
                 {
-                    Debug.WriteLine("I'm connected to the client");
-
-                    foreach (var fileOpt in fileOpts)
+                    for (int i = 0; i < fileOpt.Data.Length; i++)
                     {
-                        using (var fileStream = new MemoryStream())
-                        {
-                            for (int i = 0; i < fileOpt.Data.Length; i++)
-                            {
-                                fileStream.WriteByte(fileOpt.Data[i]);
-                            }
-                            fileStream.Seek(0, SeekOrigin.Begin);
-                            client.BufferSize = 4 * 1024;
-                            client.UploadFile(fileStream, Path.Combine(uploadPath, fileOpt.FileName));
-                        }
+                        fileStream.WriteByte(fileOpt.Data[i]);
                     }
+                    fileStream.Seek(0, SeekOrigin.Begin);
+                    _sftpClient.BufferSize = 4 * 1024;
+                    _sftpClient.UploadFile(fileStream, Path.Combine(path, fileOpt.FileName));
+                }
+            }
+        }
+        private void DeleteFiles(ICollection<string> fileNames, string path)
+        {
+            foreach (var fileName in fileNames)
+            {
+                string filePath = Path.Combine(path, fileName);
+                if (_sftpClient.Exists(filePath))
+                {
+                    _sftpClient.DeleteFile(filePath);
                 }
                 else
                 {
-                    Debug.WriteLine("I couldn't connect");
-                    throw new ExternalResourceException("Couldn't connect to the FTP server");
+                    Debug.WriteLine($"Couldn't find the file to delete: {fileName}");
                 }
 
-                client.Disconnect();
             }
         }
 
@@ -54,7 +77,23 @@ namespace Infrastructure.FTP
         {
             var conf = _config.Value;
 
+            CreateClient();
+
             UploadFiles(fileOpts, conf.RecTabsDeployPath);
+
+            CloseClient();
+        }
+
+        public void CreateUserDocs(ICollection<FTPUploadDto> fileOpts, string userFolder)
+        {
+            var conf = _config.Value;
+            string path = Path.Combine(conf.UserDocumentsPath, userFolder);
+
+            CreateClient();
+
+            UploadFiles(fileOpts, path);
+
+            CloseClient();
         }
     }
 }

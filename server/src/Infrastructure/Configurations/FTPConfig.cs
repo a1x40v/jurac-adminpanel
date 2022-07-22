@@ -7,5 +7,6 @@ namespace Infrastructure.Configurations
         public string Username { get; set; }
         public string Password { get; set; }
         public string RecTabsDeployPath { get; set; }
+        public string UserDocumentsPath { get; set; }
     }
 }
