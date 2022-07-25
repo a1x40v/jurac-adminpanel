@@ -5,19 +5,6 @@ interface Props {
   onDropFile: (file: File) => void;
 }
 
-const dzStyles = {
-  border: 'dashed 3px #eee',
-  borderColor: '#eee',
-  borderRadius: '5px',
-  paddingTop: '30px',
-  textAlign: 'center' as 'center',
-  height: 200,
-};
-
-const dzActive = {
-  borderColor: 'green',
-};
-
 const DocumentUploadWidgetDropzone: React.FC<Props> = ({ onDropFile }) => {
   const onDrop = useCallback(
     (acceptedFiles: File[]) => {
@@ -28,16 +15,21 @@ const DocumentUploadWidgetDropzone: React.FC<Props> = ({ onDropFile }) => {
 
   const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop });
 
+  const borderClasses = isDragActive ? 'border-green-700' : 'border-gray-400';
+
   return (
     <div
       {...getRootProps()}
-      style={isDragActive ? { ...dzStyles, ...dzActive } : dzStyles}
+      className={`border-2 border-dashed  rounded-md h-[200px] flex items-center justify-center ${borderClasses}`}
     >
       <input {...getInputProps()} />
+
       {isDragActive ? (
-        <p>Drop the files here ...</p>
+        <p>Бросайте файл сюда ...</p>
       ) : (
-        <p>Drag 'n' drop some files here, or click to select files</p>
+        <p>
+          Перетащите файл сюда или кликните, чтобы выбрать файл в Вашей системе
+        </p>
       )}
     </div>
   );

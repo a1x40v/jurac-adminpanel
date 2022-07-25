@@ -1,6 +1,6 @@
 namespace Application.DTO.Documentuser
 {
-    public class DocumentuserDto
+    public class DocumentDto
     {
         public int Id { get; set; }
         public DateTime DatePub { get; set; }

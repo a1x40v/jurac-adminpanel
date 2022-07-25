@@ -4,7 +4,7 @@ import DocumentUploadForm from './DocumentUploadForm';
 import DocumentUploadWidgetDropzone from './DocumentUploadWidgetDropzone';
 
 interface Props {
-  userId: number;
+  abiturId: number;
 }
 
 export type UploadedDocument = {
@@ -17,7 +17,7 @@ export type UploadedDocument = {
 
 const PREVIEW_EXTS = ['jpg', 'jpeg', 'png'];
 
-const DocumentUploadWidget: React.FC<Props> = ({ userId }) => {
+const DocumentUploadWidget: React.FC<Props> = ({ abiturId }) => {
   const [doc, setDoc] = useState<UploadedDocument | null>();
 
   const handleDropFile = useCallback(
@@ -49,15 +49,12 @@ const DocumentUploadWidget: React.FC<Props> = ({ userId }) => {
   }, []);
 
   return (
-    <div className="mt-4">
-      <h3>DocumentUploadWidget</h3>
-      <div>
-        {doc ? (
-          <DocumentUploadForm userId={userId} doc={doc} />
-        ) : (
-          <DocumentUploadWidgetDropzone onDropFile={handleDropFile} />
-        )}
-      </div>
+    <div>
+      {doc ? (
+        <DocumentUploadForm userId={abiturId} doc={doc} />
+      ) : (
+        <DocumentUploadWidgetDropzone onDropFile={handleDropFile} />
+      )}
     </div>
   );
 };

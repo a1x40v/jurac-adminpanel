@@ -1,8 +1,24 @@
-import { CreateDocumentModel, UpdateDocumentModel } from '../models/Document';
-import { baseApi } from './baseService';
+import {
+  AbiturDocument,
+  CreateDocumentModel,
+  UpdateDocumentModel,
+} from '../models/AbiturDocument';
+import { baseApi, CacheTagType } from './baseService';
 
 export const documentApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
+    getDocumentsForUser: builder.query<AbiturDocument[], number>({
+      query: (userId) => `documents/users/${userId}`,
+      providesTags: (result) =>
+        result
+          ? [
+              ...result.map(
+                ({ id }) => ({ id, type: CacheTagType.Documents } as const)
+              ),
+              { type: CacheTagType.Documents, id: 'LIST' },
+            ]
+          : [{ type: CacheTagType.Documents, id: 'LIST' }],
+    }),
     createDocument: builder.mutation<void, CreateDocumentModel>({
       query: ({ userId, file }) => {
         const data = new FormData();
@@ -26,5 +42,8 @@ export const documentApi = baseApi.injectEndpoints({
   }),
 });
 
-export const { useCreateDocumentMutation, useUpdateDocumentMutation } =
-  documentApi;
+export const {
+  useCreateDocumentMutation,
+  useUpdateDocumentMutation,
+  useGetDocumentsForUserQuery,
+} = documentApi;

@@ -6,5 +6,6 @@ namespace Application.Contracts.Infrastructure
     {
         void DeployPublishRecTabs(ICollection<FTPUploadDto> fileOpts);
         void CreateUserDocs(ICollection<FTPUploadDto> fileOpts, string userFolderPath);
+        void DeleteUserDocs(ICollection<string> docPaths);
     }
 }

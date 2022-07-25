@@ -1,4 +1,3 @@
-import dateFormat from 'dateformat';
 import { Form, Formik } from 'formik';
 import * as Yup from 'yup';
 
@@ -7,13 +6,8 @@ import {
   SEND_STATUSES,
   SEND_STATUS_DESC,
 } from '../../../app/constants/abiturientConstants';
-import {
-  AbiturDocument,
-  Abiturient,
-  AbiturientUpdate,
-} from '../../../app/models/Abiturient';
+import { Abiturient, AbiturientUpdate } from '../../../app/models/Abiturient';
 import { ChoiceProfile } from '../../../app/models/ChoiceProfile';
-import DropwdownMenu from '../../common/layout/DropwdownMenu';
 import FormField from '../../common/UI/formik/FormField';
 import Button from '../../common/UI/inputs/Button';
 import InputDate from '../../common/UI/inputs/InputDate';
@@ -39,7 +33,7 @@ const validationSchema = Yup.object({
 });
 
 const AbiturientForm: React.FC<Props> = ({ abitur, onSubmit }) => {
-  const { documents, lastLogin, dateJoined, ...updatable } = abitur;
+  const { lastLogin, dateJoined, ...updatable } = abitur;
   const initialValues = updatable;
 
   return (
@@ -76,7 +70,6 @@ const AbiturientForm: React.FC<Props> = ({ abitur, onSubmit }) => {
                 </div>
               </div>
             </div>
-
             <div className="flex flex-col mt-8 w-[100%]">
               <FormField isFullWidth={true} name="email" label="Email" />
               <FormField
@@ -110,7 +103,6 @@ const AbiturientForm: React.FC<Props> = ({ abitur, onSubmit }) => {
                 label="Комментарий для внутренней работы"
               />
             </div>
-
             <div className="flex my-8">
               <div className="flex flex-col min-w-[200px] mr-20">
                 <span className="mb-2">Статус заявки:</span>
@@ -176,7 +168,6 @@ const AbiturientForm: React.FC<Props> = ({ abitur, onSubmit }) => {
                 </label>
               </div>
             </div>
-
             <div className="mb-6">
               <p className="mb-2">Форма обучения:</p>
               <InputSelect
@@ -195,32 +186,6 @@ const AbiturientForm: React.FC<Props> = ({ abitur, onSubmit }) => {
                   );
                 }}
               />
-            </div>
-
-            <div className="mb-6">
-              <DropwdownMenu
-                label={`Документы (${
-                  documents.length ? `${documents.length} шт.` : 'отсутствуют'
-                }):`}
-              >
-                {documents.length ? (
-                  <ul>
-                    {documents.map((doc: AbiturDocument, idx) => (
-                      <li key={doc.id} className="mb-1">
-                        <p>
-                          {idx + 1}. {doc.doc}
-                        </p>
-                        <p className="pl-5">
-                          Подан:{' '}
-                          {dateFormat(new Date(doc.datePub), 'dd.mm.yy hh:MM')}
-                        </p>
-                      </li>
-                    ))}
-                  </ul>
-                ) : (
-                  <p>Документы отсутствуют</p>
-                )}
-              </DropwdownMenu>
             </div>
 
             <Button

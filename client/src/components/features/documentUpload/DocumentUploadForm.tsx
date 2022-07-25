@@ -37,7 +37,6 @@ const DocumentUploadForm: React.FC<Props> = ({ userId, doc }) => {
     const file = new File([doc.file], `${docType}${customName}.${doc.ext}`, {
       type: doc.file.type,
     });
-    console.log('file', file);
 
     try {
       await createDocument({ file, userId }).unwrap();
@@ -54,11 +53,15 @@ const DocumentUploadForm: React.FC<Props> = ({ userId, doc }) => {
     >
       {({ values, setFieldValue }) => (
         <Form>
-          <div className="mr-10 flex">
-            <div className="border-2 border-sky-700 p-3">
-              <img className="max-w-[250px] max-h-[250px]" src={previewSrc} />
+          <div className="flex mr-10">
+            <div className="p-3 border-2 border-sky-700">
+              <img
+                className="max-w-[250px] max-h-[250px]"
+                alt="preview"
+                src={previewSrc}
+              />
             </div>
-            <div className="flex grow mx-8 my-2">
+            <div className="flex mx-8 my-2 grow">
               <div className="mr-6">
                 <p className="mb-2 text-center">Тип документа</p>
                 <InputSelect

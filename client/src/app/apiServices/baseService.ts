@@ -7,6 +7,7 @@ export enum CacheTagType {
   PublishTabs = 'PublishTabs',
   PublishRecTabs = 'PublishRecTabs',
   EmailMessage = 'EmailMessage',
+  Documents = 'Documents',
 }
 
 export const baseApi = createApi({
@@ -16,6 +17,7 @@ export const baseApi = createApi({
     CacheTagType.PublishTabs,
     CacheTagType.PublishRecTabs,
     CacheTagType.EmailMessage,
+    CacheTagType.Documents,
   ],
   baseQuery: fetchBaseQuery({
     baseUrl: process.env.REACT_APP_API_URL,

@@ -68,7 +68,7 @@ const AbiturientTable: React.FC<Props> = ({
 
             let docsMarkClasses = '';
 
-            if (abt.documents.length > 0) {
+            if (abt.documentsAmount > 0) {
               const isDocSuccess = abt.sendingStatus === DocSendStatus.Success;
               docsMarkClasses = `before:absolute before:w-2 before:h-2 before:rounded-full before:-left-4 before:top-[50%] before:-translate-y-[50%] ${
                 isDocSuccess ? 'before:bg-lime-700' : 'before:bg-amber-600'

@@ -40,6 +40,13 @@ namespace Infrastructure.FTP
                 _sftpClient.Dispose();
             }
         }
+        private void CreateDirectory(string path)
+        {
+            if (!_sftpClient.Exists(path))
+            {
+                _sftpClient.CreateDirectory(path);
+            }
+        }
         private void UploadFiles(ICollection<FTPUploadDto> fileOpts, string path)
         {
             foreach (var fileOpt in fileOpts)
@@ -56,20 +63,18 @@ namespace Infrastructure.FTP
                 }
             }
         }
-        private void DeleteFiles(ICollection<string> fileNames, string path)
+        private void DeleteFiles(ICollection<string> paths)
         {
-            foreach (var fileName in fileNames)
+            foreach (var path in paths)
             {
-                string filePath = Path.Combine(path, fileName);
-                if (_sftpClient.Exists(filePath))
+                if (_sftpClient.Exists(path))
                 {
-                    _sftpClient.DeleteFile(filePath);
+                    _sftpClient.DeleteFile(path);
                 }
                 else
                 {
-                    Debug.WriteLine($"Couldn't find the file to delete: {fileName}");
+                    Debug.WriteLine($"Couldn't find the file to delete: {path}");
                 }
-
             }
         }
 
@@ -83,7 +88,6 @@ namespace Infrastructure.FTP
 
             CloseClient();
         }
-
         public void CreateUserDocs(ICollection<FTPUploadDto> fileOpts, string userFolder)
         {
             var conf = _config.Value;
@@ -91,7 +95,20 @@ namespace Infrastructure.FTP
 
             CreateClient();
 
+            CreateDirectory(path);
+
             UploadFiles(fileOpts, path);
+
+            CloseClient();
+        }
+        public void DeleteUserDocs(ICollection<string> docPaths)
+        {
+            var conf = _config.Value;
+            var paths = docPaths.Select(x => Path.Combine(conf.UserDocumentsPath, x)).ToList();
+
+            CreateClient();
+
+            DeleteFiles(paths);
 
             CloseClient();
         }
