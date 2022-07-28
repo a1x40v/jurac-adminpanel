@@ -12,7 +12,8 @@ namespace Application.MappingProfiles
         public PublishRecTabProfile()
         {
             CreateMap<RegabiturPublishrectab, PublishRecTabDto>()
-                .ForMember(d => d.FullName, o => o.MapFrom(s => $"{s.User.FirstName} {s.User.LastName}"));
+                .ForMember(d => d.FullName, o => o.MapFrom(s => $"{s.User.FirstName} {s.User.LastName}"))
+                .ForMember(d => d.Snils, o => o.MapFrom(s => s.User.RegabiturCustomuser.Snils));
 
             CreateMap<CreatePublishRecTabCommand, RegabiturPublishrectab>()
                 .ForMember(d => d.Sogl, (o) => o.MapFrom(s => s.Sogl ? UserSogl.Sent : UserSogl.NotSent))
@@ -30,12 +31,11 @@ namespace Application.MappingProfiles
                     s.Individ + s.RusPoint + s.ObshPoint + s.KpPoint + s.SpecPoint + s.ForeignLanguagePoint + s.GpPoint
                     + s.HistoryPoint + s.OkpPoint + s.TgpPoint + s.UpPoint));
 
-            CreateMap<RegabiturPublishrectab, PublishRecTabDeployDto>()
-                .ForMember(d => d.Snils, (o) => o.MapFrom(s => s.User.RegabiturCustomuser.Snils))
-                .ForMember(d => d.IndividPoint, (o) => o.MapFrom(s => s.Individ))
-                .ForMember(d => d.TestType, (o) => o.MapFrom(s => s.TestType == UserTestType.Ege ? UserTestType.Ege : "ВИ"))
-                .ForMember(d => d.ChosenPoint, (o) => o.MapFrom(s => s.TgpPoint > 0 ? s.TgpPoint : s.OkpPoint)) // ТГП / ОКП
-                .ForMember(d => d.Advantage, (o) => o.MapFrom(s => s.Advantage == UserAdvantage.Has ? "Да" : "Нет"));
+            CreateMap<PublishRecTabDto, PublishRecTabDeployDto>()
+               .ForMember(d => d.IndividPoint, (o) => o.MapFrom(s => s.Individ))
+               .ForMember(d => d.TestType, (o) => o.MapFrom(s => s.TestType == UserTestType.Ege ? UserTestType.Ege : "ВИ"))
+               .ForMember(d => d.ChosenPoint, (o) => o.MapFrom(s => s.TgpPoint > 0 ? s.TgpPoint : s.OkpPoint)) // ТГП / ОКП
+               .ForMember(d => d.Advantage, (o) => o.MapFrom(s => s.Advantage == UserAdvantage.Has ? "Да" : "Нет"));
         }
     }
 }

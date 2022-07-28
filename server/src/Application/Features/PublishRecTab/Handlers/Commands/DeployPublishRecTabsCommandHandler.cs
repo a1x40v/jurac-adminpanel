@@ -1,4 +1,5 @@
 using System.Linq.Expressions;
+using Application.Contracts.Application;
 using Application.Contracts.Infrastructure;
 using Application.DTO.FTP;
 using Application.DTO.PublishRecTab;
@@ -6,6 +7,8 @@ using Application.Features.PublishRecTab.Requests.Commands;
 using AutoMapper;
 using AutoMapper.QueryableExtensions;
 using Domain;
+using Domain.Constants;
+using Domain.Enums;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Persistence;
@@ -18,45 +21,33 @@ namespace Application.Features.PublishRecTab.Handlers.Commands
         private readonly IMapper _mapper;
         private readonly IPdfExporterService _exporterService;
         private readonly IFTPService _fTPService;
+        private readonly IPublishRecTabService _publishRecTabService;
         public DeployPublishRecTabsCommandHandler(ApplicationDbContext dbContext, IMapper mapper,
-            IPdfExporterService exporterService, IFTPService fTPService)
+            IPdfExporterService exporterService, IFTPService fTPService, IPublishRecTabService publishRecTabService)
         {
             _dbContext = dbContext;
             _mapper = mapper;
             _fTPService = fTPService;
             _exporterService = exporterService;
+            _publishRecTabService = publishRecTabService;
         }
         public async Task<Unit> Handle(DeployPublishRecTabsCommand request, CancellationToken cancellationToken)
         {
-            var deplOpts = new List<PublishRecTabDeployingOpt>
-            {
-                new PublishRecTabDeployingOpt { Selector = (recTab) => recTab.BakOfoUp, FileName = "bakOfoUp.pdf", Title = "Бакалавриат ОФО Уголовно-правовой профиль"  },
-                new PublishRecTabDeployingOpt { Selector = (recTab) => recTab.BakZfoUp,  FileName = "bakZfoUp.pdf", Title = "Бакалавриат ЗФО Уголовно-правовой профиль" },
-                new PublishRecTabDeployingOpt { Selector = (recTab) => recTab.BakOzfoUp,  FileName = "bakOzfoUp.pdf", Title = "Бакалавриат ОЗФО Уголовно-правовой профиль" },
-                new PublishRecTabDeployingOpt { Selector = (recTab) => recTab.BakOfoGp,  FileName = "bakOfoGp.pdf", Title = "Бакалавриат ОФО Гражданско-правовой профиль" },
-                new PublishRecTabDeployingOpt { Selector = (recTab) => recTab.BakZfoGp,  FileName = "bakZfoGp.pdf", Title = "Бакалавриат ЗФО Гражданско-правовой профиль" },
-                new PublishRecTabDeployingOpt { Selector = (recTab) => recTab.BakOzfoGp,  FileName = "bakOzfoGp.pdf", Title = "Бакалавриат ОЗФО Гражданско-правовой профиль" },
-                new PublishRecTabDeployingOpt { Selector = (recTab) => recTab.SpecOfoSd,  FileName = "specOfoSd.pdf", Title = "Специалитет ОФО Судебная деятельность" },
-                new PublishRecTabDeployingOpt { Selector = (recTab) => recTab.MagOfoPo,  FileName = "magOfoPo.pdf", Title = "Магистратура ОФО Правовое обеспечение гражданского оборота и предпринимательства" },
-                new PublishRecTabDeployingOpt { Selector = (recTab) => recTab.MagZfoPo,  FileName = "magZfoPo.pdf", Title = "Магистратура ЗФО Правовое обеспечение гражданского оборота и предпринимательства" },
-                new PublishRecTabDeployingOpt { Selector = (recTab) => recTab.MagOfoTp,  FileName = "magOfoTp.pdf", Title = "Магистратура ОФО Теория и практика применения законодательства в уголовно-правовой сфере" },
-                new PublishRecTabDeployingOpt { Selector = (recTab) => recTab.MagZfoTp,  FileName = "magZfoTp.pdf", Title = "Магистратура ЗФО Теория и практика применения законодательства в уголовно-правовой сфере" },
-                new PublishRecTabDeployingOpt { Selector = (recTab) => recTab.AspOfoGp,  FileName = "aspOfoGp.pdf", Title = "Аспирантура ОФО Теоретико-исторические правовые науки" },
-                new PublishRecTabDeployingOpt { Selector = (recTab) => recTab.AspOfoUgp,  FileName = "aspOfoUgp.pdf", Title = "Аспирантура ОФО Уголовно-правовые науки" },
-            };
+
+            var recTabs = await _dbContext.RegabiturPublishrectabs
+                .ProjectTo<PublishRecTabDto>(_mapper.ConfigurationProvider)
+                .ToListAsync();
+
+            var deployedTabs = _publishRecTabService.GetDeployedTabs(recTabs);
 
             var filesToUpload = new List<FTPUploadDto>();
 
-            foreach (var deplOpt in deplOpts)
+            foreach (var key in deployedTabs.Keys)
             {
-                var deployDtos = await _dbContext.RegabiturPublishrectabs
-                    .Where(deplOpt.Selector)
-                    .ProjectTo<PublishRecTabDeployDto>(_mapper.ConfigurationProvider)
-                    .ToListAsync();
-
-                var pdfFile = _exporterService.GeneratePdfExport(deployDtos, deplOpt.Title);
-
-                filesToUpload.Add(new FTPUploadDto { FileName = deplOpt.FileName, Data = pdfFile });
+                var depTabs = deployedTabs[key];
+                var pdfFile = _exporterService.GeneratePdfExport(depTabs, EduProfilesConstants.Titles[key]);
+                string fileName = $"{Enum.GetName(typeof(EduProfileType), key)}.pdf";
+                filesToUpload.Add(new FTPUploadDto { FileName = fileName, Data = pdfFile });
             }
 
             _fTPService.UploadFiles(filesToUpload);
