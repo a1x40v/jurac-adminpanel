@@ -30,6 +30,7 @@ namespace Persistence
         public virtual DbSet<AbiturResult> AbiturResults { get; set; }
         public virtual DbSet<AbiturResultasp> AbiturResultasps { get; set; }
         public virtual DbSet<AbiturResultmag> AbiturResultmags { get; set; }
+        public virtual DbSet<AdminpanelBackendstate> AdminpanelBackendstates { get; set; }
         public virtual DbSet<AdminpanelEmailmessage> AdminpanelEmailmessages { get; set; }
         public virtual DbSet<AuthUser> AuthUsers { get; set; }
         public virtual DbSet<RegabiturAdditionalinfo> RegabiturAdditionalinfos { get; set; }
@@ -500,6 +501,18 @@ namespace Persistence
                     .HasConstraintName("abitur_resultmag_educational_form_id_44f2ad0d_fk_abitur_ed");
             });
 
+            modelBuilder.Entity<AdminpanelBackendstate>(entity =>
+            {
+                entity.ToTable("adminpanel_backendstate");
+
+                entity.HasCharSet("utf8")
+                    .UseCollation("utf8_unicode_ci");
+
+                entity.Property(e => e.Id).HasColumnName("id");
+
+                entity.Property(e => e.RectabDeployStatus).HasColumnName("rectab_deploy_status");
+            });
+
             modelBuilder.Entity<AdminpanelEmailmessage>(entity =>
             {
                 entity.ToTable("adminpanel_emailmessage");
@@ -826,6 +839,11 @@ namespace Persistence
 
                 entity.Property(e => e.BakZfoUp).HasColumnName("bak_zfo_up");
 
+                entity.Property(e => e.Comment)
+                    .IsRequired()
+                    .HasMaxLength(256)
+                    .HasColumnName("comment");
+
                 entity.Property(e => e.DatePub)
                     .HasMaxLength(6)
                     .HasColumnName("date_pub");
@@ -837,6 +855,8 @@ namespace Persistence
                 entity.Property(e => e.HistoryPoint).HasColumnName("history_point");
 
                 entity.Property(e => e.Individ).HasColumnName("individ");
+
+                entity.Property(e => e.IsPublished).HasColumnName("is_published");
 
                 entity.Property(e => e.KpPoint).HasColumnName("kp_point");
 

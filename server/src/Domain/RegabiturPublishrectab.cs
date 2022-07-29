@@ -43,6 +43,8 @@ namespace Domain
         public short UpPoint { get; set; }
         public bool AspOfoGp { get; set; }
         public bool AspOfoUgp { get; set; }
+        public bool IsPublished { get; set; }
+        public string Comment { get; set; }
 
         public virtual AuthUser User { get; set; }
     }
