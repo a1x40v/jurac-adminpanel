@@ -35,6 +35,7 @@ namespace Application.Features.PublishRecTab.Handlers.Commands
         {
 
             var recTabs = await _dbContext.RegabiturPublishrectabs
+                .Where(x => x.IsPublished)
                 .ProjectTo<PublishRecTabDto>(_mapper.ConfigurationProvider)
                 .ToListAsync();
 

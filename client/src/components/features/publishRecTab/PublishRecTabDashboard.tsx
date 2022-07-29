@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom';
 import { Column } from 'react-table';
 import ScaleLoader from 'react-spinners/ScaleLoader';
+import { BsFillFileEarmarkCheckFill, BsFillFileEarmarkExcelFill } from 'react-icons/bs';
 
 import {
   useDeployPublishRecTabsMutation,
@@ -24,6 +25,11 @@ const columns: Array<Column> = [
         {value}
       </Link>
     ),
+  },
+  {
+    Header: 'Выложить',
+    accessor: 'isPublished',
+    Cell: ({ value }) => <>{value ? <BsFillFileEarmarkCheckFill size={25} color="green" /> : <BsFillFileEarmarkExcelFill size={25} color="red" />}</>,
   },
   {
     Header: 'Имя',
@@ -59,6 +65,10 @@ const columns: Array<Column> = [
         ))}
       </ul>
     ),
+  },
+  {
+    Header: 'Комментарий',
+    accessor: 'comment',
   },
 ];
 

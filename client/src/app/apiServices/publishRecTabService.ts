@@ -22,6 +22,8 @@ export const publishRecTabApi = baseApi.injectEndpoints({
             sostType,
             advantage,
             sumPoints,
+            isPublished,
+            comment,
             ...other
           }) => ({
             id,
@@ -32,6 +34,8 @@ export const publishRecTabApi = baseApi.injectEndpoints({
             sostType,
             advantage,
             sumPoints,
+            isPublished,
+            comment,
             profiles: publishProfilesToArray(other),
           })
         );

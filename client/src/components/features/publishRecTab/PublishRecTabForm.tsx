@@ -11,9 +11,11 @@ import {
 import { AbiturientTestType } from '../../../app/models/Abiturient';
 import { ChoiceProfile } from '../../../app/models/ChoiceProfile';
 import { PublishRecTabPoints } from '../../../app/models/PublishRecTab';
+import FormField from '../../common/UI/formik/FormField';
 import FormikInputText from '../../common/UI/formik/FormikInputText';
 import Button from '../../common/UI/inputs/Button';
 import InputSelect, { SelectOption } from '../../common/UI/inputs/InputSelect';
+import InputToggle from '../../common/UI/inputs/InputToggle';
 
 const calcSummPoints = (v: PublishRecTabFormValues): number =>
   v.individ +
@@ -41,6 +43,8 @@ export type PublishRecTabFormValues = {
   sostType: string;
   advantage: string;
   profiles: ChoiceProfile[];
+  isPublished: boolean;
+  comment: string;
 } & Omit<PublishRecTabPoints, 'sumPoints'>;
 
 const profileOptions = CHOICE_PROFILES.map((value) => ({
@@ -99,7 +103,14 @@ const PublishRecTabForm: React.FC<Props> = ({ values, onSubmit }) => {
       validationSchema={validationSchema}
       enableReinitialize={true}
     >
-      {({ values, isSubmitting, isValid, dirty, setFieldValue }) => (
+      {({
+        values,
+        isSubmitting,
+        isValid,
+        dirty,
+        getFieldProps,
+        setFieldValue,
+      }) => (
         <Form>
           <div className="flex flex-col items-start">
             <div className="flex justify-between w-full">
@@ -243,6 +254,19 @@ const PublishRecTabForm: React.FC<Props> = ({ values, onSubmit }) => {
                   );
                 }}
               />
+            </div>
+            <div className="w-full">
+              <div className="mb-3">
+                <p className="mb-2">Выкладывать на сайт</p>
+                <InputToggle {...getFieldProps('isPublished')} />
+              </div>
+              <div className="grow">
+                <FormField
+                  isFullWidth={true}
+                  name="comment"
+                  label="Комментарий к публикации"
+                />
+              </div>
             </div>
             <Button
               type="submit"

@@ -64,6 +64,8 @@ const PublishRecTabDetail: React.FC<Props> = ({ userId, isSnils }) => {
       tgpPoint: 0,
       upPoint: 0,
       profiles: [],
+      isPublished: false,
+      comment: '',
     };
   } else {
     const {
@@ -85,6 +87,8 @@ const PublishRecTabDetail: React.FC<Props> = ({ userId, isSnils }) => {
       okpPoint,
       tgpPoint,
       upPoint,
+      isPublished,
+      comment,
       ...other
     } = data;
     formValues = {
@@ -105,6 +109,8 @@ const PublishRecTabDetail: React.FC<Props> = ({ userId, isSnils }) => {
       okpPoint,
       tgpPoint,
       upPoint,
+      isPublished,
+      comment,
       profiles: publishProfilesToArray(other),
     };
   }

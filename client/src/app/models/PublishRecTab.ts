@@ -24,6 +24,8 @@ export type PublishRecTab = {
   sogl: string;
   sostType: string;
   advantage: string;
+  isPublished: boolean;
+  comment: string;
 } & PublishRecTabPoints &
   ChoiceProfileSet;
 
@@ -44,6 +46,8 @@ export type PublishRecTabView = {
   advantage: string;
   sumPoints: number;
   profiles: ChoiceProfile[];
+  isPublished: boolean;
+  comment: string;
 };
 
 export enum PublishRecSostType {

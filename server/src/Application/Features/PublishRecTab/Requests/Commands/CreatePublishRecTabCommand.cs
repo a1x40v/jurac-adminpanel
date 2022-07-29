@@ -38,6 +38,8 @@ namespace Application.Features.PublishRecTab.Requests.Commands
         public bool AspOfoKs { get; set; }
         public bool AspZfoKs { get; set; }
         public bool AspOfoGp { get; set; }
-        public bool AspOfoUgp { get; set; } 
+        public bool AspOfoUgp { get; set; }
+        public bool IsPublished { get; set; }
+        public string Comment { get; set; }
     }
 }

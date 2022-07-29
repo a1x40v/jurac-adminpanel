@@ -41,5 +41,7 @@ namespace Application.DTO.PublishRecTab
         public bool AspOfoUgp { get; set; }
         public string FullName { get; set; }
         public string Snils { get; set; }
+        public bool IsPublished { get; set; }
+        public string Comment { get; set; }
     }
 }
