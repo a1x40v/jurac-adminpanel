@@ -47,5 +47,6 @@ namespace Domain
         public string Comment { get; set; }
 
         public virtual AuthUser User { get; set; }
+        public virtual AdminpanelRectabmodification AdminpanelRectabmodification { get; set; }
     }
 }

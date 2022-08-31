@@ -30,8 +30,8 @@ namespace Persistence
         public virtual DbSet<AbiturResult> AbiturResults { get; set; }
         public virtual DbSet<AbiturResultasp> AbiturResultasps { get; set; }
         public virtual DbSet<AbiturResultmag> AbiturResultmags { get; set; }
-        public virtual DbSet<AdminpanelBackendstate> AdminpanelBackendstates { get; set; }
         public virtual DbSet<AdminpanelEmailmessage> AdminpanelEmailmessages { get; set; }
+        public virtual DbSet<AdminpanelRectabmodification> AdminpanelRectabmodifications { get; set; }
         public virtual DbSet<AuthUser> AuthUsers { get; set; }
         public virtual DbSet<RegabiturAdditionalinfo> RegabiturAdditionalinfos { get; set; }
         public virtual DbSet<RegabiturAdditionalinfoEducationProfile> RegabiturAdditionalinfoEducationProfiles { get; set; }
@@ -501,18 +501,6 @@ namespace Persistence
                     .HasConstraintName("abitur_resultmag_educational_form_id_44f2ad0d_fk_abitur_ed");
             });
 
-            modelBuilder.Entity<AdminpanelBackendstate>(entity =>
-            {
-                entity.ToTable("adminpanel_backendstate");
-
-                entity.HasCharSet("utf8")
-                    .UseCollation("utf8_unicode_ci");
-
-                entity.Property(e => e.Id).HasColumnName("id");
-
-                entity.Property(e => e.RectabDeployStatus).HasColumnName("rectab_deploy_status");
-            });
-
             modelBuilder.Entity<AdminpanelEmailmessage>(entity =>
             {
                 entity.ToTable("adminpanel_emailmessage");
@@ -560,6 +548,38 @@ namespace Persistence
                     .HasForeignKey(d => d.SenderId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("adminpanel_emailmessage_sender_id_7d5eda7b_fk_auth_user_id");
+            });
+
+            modelBuilder.Entity<AdminpanelRectabmodification>(entity =>
+            {
+                entity.ToTable("adminpanel_rectabmodification");
+
+                entity.HasCharSet("utf8")
+                    .UseCollation("utf8_unicode_ci");
+
+                entity.HasIndex(e => e.RectabId, "rectab_id")
+                    .IsUnique();
+
+                entity.Property(e => e.Id).HasColumnName("id");
+
+                entity.Property(e => e.Author)
+                    .IsRequired()
+                    .HasMaxLength(100)
+                    .HasColumnName("author");
+
+                entity.Property(e => e.CreatedAt)
+                    .HasMaxLength(6)
+                    .HasColumnName("created_at");
+
+                entity.Property(e => e.RectabId).HasColumnName("rectab_id");
+
+                entity.Property(e => e.Type).HasColumnName("type");
+
+                entity.HasOne(d => d.Rectab)
+                    .WithOne(p => p.AdminpanelRectabmodification)
+                    .HasForeignKey<AdminpanelRectabmodification>(d => d.RectabId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("adminpanel_rectabmod_rectab_id_48d138d3_fk_regabitur");
             });
 
             modelBuilder.Entity<AuthUser>(entity =>
