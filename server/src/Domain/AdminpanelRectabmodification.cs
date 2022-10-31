@@ -9,8 +9,10 @@ namespace Domain
         public DateTime CreatedAt { get; set; }
         public string Author { get; set; }
         public ushort Type { get; set; }
-        public int RectabId { get; set; }
+        public int? RectabId { get; set; }
+        public int? AbiturientId { get; set; }
 
+        public virtual AuthUser Abiturient { get; set; }
         public virtual RegabiturPublishrectab Rectab { get; set; }
     }
 }

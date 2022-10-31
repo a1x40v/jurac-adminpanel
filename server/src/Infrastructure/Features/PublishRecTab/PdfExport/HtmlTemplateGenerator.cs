@@ -18,9 +18,6 @@ namespace Infrastructure.Features.PublishRecTab.PdfExport
                         <th>СНИЛС</th>
                         <th>ВИ</th>
                         <th>Сумма баллов</th>
-                        <th>Обществоз<br/>нание</th>
-                        <th>Русский<br/>язык</th>
-                        <th>Предмет<br/>по выбору:<br/>ТГП/ОКП</th>
                         <th>Инд. достижения</th>
                         <th>Состояние</th>
                         <th>Согласие на<br/>зачисление</th>
@@ -39,12 +36,8 @@ namespace Infrastructure.Features.PublishRecTab.PdfExport
                         <td>{5}</td>
                         <td>{6}</td>
                         <td>{7}</td>
-                        <td>{8}</td>
-                        <td>{9}</td>
-                        <td>{10}</td>
                     </tr>",
-                    rec.UserId, rec.Snils, rec.TestType, rec.SumPoints, rec.ObshPoint, rec.RusPoint,
-                    rec.ChosenPoint, rec.IndividPoint > 0 ? rec.IndividPoint : "-", rec.SostType, rec.Sogl, rec.Advantage);
+                    rec.UserId, rec.Snils, rec.TestType, rec.SumPoints, rec.IndividPoint > 0 ? rec.IndividPoint : "-", rec.SostType, rec.Sogl, rec.Advantage);
             }
 
             sb.Append("</table>");
@@ -64,8 +57,15 @@ namespace Infrastructure.Features.PublishRecTab.PdfExport
                         }
 
                         td, th {
-                            padding: 10px;
+                            padding: 15px;
                             text-align: center;
+                        }
+
+                        table,
+                        th,
+                        td {
+                        border: 1px solid;
+                        border-collapse: collapse;
                         }
                     </style>
                     </head>

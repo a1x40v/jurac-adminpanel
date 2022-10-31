@@ -1,5 +1,3 @@
-using System;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 using Domain;
 using Domain.Constants;
@@ -42,102 +40,6 @@ namespace IntegrationTests
             {
                 Description = UserChoisesProfile.AspOfoUgp
             });
-        }
-
-        protected async Task<int> CreateUser(bool addCustom = false, bool addProfiles = false, bool addPublishes = false)
-        {
-            var authUser = new AuthUser
-            {
-                Password = "password",
-                IsSuperuser = false,
-                Username = "testusername",
-                FirstName = "Testfirstname",
-                LastName = "Testlastname",
-                Email = "test@example.com",
-                IsStaff = false,
-                IsActive = false,
-                DateJoined = DateTime.Now
-            };
-
-            // Custom User
-            if (addCustom)
-            {
-                var customUser = new RegabiturCustomuser
-                {
-                    DateOfBirth = DateTime.Now,
-                    Patronymic = "Testpatronymic",
-                    PhoneNumber = "123456",
-                    SendingStatus = UserDocSendingStatus.No,
-                    CompleteFlag = false,
-                    AgreementFlag = false,
-                    WorkFlag = false,
-                    SuccessFlag = false,
-                    Address = "Test address",
-                    CommentAdmin = "Test comment admin",
-                    DateOfDoc = "Test date of doc",
-                    NameUz = "Test name uz",
-                    Passport = "12345678",
-                    Snils = "12345678901",
-                    Message = "Test message"
-                };
-                authUser.RegabiturCustomuser = customUser;
-            }
-
-            // Additional Info
-            if (addProfiles)
-            {
-                var addInfo = new RegabiturAdditionalinfo();
-                authUser.RegabiturAdditionalinfo = addInfo;
-
-                // Choises profile
-                addInfo.RegabiturAdditionalinfoEducationProfiles = new List<RegabiturAdditionalinfoEducationProfile>
-                {
-                     new RegabiturAdditionalinfoEducationProfile
-                     {
-                         Additionalinfo = addInfo,
-                         Choicesprofile = new RegabiturChoicesprofile { Description = UserChoisesProfile.BakOfoUp}
-                     },
-                     new RegabiturAdditionalinfoEducationProfile
-                     {
-                         Additionalinfo = addInfo,
-                         Choicesprofile = new RegabiturChoicesprofile { Description = UserChoisesProfile.BakOfoGp}
-                     }
-                };
-            }
-
-            // Documentuser
-            var docUser = new RegabiturDocumentuser
-            {
-                NameDoc = "Test name doc",
-                Doc = "Test doc"
-            };
-            authUser.RegabiturDocumentusers = new List<RegabiturDocumentuser> {
-                docUser
-            };
-
-            if (addPublishes)
-            {
-                // Publishtab
-                var publishtab = new RegabiturPublishtab
-                {
-                    IndividualStr = "Test Ind Str",
-                    TestType = "Test testtype"
-                };
-                authUser.RegabiturPublishtab = publishtab;
-
-                var publishRecTab = new RegabiturPublishrectab
-                {
-                    TestType = "Test testtype",
-                    Advantage = "adv",
-                    SostType = "sost",
-                    Sogl = "sogl"
-                };
-                authUser.RegabiturPublishrectab = publishRecTab;
-            }
-
-            await AddAsync<AuthUser>(authUser);
-
-            return authUser.Id;
         }
     }
 }

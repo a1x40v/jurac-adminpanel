@@ -23,7 +23,7 @@ namespace IntegrationTests.Users.Commands
         [Test]
         public async Task ShouldDeleteUser()
         {
-            var id = await CreateUser();
+            var id = await RunAsUserAsync();
 
             await SendAsync(new DeleteUserCommand
             {
@@ -38,7 +38,7 @@ namespace IntegrationTests.Users.Commands
         [Test]
         public async Task ShouldDeleteUserWithRelatedEntities()
         {
-            var id = await CreateUser(true, true, true);
+            var id = await RunAsUserAsync(true, true, true);
 
             await SendAsync(new DeleteUserCommand
             {

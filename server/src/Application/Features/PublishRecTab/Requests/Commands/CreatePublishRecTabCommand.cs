@@ -17,8 +17,8 @@ namespace Application.Features.PublishRecTab.Requests.Commands
         public short ForeignLanguagePoint { get; set; }
         public short GpPoint { get; set; }
         public short HistoryPoint { get; set; }
-        public short OkpPoint { get; set; }
-        public short TgpPoint { get; set; }
+        public short OkpPoint { get; set; } // ТГП или ОКП должны быть 0
+        public short TgpPoint { get; set; } // ТГП или ОКП должны быть 0
         public short UpPoint { get; set; }
         public bool BakOfoGp { get; set; }
         public bool BakOfoUp { get; set; }

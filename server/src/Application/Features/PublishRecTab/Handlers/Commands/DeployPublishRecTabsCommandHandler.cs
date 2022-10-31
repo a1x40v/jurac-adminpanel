@@ -53,6 +53,9 @@ namespace Application.Features.PublishRecTab.Handlers.Commands
 
             _fTPService.UploadFiles(filesToUpload);
 
+            _dbContext.AdminpanelRectabmodifications.RemoveRange(_dbContext.AdminpanelRectabmodifications);
+            await _dbContext.SaveChangesAsync();
+
             return Unit.Value;
         }
     }

@@ -557,10 +557,15 @@ namespace Persistence
                 entity.HasCharSet("utf8")
                     .UseCollation("utf8_unicode_ci");
 
+                entity.HasIndex(e => e.AbiturientId, "abiturient_id")
+                    .IsUnique();
+
                 entity.HasIndex(e => e.RectabId, "rectab_id")
                     .IsUnique();
 
                 entity.Property(e => e.Id).HasColumnName("id");
+
+                entity.Property(e => e.AbiturientId).HasColumnName("abiturient_id");
 
                 entity.Property(e => e.Author)
                     .IsRequired()
@@ -575,10 +580,14 @@ namespace Persistence
 
                 entity.Property(e => e.Type).HasColumnName("type");
 
+                entity.HasOne(d => d.Abiturient)
+                    .WithOne(p => p.AdminpanelRectabmodification)
+                    .HasForeignKey<AdminpanelRectabmodification>(d => d.AbiturientId)
+                    .HasConstraintName("adminpanel_rectabmod_abiturient_id_80877e36_fk_auth_user");
+
                 entity.HasOne(d => d.Rectab)
                     .WithOne(p => p.AdminpanelRectabmodification)
                     .HasForeignKey<AdminpanelRectabmodification>(d => d.RectabId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("adminpanel_rectabmod_rectab_id_48d138d3_fk_regabitur");
             });
 

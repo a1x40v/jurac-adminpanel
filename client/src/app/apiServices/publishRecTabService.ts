@@ -66,6 +66,7 @@ export const publishRecTabApi = baseApi.injectEndpoints({
       invalidatesTags: (result, error, { userId }) => [
         { type: CacheTagType.PublishRecTabs, id: userId },
         { type: CacheTagType.PublishRecTabs, id: 'LIST' },
+        { type: CacheTagType.PublishRecTabMods, id: 'LIST' },
       ],
     }),
     updatePublishRecTab: builder.mutation<void, PublishRecTabUpdateModel>({
@@ -76,6 +77,7 @@ export const publishRecTabApi = baseApi.injectEndpoints({
       }),
       invalidatesTags: (result, error, { userId }) => [
         { type: CacheTagType.PublishRecTabs, id: userId },
+        { type: CacheTagType.PublishRecTabMods, id: 'LIST' },
       ],
     }),
     deletePublishRecTab: builder.mutation<void, number>({
@@ -85,6 +87,7 @@ export const publishRecTabApi = baseApi.injectEndpoints({
       }),
       invalidatesTags: (result, error, userId) => [
         { type: CacheTagType.PublishRecTabs, id: userId },
+        { type: CacheTagType.PublishRecTabMods, id: 'LIST' },
       ],
     }),
     deployPublishRecTabs: builder.mutation<void, void>({
@@ -92,6 +95,9 @@ export const publishRecTabApi = baseApi.injectEndpoints({
         url: 'publishrectabs/deploy',
         method: 'POST',
       }),
+      invalidatesTags: () => [
+        { type: CacheTagType.PublishRecTabMods, id: 'LIST' },
+      ],
     }),
   }),
 });

@@ -6,6 +6,7 @@ export enum CacheTagType {
   Abiturients = 'Abiturients',
   PublishTabs = 'PublishTabs',
   PublishRecTabs = 'PublishRecTabs',
+  PublishRecTabMods = 'PublishRecTabMods',
   EmailMessage = 'EmailMessage',
 }
 
@@ -15,6 +16,7 @@ export const baseApi = createApi({
     CacheTagType.Abiturients,
     CacheTagType.PublishTabs,
     CacheTagType.PublishRecTabs,
+    CacheTagType.PublishRecTabMods,
     CacheTagType.EmailMessage,
   ],
   baseQuery: fetchBaseQuery({
