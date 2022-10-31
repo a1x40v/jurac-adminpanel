@@ -31,6 +31,7 @@ namespace Persistence
         public virtual DbSet<AbiturResultasp> AbiturResultasps { get; set; }
         public virtual DbSet<AbiturResultmag> AbiturResultmags { get; set; }
         public virtual DbSet<AdminpanelEmailmessage> AdminpanelEmailmessages { get; set; }
+        public virtual DbSet<AdminpanelRectabmodification> AdminpanelRectabmodifications { get; set; }
         public virtual DbSet<AuthUser> AuthUsers { get; set; }
         public virtual DbSet<RegabiturAdditionalinfo> RegabiturAdditionalinfos { get; set; }
         public virtual DbSet<RegabiturAdditionalinfoEducationProfile> RegabiturAdditionalinfoEducationProfiles { get; set; }
@@ -549,6 +550,47 @@ namespace Persistence
                     .HasConstraintName("adminpanel_emailmessage_sender_id_7d5eda7b_fk_auth_user_id");
             });
 
+            modelBuilder.Entity<AdminpanelRectabmodification>(entity =>
+            {
+                entity.ToTable("adminpanel_rectabmodification");
+
+                entity.HasCharSet("utf8")
+                    .UseCollation("utf8_unicode_ci");
+
+                entity.HasIndex(e => e.AbiturientId, "abiturient_id")
+                    .IsUnique();
+
+                entity.HasIndex(e => e.RectabId, "rectab_id")
+                    .IsUnique();
+
+                entity.Property(e => e.Id).HasColumnName("id");
+
+                entity.Property(e => e.AbiturientId).HasColumnName("abiturient_id");
+
+                entity.Property(e => e.Author)
+                    .IsRequired()
+                    .HasMaxLength(100)
+                    .HasColumnName("author");
+
+                entity.Property(e => e.CreatedAt)
+                    .HasMaxLength(6)
+                    .HasColumnName("created_at");
+
+                entity.Property(e => e.RectabId).HasColumnName("rectab_id");
+
+                entity.Property(e => e.Type).HasColumnName("type");
+
+                entity.HasOne(d => d.Abiturient)
+                    .WithOne(p => p.AdminpanelRectabmodification)
+                    .HasForeignKey<AdminpanelRectabmodification>(d => d.AbiturientId)
+                    .HasConstraintName("adminpanel_rectabmod_abiturient_id_80877e36_fk_auth_user");
+
+                entity.HasOne(d => d.Rectab)
+                    .WithOne(p => p.AdminpanelRectabmodification)
+                    .HasForeignKey<AdminpanelRectabmodification>(d => d.RectabId)
+                    .HasConstraintName("adminpanel_rectabmod_rectab_id_48d138d3_fk_regabitur");
+            });
+
             modelBuilder.Entity<AuthUser>(entity =>
             {
                 entity.ToTable("auth_user");
@@ -826,6 +868,11 @@ namespace Persistence
 
                 entity.Property(e => e.BakZfoUp).HasColumnName("bak_zfo_up");
 
+                entity.Property(e => e.Comment)
+                    .IsRequired()
+                    .HasMaxLength(256)
+                    .HasColumnName("comment");
+
                 entity.Property(e => e.DatePub)
                     .HasMaxLength(6)
                     .HasColumnName("date_pub");
@@ -837,6 +884,8 @@ namespace Persistence
                 entity.Property(e => e.HistoryPoint).HasColumnName("history_point");
 
                 entity.Property(e => e.Individ).HasColumnName("individ");
+
+                entity.Property(e => e.IsPublished).HasColumnName("is_published");
 
                 entity.Property(e => e.KpPoint).HasColumnName("kp_point");
 

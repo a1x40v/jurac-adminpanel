@@ -75,7 +75,7 @@ namespace IntegrationTests.Users.Commands
         [Test]
         public async Task ShouldUpdateUser()
         {
-            int userId = await CreateUser();
+            int userId = await RunAsUserAsync();
 
             var command = CreateUpdateCommand(userId);
 
@@ -110,7 +110,7 @@ namespace IntegrationTests.Users.Commands
         {
             await CreateUserProfiles();
 
-            int userId = await CreateUser();
+            int userId = await RunAsUserAsync();
 
             var newProfiles = new List<string>
             {

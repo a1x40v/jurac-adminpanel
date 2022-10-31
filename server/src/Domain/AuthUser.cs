@@ -23,6 +23,7 @@ namespace Domain
         public bool IsActive { get; set; }
         public DateTime DateJoined { get; set; }
 
+        public virtual AdminpanelRectabmodification AdminpanelRectabmodification { get; set; }
         public virtual RegabiturAdditionalinfo RegabiturAdditionalinfo { get; set; }
         public virtual RegabiturCustomuser RegabiturCustomuser { get; set; }
         public virtual RegabiturPublishrectab RegabiturPublishrectab { get; set; }

@@ -1,10 +1,11 @@
 using Application.Common.Behaviours;
 using Application.Common.Sorting;
+using Application.Contracts.Application;
 using Application.Contracts.Common;
 using Application.DTO.User;
 using Application.Features.Users.Requests.Commands;
 using Application.MappingProfiles;
-using Domain;
+using Application.Services;
 using MediatR;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -28,6 +29,7 @@ namespace Application
 
             services.AddTransient(typeof(IPipelineBehavior<,>), typeof(RequestValidationBehavior<,>));
             services.AddScoped<ISortHelper<UserDto>, SortHelper<UserDto>>();
+            services.AddScoped<IPublishRecTabService, PublishRecTabService>();
 
             return services;
         }
