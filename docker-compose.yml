@@ -1,0 +1,42 @@
+version: '3.1'
+
+services:
+  web:
+    image: juracdev/adminpanel
+    ports:
+      - 80:80
+    environment:
+      Email__From: jurac.spb@mail.ru
+      Email__SmtpServer: smtp.mail.ru
+      Email__Port: 465
+      Email__Username: jurac.spb@mail.ru
+    secrets:
+      - connectionstrings__defaultconnection
+      - jwtsecret
+      - email__password
+      - ftp__host
+      - ftp__port
+      - ftp__username
+      - ftp__password
+      - ftp__rectabsdeploypath
+      - ftp__userdocumentspath
+
+secrets:
+  connectionstrings__defaultconnection:
+    external: true
+  jwtsecret:
+    external: true
+  email__password:
+    external: true
+  ftp__host:
+    external: true
+  ftp__port:
+    external: true
+  ftp__username:
+    external: true
+  ftp__password:
+    external: true
+  ftp__rectabsdeploypath:
+    external: true
+  ftp__userdocumentspath:
+    external: true
