@@ -1,4 +1,4 @@
-using Application.DTO.Documentuser;
+using Application.DTO.Document;
 
 namespace Application.DTO.User
 {
@@ -25,8 +25,8 @@ namespace Application.DTO.User
         public string NameUz { get; set; }
         public string Passport { get; set; }
         public string Snils { get; set; }
+        public int DocumentsAmount { get; set; }
         public DateTime? NewestDocumentDate { get; set; } = null;
-        public ICollection<DocumentuserDto> Documents { get; set; }
         public ICollection<string> ChoicesProfiles { get; set; }
     }
 }

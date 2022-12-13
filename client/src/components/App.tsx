@@ -4,6 +4,7 @@ import { ToastContainer } from 'react-toastify';
 
 import { useAppSelector } from '../app/hooks/stateHooks';
 import LeftNavBar from './common/layout/LeftNavBar';
+import AbiturientDocumentDetail from './features/abiturDocument/AbiturientDocumentDetail';
 import AbiturientDashboard from './features/abiturient/AbiturientDashboard';
 import AbiturientDetail from './features/abiturient/AbiturientDetail';
 import LoginForm from './features/auth/LoginForm';
@@ -36,6 +37,7 @@ const App = () => {
           <Route path="/publishtabs" element={<PublishTabDashboard />} />
           <Route path="/publishrectabs" element={<PublishRecTabDashboard />} />
           <Route path="/emailmessages/:id" element={<EmailMessageDetail />} />
+          <Route path="/documents/:id" element={<AbiturientDocumentDetail />} />
           <Route path="/settings" element={<AppSettings />} />
           <Route path="*" element={<AbiturientDashboard />} />
         </Routes>

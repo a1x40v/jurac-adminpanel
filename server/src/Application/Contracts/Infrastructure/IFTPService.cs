@@ -4,6 +4,6 @@ namespace Application.Contracts.Infrastructure
 {
     public interface IFTPService
     {
-        void UploadFiles(ICollection<FTPUploadDto> fileOpts);
+        void DeployPublishRecTabs(ICollection<FTPUploadDto> fileOpts);
     }
 }

@@ -54,10 +54,10 @@ namespace Application.Features.Users.Handlers.Queries
                 switch (request.QueryParams.DocExistStatus)
                 {
                     case UserDocExistingStatus.Exist:
-                        filteredQuery = filteredQuery.Where(x => x.Documents.Count != 0);
+                        filteredQuery = filteredQuery.Where(x => x.DocumentsAmount != 0);
                         break;
                     case UserDocExistingStatus.NotExist:
-                        filteredQuery = filteredQuery.Where(x => x.Documents.Count == 0);
+                        filteredQuery = filteredQuery.Where(x => x.DocumentsAmount == 0);
                         break;
                 }
             }

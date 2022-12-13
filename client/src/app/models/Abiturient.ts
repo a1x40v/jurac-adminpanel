@@ -55,7 +55,7 @@ export interface Abiturient {
   passport: string;
   snils: string;
   newestDocumentDate: string | null;
-  documents: AbiturDocument[];
+  documentsAmount: number;
   choicesProfiles: ChoiceProfile[];
 }
 
@@ -63,12 +63,6 @@ export type AbiturientUpdate = Omit<
   Abiturient,
   'documents' | 'dateJoined' | 'lastLogin' | 'newestDocumentDate'
 >;
-export interface AbiturDocument {
-  id: number;
-  datePub: string;
-  nameDoc: string;
-  doc: string;
-}
 
 export interface AbiturientListVm {
   users: Abiturient[];

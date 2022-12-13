@@ -20,14 +20,14 @@ namespace Application.Features.PublishRecTab.Handlers.Commands
         private readonly ApplicationDbContext _dbContext;
         private readonly IMapper _mapper;
         private readonly IPdfExporterService _exporterService;
-        private readonly IFTPService _fTPService;
+        private readonly IFTPService _ftpService;
         private readonly IPublishRecTabService _publishRecTabService;
         public DeployPublishRecTabsCommandHandler(ApplicationDbContext dbContext, IMapper mapper,
-            IPdfExporterService exporterService, IFTPService fTPService, IPublishRecTabService publishRecTabService)
+            IPdfExporterService exporterService, IFTPService ftpService, IPublishRecTabService publishRecTabService)
         {
             _dbContext = dbContext;
             _mapper = mapper;
-            _fTPService = fTPService;
+            _ftpService = ftpService;
             _exporterService = exporterService;
             _publishRecTabService = publishRecTabService;
         }
@@ -51,7 +51,7 @@ namespace Application.Features.PublishRecTab.Handlers.Commands
                 filesToUpload.Add(new FTPUploadDto { FileName = fileName, Data = pdfFile });
             }
 
-            _fTPService.UploadFiles(filesToUpload);
+            _ftpService.DeployPublishRecTabs(filesToUpload);
 
             _dbContext.AdminpanelRectabmodifications.RemoveRange(_dbContext.AdminpanelRectabmodifications);
             await _dbContext.SaveChangesAsync();

@@ -1,4 +1,4 @@
-using Application.DTO.Documentuser;
+using Application.DTO.Document;
 using Application.DTO.User;
 using Application.Features.Users.Requests.Commands;
 using AutoMapper;
@@ -10,10 +10,6 @@ namespace Application.MappingProfiles
     {
         public UserProfile()
         {
-            // Documentuser
-            CreateMap<RegabiturDocumentuser, DocumentuserDto>();
-
-            // User
             CreateMap<UpdateUserCommand, AuthUser>();
 
             CreateMap<UpdateUserCommand, RegabiturCustomuser>()
@@ -36,9 +32,9 @@ namespace Application.MappingProfiles
                 .ForMember(d => d.WorkFlag, o => o.MapFrom(s => s.RegabiturCustomuser != null ? s.RegabiturCustomuser.WorkFlag : false))
                 .ForMember(d => d.SuccessFlag, o => o.MapFrom(s => s.RegabiturCustomuser != null ? s.RegabiturCustomuser.SuccessFlag : false))
 
+                .ForMember(d => d.DocumentsAmount, o => o.MapFrom(s => s.RegabiturDocumentusers.Where(x => x.UserId == s.Id).Count()))
                 .ForMember(d => d.NewestDocumentDate, o => o.MapFrom(s => s.RegabiturDocumentusers.OrderByDescending(x => x.DatePub).FirstOrDefault().DatePub.Date))
 
-                .ForMember(d => d.Documents, o => o.MapFrom(s => s.RegabiturDocumentusers))
                 .ForMember(d => d.ChoicesProfiles, o => o.MapFrom(s =>
                     s.RegabiturAdditionalinfo.RegabiturAdditionalinfoEducationProfiles
                         .Select(x => x.Choicesprofile.Description)));

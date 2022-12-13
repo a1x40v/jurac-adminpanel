@@ -17,6 +17,7 @@ namespace Infrastructure
         {
             services.AddScoped<IUserExporter, UserExporter>();
             services.AddScoped<IFTPService, FTPService>();
+            services.AddScoped<IFTPUserDocsService, FTPUserDocsService>();
             services.AddSingleton(typeof(IConverter), new SynchronizedConverter(new PdfTools()));
             services.AddScoped<IPdfExporterService, PdfExporterService>();
 
