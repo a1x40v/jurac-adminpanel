@@ -6,10 +6,15 @@ export enum ChoiceProfile {
   BakZfoGp = 'Бакалавриат ЗФО Гражданско-правовой профиль',
   BakOzfoGp = 'Бакалавриат ОЗФО Гражданско-правовой профиль',
   SpecOfoSd = 'Специалитет ОФО Судебная деятельность',
+  SpecZfoSd = 'Специалитет ЗФО Судебная деятельность',
   MagOfoPo = 'Магистратура ОФО Правовое обеспечение гражданского оборота и предпринимательства',
   MagZfoPo = 'Магистратура ЗФО Правовое обеспечение гражданского оборота и предпринимательства',
   MagOfoTp = 'Магистратура ОФО Теория и практика применения законодательства в уголовно-правовой сфере',
   MagZfoTp = 'Магистратура ЗФО Теория и практика применения законодательства в уголовно-правовой сфере',
+  MagOfoCorp = 'Магистратура ОФО Юрист в сфере корпоративного права',
+  MagZfoCorp = 'Магистратура ЗФО Юрист в сфере корпоративного права',
+  MagOfoMed = 'Магистратура ОФО Медицинское право (юрист в сфере здравоохранения)',
+  MagZfoMed = 'Магистратура ЗФО Медицинское право (юрист в сфере здравоохранения)',
   AspOfoTip = 'Аспирантура ОФО Теория и история права и государства, история учений о праве и государстве',
   AspZfoTip = 'Аспирантура ЗФО Теория и история права и государства, история учений о праве и государстве',
   AspOfoUp = 'Аспирантура ОФО Уголовный процесс',
@@ -28,10 +33,15 @@ export interface ChoiceProfileSet {
   bakOzfoUp: boolean;
   bakOzfoGp: boolean;
   specOfoSd: boolean;
+  specZfoSd: boolean;
   magOfoPo: boolean;
   magZfoPo: boolean;
   magOfoTp: boolean;
   magZfoTp: boolean;
+  magOfoCorp: boolean;
+  magZfoCorp: boolean;
+  magOfoMed: boolean;
+  magZfoMed: boolean;
   aspOfoTip: boolean;
   aspZfoTip: boolean;
   aspOfoUp: boolean;

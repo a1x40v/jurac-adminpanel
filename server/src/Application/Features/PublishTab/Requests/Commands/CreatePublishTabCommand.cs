@@ -14,10 +14,15 @@ namespace Application.Features.PublishTab.Requests.Commands
         public bool BakOzfoUp { get; set; }
         public bool BakOzfoGp { get; set; }
         public bool SpecOfoSd { get; set; }
+        public bool SpecZfoSd { get; set; }
         public bool MagOfoPo { get; set; }
         public bool MagZfoPo { get; set; }
         public bool MagOfoTp { get; set; }
         public bool MagZfoTp { get; set; }
+        public bool MagOfoCorp { get; set; }
+        public bool MagZfoCorp { get; set; }
+        public bool MagOfoMed { get; set; }
+        public bool MagZfoMed { get; set; }
         public bool AspOfoTip { get; set; }
         public bool AspZfoTip { get; set; }
         public bool AspOfoUp { get; set; }

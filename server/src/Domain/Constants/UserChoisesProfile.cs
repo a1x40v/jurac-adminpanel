@@ -9,10 +9,15 @@ namespace Domain.Constants
         public const string BakZfoGp = "Бакалавриат ЗФО Гражданско-правовой профиль";
         public const string BakOzfoGp = "Бакалавриат ОЗФО Гражданско-правовой профиль";
         public const string SpecOfoSd = "Специалитет ОФО Судебная деятельность";
+        public const string SpecZfoSd = "Специалитет ЗФО Судебная деятельность";
         public const string MagOfoPo = "Магистратура ОФО Правовое обеспечение гражданского оборота и предпринимательства";
         public const string MagZfoPo = "Магистратура ЗФО Правовое обеспечение гражданского оборота и предпринимательства";
         public const string MagOfoTp = "Магистратура ОФО Теория и практика применения законодательства в уголовно-правовой сфере";
         public const string MagZfoTp = "Магистратура ЗФО Теория и практика применения законодательства в уголовно-правовой сфере";
+        public const string MagOfoCorp = "Магистратура ОФО Юрист в сфере корпоративного права";
+        public const string MagZfoCorp = "Магистратура ЗФО Юрист в сфере корпоративного права";
+        public const string MagOfoMed = "Магистратура ОФО Медицинское право (юрист в сфере здравоохранения)";
+        public const string MagZfoMed = "Магистратура ЗФО Медицинское право (юрист в сфере здравоохранения)";
         public const string AspOfoGp = "Аспирантура Теоретико-исторические правовые науки (ОЧНАЯ ФОРМА ОБУЧЕНИЯ)";
         public const string AspOfoUgp = "Аспирантура Уголовно-правовые науки (ОЧНАЯ ФОРМА ОБУЧЕНИЯ)";
 

@@ -35,6 +35,9 @@ namespace Application.Features.Users.Validators
                         UserChoisesProfile.AspOfoUp, UserChoisesProfile.AspZfoUp,
                         UserChoisesProfile.AspOfoKs, UserChoisesProfile.AspZfoKs,
                         UserChoisesProfile.AspOfoGp, UserChoisesProfile.AspOfoUgp,
+                        UserChoisesProfile.SpecZfoSd,
+                        UserChoisesProfile.MagOfoCorp, UserChoisesProfile.MagZfoCorp,
+                        UserChoisesProfile.MagOfoMed, UserChoisesProfile.MagZfoMed,
                     };
 
                     foreach (var profile in profiles)

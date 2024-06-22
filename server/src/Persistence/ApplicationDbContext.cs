@@ -41,19 +41,27 @@ namespace Persistence
         public virtual DbSet<RegabiturPublishrectab> RegabiturPublishrectabs { get; set; }
         public virtual DbSet<RegabiturPublishtab> RegabiturPublishtabs { get; set; }
 
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            if (!optionsBuilder.IsConfigured)
+            {
+#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
+                optionsBuilder.UseMySql("server=141.8.192.132;user=a0173508_abiturient;password=aMw6QXyr;database=a0173508_abiturient", Microsoft.EntityFrameworkCore.ServerVersion.Parse("5.7.37-mysql"));
+            }
+        }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.UseCollation("utf8mb4_0900_ai_ci")
-                .HasCharSet("utf8mb4");
+            modelBuilder.UseCollation("utf8_unicode_ci")
+                .HasCharSet("utf8");
 
             modelBuilder.Entity<AbiturEducationalform>(entity =>
             {
                 entity.ToTable("abitur_educationalform");
 
-                entity.HasCharSet("utf8")
-                    .UseCollation("utf8_unicode_ci");
-
-                entity.Property(e => e.Id).HasColumnName("id");
+                entity.Property(e => e.Id)
+                    .HasColumnType("int(11)")
+                    .HasColumnName("id");
 
                 entity.Property(e => e.NameEducationalForm)
                     .IsRequired()
@@ -65,10 +73,9 @@ namespace Persistence
             {
                 entity.ToTable("abitur_educationalformasp");
 
-                entity.HasCharSet("utf8")
-                    .UseCollation("utf8_unicode_ci");
-
-                entity.Property(e => e.Id).HasColumnName("id");
+                entity.Property(e => e.Id)
+                    .HasColumnType("int(11)")
+                    .HasColumnName("id");
 
                 entity.Property(e => e.NameEducationalForm)
                     .IsRequired()
@@ -80,10 +87,9 @@ namespace Persistence
             {
                 entity.ToTable("abitur_educationalformmag");
 
-                entity.HasCharSet("utf8")
-                    .UseCollation("utf8_unicode_ci");
-
-                entity.Property(e => e.Id).HasColumnName("id");
+                entity.Property(e => e.Id)
+                    .HasColumnType("int(11)")
+                    .HasColumnName("id");
 
                 entity.Property(e => e.NameEducationalForm)
                     .IsRequired()
@@ -95,10 +101,9 @@ namespace Persistence
             {
                 entity.ToTable("abitur_educationalformspec");
 
-                entity.HasCharSet("utf8")
-                    .UseCollation("utf8_unicode_ci");
-
-                entity.Property(e => e.Id).HasColumnName("id");
+                entity.Property(e => e.Id)
+                    .HasColumnType("int(11)")
+                    .HasColumnName("id");
 
                 entity.Property(e => e.NameEducationalForm)
                     .IsRequired()
@@ -110,12 +115,11 @@ namespace Persistence
             {
                 entity.ToTable("abitur_orders");
 
-                entity.HasCharSet("utf8")
-                    .UseCollation("utf8_unicode_ci");
-
                 entity.HasIndex(e => e.EducationalFormId, "abitur_orders_educational_form_id_85a4ec2b_fk_abitur_ed");
 
-                entity.Property(e => e.Id).HasColumnName("id");
+                entity.Property(e => e.Id)
+                    .HasColumnType("int(11)")
+                    .HasColumnName("id");
 
                 entity.Property(e => e.DateOrder).HasColumnName("date_order");
 
@@ -123,7 +127,9 @@ namespace Persistence
                     .HasMaxLength(6)
                     .HasColumnName("date_pub");
 
-                entity.Property(e => e.EducationalFormId).HasColumnName("educational_form_id");
+                entity.Property(e => e.EducationalFormId)
+                    .HasColumnType("int(11)")
+                    .HasColumnName("educational_form_id");
 
                 entity.Property(e => e.File)
                     .IsRequired()
@@ -151,12 +157,11 @@ namespace Persistence
             {
                 entity.ToTable("abitur_ordersasp");
 
-                entity.HasCharSet("utf8")
-                    .UseCollation("utf8_unicode_ci");
-
                 entity.HasIndex(e => e.EducationalFormId, "abitur_ordersasp_educational_form_id_9681a2a1_fk_abitur_ed");
 
-                entity.Property(e => e.Id).HasColumnName("id");
+                entity.Property(e => e.Id)
+                    .HasColumnType("int(11)")
+                    .HasColumnName("id");
 
                 entity.Property(e => e.DateOrder).HasColumnName("date_order");
 
@@ -164,7 +169,9 @@ namespace Persistence
                     .HasMaxLength(6)
                     .HasColumnName("date_pub");
 
-                entity.Property(e => e.EducationalFormId).HasColumnName("educational_form_id");
+                entity.Property(e => e.EducationalFormId)
+                    .HasColumnType("int(11)")
+                    .HasColumnName("educational_form_id");
 
                 entity.Property(e => e.File)
                     .IsRequired()
@@ -192,12 +199,11 @@ namespace Persistence
             {
                 entity.ToTable("abitur_ordersmag");
 
-                entity.HasCharSet("utf8")
-                    .UseCollation("utf8_unicode_ci");
-
                 entity.HasIndex(e => e.EducationalFormId, "abitur_ordersmag_educational_form_id_110b11ab_fk_abitur_ed");
 
-                entity.Property(e => e.Id).HasColumnName("id");
+                entity.Property(e => e.Id)
+                    .HasColumnType("int(11)")
+                    .HasColumnName("id");
 
                 entity.Property(e => e.DateOrder).HasColumnName("date_order");
 
@@ -205,7 +211,9 @@ namespace Persistence
                     .HasMaxLength(6)
                     .HasColumnName("date_pub");
 
-                entity.Property(e => e.EducationalFormId).HasColumnName("educational_form_id");
+                entity.Property(e => e.EducationalFormId)
+                    .HasColumnType("int(11)")
+                    .HasColumnName("educational_form_id");
 
                 entity.Property(e => e.File)
                     .IsRequired()
@@ -233,12 +241,11 @@ namespace Persistence
             {
                 entity.ToTable("abitur_ordersspec");
 
-                entity.HasCharSet("utf8")
-                    .UseCollation("utf8_unicode_ci");
-
                 entity.HasIndex(e => e.EducationalFormId, "abitur_ordersspec_educational_form_id_2c238eeb_fk_abitur_ed");
 
-                entity.Property(e => e.Id).HasColumnName("id");
+                entity.Property(e => e.Id)
+                    .HasColumnType("int(11)")
+                    .HasColumnName("id");
 
                 entity.Property(e => e.DateOrder).HasColumnName("date_order");
 
@@ -246,7 +253,9 @@ namespace Persistence
                     .HasMaxLength(6)
                     .HasColumnName("date_pub");
 
-                entity.Property(e => e.EducationalFormId).HasColumnName("educational_form_id");
+                entity.Property(e => e.EducationalFormId)
+                    .HasColumnType("int(11)")
+                    .HasColumnName("educational_form_id");
 
                 entity.Property(e => e.File)
                     .IsRequired()
@@ -274,12 +283,11 @@ namespace Persistence
             {
                 entity.ToTable("abitur_recommendedlist");
 
-                entity.HasCharSet("utf8")
-                    .UseCollation("utf8_unicode_ci");
-
                 entity.HasIndex(e => e.EducationalFormId, "abitur_recommendedli_educational_form_id_c510b5d4_fk_abitur_ed");
 
-                entity.Property(e => e.Id).HasColumnName("id");
+                entity.Property(e => e.Id)
+                    .HasColumnType("int(11)")
+                    .HasColumnName("id");
 
                 entity.Property(e => e.DateOrder).HasColumnName("date_order");
 
@@ -287,7 +295,9 @@ namespace Persistence
                     .HasMaxLength(6)
                     .HasColumnName("date_pub");
 
-                entity.Property(e => e.EducationalFormId).HasColumnName("educational_form_id");
+                entity.Property(e => e.EducationalFormId)
+                    .HasColumnType("int(11)")
+                    .HasColumnName("educational_form_id");
 
                 entity.Property(e => e.File)
                     .IsRequired()
@@ -310,12 +320,11 @@ namespace Persistence
             {
                 entity.ToTable("abitur_recommendedlistasp");
 
-                entity.HasCharSet("utf8")
-                    .UseCollation("utf8_unicode_ci");
-
                 entity.HasIndex(e => e.EducationalFormId, "abitur_recommendedli_educational_form_id_a9089bd8_fk_abitur_ed");
 
-                entity.Property(e => e.Id).HasColumnName("id");
+                entity.Property(e => e.Id)
+                    .HasColumnType("int(11)")
+                    .HasColumnName("id");
 
                 entity.Property(e => e.DateOrder).HasColumnName("date_order");
 
@@ -323,7 +332,9 @@ namespace Persistence
                     .HasMaxLength(6)
                     .HasColumnName("date_pub");
 
-                entity.Property(e => e.EducationalFormId).HasColumnName("educational_form_id");
+                entity.Property(e => e.EducationalFormId)
+                    .HasColumnType("int(11)")
+                    .HasColumnName("educational_form_id");
 
                 entity.Property(e => e.File)
                     .IsRequired()
@@ -346,12 +357,11 @@ namespace Persistence
             {
                 entity.ToTable("abitur_recommendedlistmag");
 
-                entity.HasCharSet("utf8")
-                    .UseCollation("utf8_unicode_ci");
-
                 entity.HasIndex(e => e.EducationalFormId, "abitur_recommendedli_educational_form_id_20ab5d2e_fk_abitur_ed");
 
-                entity.Property(e => e.Id).HasColumnName("id");
+                entity.Property(e => e.Id)
+                    .HasColumnType("int(11)")
+                    .HasColumnName("id");
 
                 entity.Property(e => e.DateOrder).HasColumnName("date_order");
 
@@ -359,7 +369,9 @@ namespace Persistence
                     .HasMaxLength(6)
                     .HasColumnName("date_pub");
 
-                entity.Property(e => e.EducationalFormId).HasColumnName("educational_form_id");
+                entity.Property(e => e.EducationalFormId)
+                    .HasColumnType("int(11)")
+                    .HasColumnName("educational_form_id");
 
                 entity.Property(e => e.File)
                     .IsRequired()
@@ -382,12 +394,11 @@ namespace Persistence
             {
                 entity.ToTable("abitur_result");
 
-                entity.HasCharSet("utf8")
-                    .UseCollation("utf8_unicode_ci");
-
                 entity.HasIndex(e => e.EducationalFormId, "abitur_result_educational_form_id_6873845e_fk_abitur_ed");
 
-                entity.Property(e => e.Id).HasColumnName("id");
+                entity.Property(e => e.Id)
+                    .HasColumnType("int(11)")
+                    .HasColumnName("id");
 
                 entity.Property(e => e.DatePub)
                     .HasMaxLength(6)
@@ -395,7 +406,9 @@ namespace Persistence
 
                 entity.Property(e => e.DateResult).HasColumnName("date_result");
 
-                entity.Property(e => e.EducationalFormId).HasColumnName("educational_form_id");
+                entity.Property(e => e.EducationalFormId)
+                    .HasColumnType("int(11)")
+                    .HasColumnName("educational_form_id");
 
                 entity.Property(e => e.File)
                     .IsRequired()
@@ -423,12 +436,11 @@ namespace Persistence
             {
                 entity.ToTable("abitur_resultasp");
 
-                entity.HasCharSet("utf8")
-                    .UseCollation("utf8_unicode_ci");
-
                 entity.HasIndex(e => e.EducationalFormId, "abitur_resultasp_educational_form_id_b9f800bc_fk_abitur_ed");
 
-                entity.Property(e => e.Id).HasColumnName("id");
+                entity.Property(e => e.Id)
+                    .HasColumnType("int(11)")
+                    .HasColumnName("id");
 
                 entity.Property(e => e.DatePub)
                     .HasMaxLength(6)
@@ -436,7 +448,9 @@ namespace Persistence
 
                 entity.Property(e => e.DateResult).HasColumnName("date_result");
 
-                entity.Property(e => e.EducationalFormId).HasColumnName("educational_form_id");
+                entity.Property(e => e.EducationalFormId)
+                    .HasColumnType("int(11)")
+                    .HasColumnName("educational_form_id");
 
                 entity.Property(e => e.File)
                     .IsRequired()
@@ -464,12 +478,11 @@ namespace Persistence
             {
                 entity.ToTable("abitur_resultmag");
 
-                entity.HasCharSet("utf8")
-                    .UseCollation("utf8_unicode_ci");
-
                 entity.HasIndex(e => e.EducationalFormId, "abitur_resultmag_educational_form_id_44f2ad0d_fk_abitur_ed");
 
-                entity.Property(e => e.Id).HasColumnName("id");
+                entity.Property(e => e.Id)
+                    .HasColumnType("int(11)")
+                    .HasColumnName("id");
 
                 entity.Property(e => e.DatePub)
                     .HasMaxLength(6)
@@ -477,7 +490,9 @@ namespace Persistence
 
                 entity.Property(e => e.DateResult).HasColumnName("date_result");
 
-                entity.Property(e => e.EducationalFormId).HasColumnName("educational_form_id");
+                entity.Property(e => e.EducationalFormId)
+                    .HasColumnType("int(11)")
+                    .HasColumnName("educational_form_id");
 
                 entity.Property(e => e.File)
                     .IsRequired()
@@ -505,14 +520,13 @@ namespace Persistence
             {
                 entity.ToTable("adminpanel_emailmessage");
 
-                entity.HasCharSet("utf8")
-                    .UseCollation("utf8_unicode_ci");
-
                 entity.HasIndex(e => e.RecipientId, "adminpanel_emailmessage_recipient_id_a8779636_fk_auth_user_id");
 
                 entity.HasIndex(e => e.SenderId, "adminpanel_emailmessage_sender_id_7d5eda7b_fk_auth_user_id");
 
-                entity.Property(e => e.Id).HasColumnName("id");
+                entity.Property(e => e.Id)
+                    .HasColumnType("int(11)")
+                    .HasColumnName("id");
 
                 entity.Property(e => e.Content)
                     .IsRequired()
@@ -524,9 +538,13 @@ namespace Persistence
                     .HasMaxLength(100)
                     .HasColumnName("recipientEmail");
 
-                entity.Property(e => e.RecipientId).HasColumnName("recipient_id");
+                entity.Property(e => e.RecipientId)
+                    .HasColumnType("int(11)")
+                    .HasColumnName("recipient_id");
 
-                entity.Property(e => e.SenderId).HasColumnName("sender_id");
+                entity.Property(e => e.SenderId)
+                    .HasColumnType("int(11)")
+                    .HasColumnName("sender_id");
 
                 entity.Property(e => e.SentAt)
                     .HasMaxLength(6)
@@ -554,18 +572,19 @@ namespace Persistence
             {
                 entity.ToTable("adminpanel_rectabmodification");
 
-                entity.HasCharSet("utf8")
-                    .UseCollation("utf8_unicode_ci");
-
                 entity.HasIndex(e => e.AbiturientId, "abiturient_id")
                     .IsUnique();
 
                 entity.HasIndex(e => e.RectabId, "rectab_id")
                     .IsUnique();
 
-                entity.Property(e => e.Id).HasColumnName("id");
+                entity.Property(e => e.Id)
+                    .HasColumnType("int(11)")
+                    .HasColumnName("id");
 
-                entity.Property(e => e.AbiturientId).HasColumnName("abiturient_id");
+                entity.Property(e => e.AbiturientId)
+                    .HasColumnType("int(11)")
+                    .HasColumnName("abiturient_id");
 
                 entity.Property(e => e.Author)
                     .IsRequired()
@@ -576,9 +595,13 @@ namespace Persistence
                     .HasMaxLength(6)
                     .HasColumnName("created_at");
 
-                entity.Property(e => e.RectabId).HasColumnName("rectab_id");
+                entity.Property(e => e.RectabId)
+                    .HasColumnType("int(11)")
+                    .HasColumnName("rectab_id");
 
-                entity.Property(e => e.Type).HasColumnName("type");
+                entity.Property(e => e.Type)
+                    .HasColumnType("smallint(5) unsigned")
+                    .HasColumnName("type");
 
                 entity.HasOne(d => d.Abiturient)
                     .WithOne(p => p.AdminpanelRectabmodification)
@@ -595,13 +618,12 @@ namespace Persistence
             {
                 entity.ToTable("auth_user");
 
-                entity.HasCharSet("utf8")
-                    .UseCollation("utf8_unicode_ci");
-
                 entity.HasIndex(e => e.Username, "username")
                     .IsUnique();
 
-                entity.Property(e => e.Id).HasColumnName("id");
+                entity.Property(e => e.Id)
+                    .HasColumnType("int(11)")
+                    .HasColumnName("id");
 
                 entity.Property(e => e.DateJoined)
                     .HasMaxLength(6)
@@ -647,15 +669,16 @@ namespace Persistence
             {
                 entity.ToTable("regabitur_additionalinfo");
 
-                entity.HasCharSet("utf8")
-                    .UseCollation("utf8_unicode_ci");
-
                 entity.HasIndex(e => e.UserId, "user_id")
                     .IsUnique();
 
-                entity.Property(e => e.Id).HasColumnName("id");
+                entity.Property(e => e.Id)
+                    .HasColumnType("int(11)")
+                    .HasColumnName("id");
 
-                entity.Property(e => e.UserId).HasColumnName("user_id");
+                entity.Property(e => e.UserId)
+                    .HasColumnType("int(11)")
+                    .HasColumnName("user_id");
 
                 entity.HasOne(d => d.User)
                     .WithOne(p => p.RegabiturAdditionalinfo)
@@ -668,19 +691,22 @@ namespace Persistence
             {
                 entity.ToTable("regabitur_additionalinfo_education_profile");
 
-                entity.HasCharSet("utf8")
-                    .UseCollation("utf8_unicode_ci");
-
                 entity.HasIndex(e => e.ChoicesprofileId, "regabitur_additional_choicesprofile_id_c3becd9c_fk_regabitur");
 
                 entity.HasIndex(e => new { e.AdditionalinfoId, e.ChoicesprofileId }, "regabitur_additionalinfo_additionalinfo_id_choice_a9d99a17_uniq")
                     .IsUnique();
 
-                entity.Property(e => e.Id).HasColumnName("id");
+                entity.Property(e => e.Id)
+                    .HasColumnType("int(11)")
+                    .HasColumnName("id");
 
-                entity.Property(e => e.AdditionalinfoId).HasColumnName("additionalinfo_id");
+                entity.Property(e => e.AdditionalinfoId)
+                    .HasColumnType("int(11)")
+                    .HasColumnName("additionalinfo_id");
 
-                entity.Property(e => e.ChoicesprofileId).HasColumnName("choicesprofile_id");
+                entity.Property(e => e.ChoicesprofileId)
+                    .HasColumnType("int(11)")
+                    .HasColumnName("choicesprofile_id");
 
                 entity.HasOne(d => d.Additionalinfo)
                     .WithMany(p => p.RegabiturAdditionalinfoEducationProfiles)
@@ -699,10 +725,9 @@ namespace Persistence
             {
                 entity.ToTable("regabitur_choicesprofile");
 
-                entity.HasCharSet("utf8")
-                    .UseCollation("utf8_unicode_ci");
-
-                entity.Property(e => e.Id).HasColumnName("id");
+                entity.Property(e => e.Id)
+                    .HasColumnType("int(11)")
+                    .HasColumnName("id");
 
                 entity.Property(e => e.Description)
                     .IsRequired()
@@ -714,13 +739,12 @@ namespace Persistence
             {
                 entity.ToTable("regabitur_customuser");
 
-                entity.HasCharSet("utf8")
-                    .UseCollation("utf8_unicode_ci");
-
                 entity.HasIndex(e => e.UserId, "user_id")
                     .IsUnique();
 
-                entity.Property(e => e.Id).HasColumnName("id");
+                entity.Property(e => e.Id)
+                    .HasColumnType("int(11)")
+                    .HasColumnName("id");
 
                 entity.Property(e => e.Address)
                     .IsRequired()
@@ -778,7 +802,9 @@ namespace Persistence
 
                 entity.Property(e => e.SuccessFlag).HasColumnName("success_flag");
 
-                entity.Property(e => e.UserId).HasColumnName("user_id");
+                entity.Property(e => e.UserId)
+                    .HasColumnType("int(11)")
+                    .HasColumnName("user_id");
 
                 entity.Property(e => e.WorkFlag).HasColumnName("work_flag");
 
@@ -793,12 +819,11 @@ namespace Persistence
             {
                 entity.ToTable("regabitur_documentuser");
 
-                entity.HasCharSet("utf8")
-                    .UseCollation("utf8_unicode_ci");
-
                 entity.HasIndex(e => e.UserId, "regabitur_documentuser_user_id_2349932c_fk_auth_user_id");
 
-                entity.Property(e => e.Id).HasColumnName("id");
+                entity.Property(e => e.Id)
+                    .HasColumnType("int(11)")
+                    .HasColumnName("id");
 
                 entity.Property(e => e.DatePub)
                     .HasMaxLength(6)
@@ -814,7 +839,9 @@ namespace Persistence
                     .HasMaxLength(256)
                     .HasColumnName("name_doc");
 
-                entity.Property(e => e.UserId).HasColumnName("user_id");
+                entity.Property(e => e.UserId)
+                    .HasColumnType("int(11)")
+                    .HasColumnName("user_id");
 
                 entity.HasOne(d => d.User)
                     .WithMany(p => p.RegabiturDocumentusers)
@@ -827,13 +854,12 @@ namespace Persistence
             {
                 entity.ToTable("regabitur_publishrectab");
 
-                entity.HasCharSet("utf8")
-                    .UseCollation("utf8_unicode_ci");
-
                 entity.HasIndex(e => e.UserId, "user_id")
                     .IsUnique();
 
-                entity.Property(e => e.Id).HasColumnName("id");
+                entity.Property(e => e.Id)
+                    .HasColumnType("int(11)")
+                    .HasColumnName("id");
 
                 entity.Property(e => e.Advantage)
                     .IsRequired()
@@ -877,17 +903,27 @@ namespace Persistence
                     .HasMaxLength(6)
                     .HasColumnName("date_pub");
 
-                entity.Property(e => e.ForeignLanguagePoint).HasColumnName("foreign_language_point");
+                entity.Property(e => e.ForeignLanguagePoint)
+                    .HasColumnType("smallint(6)")
+                    .HasColumnName("foreign_language_point");
 
-                entity.Property(e => e.GpPoint).HasColumnName("gp_point");
+                entity.Property(e => e.GpPoint)
+                    .HasColumnType("smallint(6)")
+                    .HasColumnName("gp_point");
 
-                entity.Property(e => e.HistoryPoint).HasColumnName("history_point");
+                entity.Property(e => e.HistoryPoint)
+                    .HasColumnType("smallint(6)")
+                    .HasColumnName("history_point");
 
-                entity.Property(e => e.Individ).HasColumnName("individ");
+                entity.Property(e => e.Individ)
+                    .HasColumnType("smallint(6)")
+                    .HasColumnName("individ");
 
                 entity.Property(e => e.IsPublished).HasColumnName("is_published");
 
-                entity.Property(e => e.KpPoint).HasColumnName("kp_point");
+                entity.Property(e => e.KpPoint)
+                    .HasColumnType("smallint(6)")
+                    .HasColumnName("kp_point");
 
                 entity.Property(e => e.MagOfoPo).HasColumnName("mag_ofo_po");
 
@@ -897,11 +933,17 @@ namespace Persistence
 
                 entity.Property(e => e.MagZfoTp).HasColumnName("mag_zfo_tp");
 
-                entity.Property(e => e.ObshPoint).HasColumnName("obsh_point");
+                entity.Property(e => e.ObshPoint)
+                    .HasColumnType("smallint(6)")
+                    .HasColumnName("obsh_point");
 
-                entity.Property(e => e.OkpPoint).HasColumnName("okp_point");
+                entity.Property(e => e.OkpPoint)
+                    .HasColumnType("smallint(6)")
+                    .HasColumnName("okp_point");
 
-                entity.Property(e => e.RusPoint).HasColumnName("rus_point");
+                entity.Property(e => e.RusPoint)
+                    .HasColumnType("smallint(6)")
+                    .HasColumnName("rus_point");
 
                 entity.Property(e => e.Sogl)
                     .IsRequired()
@@ -915,20 +957,30 @@ namespace Persistence
 
                 entity.Property(e => e.SpecOfoSd).HasColumnName("spec_ofo_sd");
 
-                entity.Property(e => e.SpecPoint).HasColumnName("spec_point");
+                entity.Property(e => e.SpecPoint)
+                    .HasColumnType("smallint(6)")
+                    .HasColumnName("spec_point");
 
-                entity.Property(e => e.SumPoints).HasColumnName("sum_points");
+                entity.Property(e => e.SumPoints)
+                    .HasColumnType("smallint(6)")
+                    .HasColumnName("sum_points");
 
                 entity.Property(e => e.TestType)
                     .IsRequired()
                     .HasMaxLength(256)
                     .HasColumnName("test_type");
 
-                entity.Property(e => e.TgpPoint).HasColumnName("tgp_point");
+                entity.Property(e => e.TgpPoint)
+                    .HasColumnType("smallint(6)")
+                    .HasColumnName("tgp_point");
 
-                entity.Property(e => e.UpPoint).HasColumnName("up_point");
+                entity.Property(e => e.UpPoint)
+                    .HasColumnType("smallint(6)")
+                    .HasColumnName("up_point");
 
-                entity.Property(e => e.UserId).HasColumnName("user_id");
+                entity.Property(e => e.UserId)
+                    .HasColumnType("int(11)")
+                    .HasColumnName("user_id");
 
                 entity.HasOne(d => d.User)
                     .WithOne(p => p.RegabiturPublishrectab)
@@ -941,13 +993,12 @@ namespace Persistence
             {
                 entity.ToTable("regabitur_publishtab");
 
-                entity.HasCharSet("utf8")
-                    .UseCollation("utf8_unicode_ci");
-
                 entity.HasIndex(e => e.UserId, "user_id")
                     .IsUnique();
 
-                entity.Property(e => e.Id).HasColumnName("id");
+                entity.Property(e => e.Id)
+                    .HasColumnType("int(11)")
+                    .HasColumnName("id");
 
                 entity.Property(e => e.AspOfoGp).HasColumnName("asp_ofo_gp");
 
@@ -986,9 +1037,17 @@ namespace Persistence
                     .HasMaxLength(32)
                     .HasColumnName("individual_str");
 
+                entity.Property(e => e.MagOfoCorp).HasColumnName("mag_ofo_corp");
+
+                entity.Property(e => e.MagOfoMed).HasColumnName("mag_ofo_med");
+
                 entity.Property(e => e.MagOfoPo).HasColumnName("mag_ofo_po");
 
                 entity.Property(e => e.MagOfoTp).HasColumnName("mag_ofo_tp");
+
+                entity.Property(e => e.MagZfoCorp).HasColumnName("mag_zfo_corp");
+
+                entity.Property(e => e.MagZfoMed).HasColumnName("mag_zfo_med");
 
                 entity.Property(e => e.MagZfoPo).HasColumnName("mag_zfo_po");
 
@@ -996,12 +1055,16 @@ namespace Persistence
 
                 entity.Property(e => e.SpecOfoSd).HasColumnName("spec_ofo_sd");
 
+                entity.Property(e => e.SpecZfoSd).HasColumnName("spec_zfo_sd");
+
                 entity.Property(e => e.TestType)
                     .IsRequired()
                     .HasMaxLength(256)
                     .HasColumnName("test_type");
 
-                entity.Property(e => e.UserId).HasColumnName("user_id");
+                entity.Property(e => e.UserId)
+                    .HasColumnType("int(11)")
+                    .HasColumnName("user_id");
 
                 entity.HasOne(d => d.User)
                     .WithOne(p => p.RegabiturPublishtab)
