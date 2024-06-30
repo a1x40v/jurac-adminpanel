@@ -45,6 +45,11 @@ namespace Domain
         public bool AspOfoUgp { get; set; }
         public bool IsPublished { get; set; }
         public string Comment { get; set; }
+        public bool MagOfoCorp { get; set; }
+        public bool MagOfoMed { get; set; }
+        public bool MagZfoCorp { get; set; }
+        public bool MagZfoMed { get; set; }
+        public bool SpecZfoSd { get; set; }
 
         public virtual AuthUser User { get; set; }
         public virtual AdminpanelRectabmodification AdminpanelRectabmodification { get; set; }

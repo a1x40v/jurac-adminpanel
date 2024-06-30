@@ -925,9 +925,17 @@ namespace Persistence
                     .HasColumnType("smallint(6)")
                     .HasColumnName("kp_point");
 
+                entity.Property(e => e.MagOfoCorp).HasColumnName("mag_ofo_corp");
+
+                entity.Property(e => e.MagOfoMed).HasColumnName("mag_ofo_med");
+
                 entity.Property(e => e.MagOfoPo).HasColumnName("mag_ofo_po");
 
                 entity.Property(e => e.MagOfoTp).HasColumnName("mag_ofo_tp");
+
+                entity.Property(e => e.MagZfoCorp).HasColumnName("mag_zfo_corp");
+
+                entity.Property(e => e.MagZfoMed).HasColumnName("mag_zfo_med");
 
                 entity.Property(e => e.MagZfoPo).HasColumnName("mag_zfo_po");
 
@@ -960,6 +968,8 @@ namespace Persistence
                 entity.Property(e => e.SpecPoint)
                     .HasColumnType("smallint(6)")
                     .HasColumnName("spec_point");
+
+                entity.Property(e => e.SpecZfoSd).HasColumnName("spec_zfo_sd");
 
                 entity.Property(e => e.SumPoints)
                     .HasColumnType("smallint(6)")

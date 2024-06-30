@@ -1,8 +1,9 @@
+using Application.Features.Common;
 using MediatR;
 
 namespace Application.Features.PublishRecTab.Requests.Commands
 {
-    public class CreatePublishRecTabCommand : IRequest, IPublishRecTabCommand
+    public class CreatePublishRecTabCommand : PublishProfilesBase, IRequest, IPublishRecTabCommand
     {
         public int UserId { get; set; }
         public string TestType { get; set; } // ЕГЭ, Вступительные испытания
@@ -20,25 +21,6 @@ namespace Application.Features.PublishRecTab.Requests.Commands
         public short OkpPoint { get; set; } // ТГП или ОКП должны быть 0
         public short TgpPoint { get; set; } // ТГП или ОКП должны быть 0
         public short UpPoint { get; set; }
-        public bool BakOfoGp { get; set; }
-        public bool BakOfoUp { get; set; }
-        public bool BakZfoGp { get; set; }
-        public bool BakZfoUp { get; set; }
-        public bool BakOzfoGp { get; set; }
-        public bool BakOzfoUp { get; set; }
-        public bool SpecOfoSd { get; set; }
-        public bool MagOfoPo { get; set; }
-        public bool MagZfoPo { get; set; }
-        public bool MagOfoTp { get; set; }
-        public bool MagZfoTp { get; set; }
-        public bool AspOfoTip { get; set; }
-        public bool AspZfoTip { get; set; }
-        public bool AspOfoUp { get; set; }
-        public bool AspZfoUp { get; set; }
-        public bool AspOfoKs { get; set; }
-        public bool AspZfoKs { get; set; }
-        public bool AspOfoGp { get; set; }
-        public bool AspOfoUgp { get; set; }
         public bool IsPublished { get; set; }
         public string Comment { get; set; }
     }
